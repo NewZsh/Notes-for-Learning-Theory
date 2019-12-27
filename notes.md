@@ -14,15 +14,17 @@
 - Label Set: label $y \in \mathcal{Y}$. Currently, just consider the binary classification task, i.e., $y = 0,1 $ or $ -1, +1 $.
 - Training data: $S=((x_1, y_1), \cdots, (x_m,y_m))$ is a finite sequence.
 
-  `remark: usually called 'training set', but must be 'training sequence' more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.`
+    `remark: usually called 'training set', but must be 'training sequence' more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.`
 
   - **A simple data generation model**:
 
   
-**The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightwrrow\mathcal{Y}$.
+**The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightarrow\mathcal{Y}$.
 
 **Evaluation**:
 
 $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathbb{P}_{x}
 $$
+
+    `remark: here we neglect the measurability assumption, which requires that $A$ is a member of $\sigma$-algebra of subsets of $\mathcal{X}$.`
