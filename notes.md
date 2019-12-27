@@ -54,13 +54,13 @@ L_{\mathcal{D}}(h)=0$.
 
 **ERM with restricted hypothesis set (inductive bias)**: $h_S\in\arg\min \limits_{h\in\mathcal{H}} L_S(h)$
 
-- Realizability assumption: There exsits $h^\* \in\mathcal{H}$, such that $L_{\mathcal{D}, f}(h^*)=0$.
+- Realizability assumption: there exists $h^\* \in\mathcal{H}$, such that $L_{\mathcal{D}, f}(h^*)=0$.
 
       remark: It implies that $L_S(h^*)=0$, and $L_S(h_S)=0$. However, we are interested in $L_{\mathcal{D}, f}(h_S)$.
 
-- The i.i.d. assumption:
+- The i.i.d. assumption: the training samples are independently and identically distributed.
 
-- Finite hypothesis classes are PAC learnable
+- Finite hypothesis classes are PAC learnable: with *confidence* paramter $1-\delta$ to achieve *accuracy* at least $1-\epsilon$:
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
