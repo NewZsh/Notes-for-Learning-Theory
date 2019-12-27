@@ -14,7 +14,7 @@
 - Label Set: label $y \in \mathcal{Y}$. Currently, just consider the binary classification task, i.e., $y = 0,1 $ or $ -1, +1 $.
 - Training data: $S=((x_1, y_1), \cdots, (x_m,y_m))$ is a finite sequence.
 
-&emsp;&emsp;`remark: usually called 'training set', but must be 'training sequence' more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.`
+`remark: usually called 'training set', but must be 'training sequence' more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.`
 
   - **A simple data generation model**:
 
@@ -27,6 +27,6 @@ $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathbb{P}_{x}
 $$
 
-&emsp;&emsp;**NOTE: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution \mathcal{D}, such that $h(x)\neq f(x)$**.
+    **NOTE: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution \mathcal{D}, such that $h(x)\neq f(x)$**.
 
-&emsp;&emsp;`remark: here we neglect the measurability assumption.`
+`remark: here we neglect the measurability assumption.`
