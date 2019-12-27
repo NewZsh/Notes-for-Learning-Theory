@@ -1,6 +1,8 @@
 # Notes of Statistical Machine Learning Theory
 
-*The notes is mainly based on the book **Understanding Machine Learning: From Theory to Algorithms** XXX, 2014?*
+*The notes is mainly based on the following book*
+  - [Understanding Machine Learning: From Theory to Algorithms](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf)  Shai Shalev-Shwartz and Shai Ben-David, 2014.
+  - []
 
 ## 1. Probably Approximately Correct (PAC)
 
