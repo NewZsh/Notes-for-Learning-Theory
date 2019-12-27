@@ -25,7 +25,7 @@
 
   **[IMPORTANT]**: The learner is blind to $\mathcal{D}, f$.
 
-    remark: usually called 'training set', but must be 'training sequence', because the same sample may appear more than one time, and some training algorithms is order-sensitive.
+    \noindent  remark: usually called 'training set', but must be 'training sequence', because the same sample may appear more than one time, and some training algorithms is order-sensitive.
   
 **The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightarrow\mathcal{Y}$.
 
