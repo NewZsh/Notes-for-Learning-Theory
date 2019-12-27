@@ -10,9 +10,9 @@ Notes of Statistical Machine Learning Theory
 
 **The learner's input**:
 
-- Domain Set
-- Label Set
-- Training data
+- Domain Set: instance $x \in \mathcal{X}$
+- Label Set: label $y \in \mathcal{Y}$ (currently, just consider binary classification task, i.e., $y\in{0,1}$ or ${-1,+1}$)
+- Training data: $S=((x_1, y_1), \cdots, (x_m,y_m))$ is a finite sequence. (Usually called training set, but must be *training sequence* more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive).
   
     **A simple data generation model**:
 
