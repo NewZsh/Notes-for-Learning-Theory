@@ -65,3 +65,11 @@ $$
 solution
 
 #### 1.6.2 (UML)
+
+## 2. VC-dimension
+
+### 2.1
+
+## 3. Bayesian-PAC
+
+## 4. Generalization in Deep Learning
