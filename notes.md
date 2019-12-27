@@ -52,9 +52,13 @@ $$
 - Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$, while $
 L_{\mathcal{D}}(h)=0$.
 
-**ERM with restricted hypothesis set (inductive bias)**:
+**ERM with restricted hypothesis set (inductive bias)**: $h_S\in\argmin \limits_{h\in\mathcal{H}} L_S(h)$
 
-- Realizability assumption
+- Realizability assumption: There exsits $h^*\in\mathcal{H}$, such that $L_{\mathcal{D}, f}(h^*)=0$.
+
+      remark: It implies that $L_S(h^*)=0$, and $L_S(h_S)=0$. However, we are interested in $L_{\mathcal{D}, f}(h_S)$.
+
+- The i.i.d. assumption:
 
 - Finite hypothesis classes are PAC learnable
 
