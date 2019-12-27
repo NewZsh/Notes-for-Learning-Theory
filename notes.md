@@ -39,7 +39,7 @@ $$
 
       remark: here we neglect the measurability assumption.
 
-### 1.2 Empirical Risk Minimization (ERM)
+### 1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
 
 **ERM may lead to overfitting**:
 
@@ -54,17 +54,21 @@ L_{\mathcal{D}}(h)=0$.
 
 **ERM with restricted hypothesis set (inductive bias)**:
 
-**No-Free-Lunch (neccessity of inductive bias)**:
-  
-### 1.3 PAC and Agnostic PAC
+- Realizability assumption
 
-- Realizability assumption and finite classes
-- Beyond realizability assumption: Agnostic PAC
+- Finite hypothesis classes are PAC learnable
+
+**No-Free-Lunch (neccessity of inductive bias)**:
+
+
+**Agnostic PAC**:
+
+- Beyond realizability assumption
 - Beyond binary classification: learning via uniform convergence
 
-### 1.4 Error decomposition
+### 1.3 Error decomposition
 
-### 1.5 Summary
+### 1.4 Summary
 
 Now that, we have come to some important conclusions under the PAC learning framework:
 
