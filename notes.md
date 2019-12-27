@@ -29,7 +29,7 @@
   
 **The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightarrow\mathcal{Y}$.
 
-**Generalization error**: *a.k.a*, true error/risk
+**Generalization error**: *a.k.a*, true error/risk.
 
 $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\\{ x:h(x) \neq f(x)\\} )
@@ -60,7 +60,10 @@ L_{\mathcal{D}}(h)=0$.
 
 - The i.i.d. assumption: the training samples are independently and identically distributed.
 
-- Finite hypothesis classes are PAC learnable: with *confidence* paramter $1-\delta$ to achieve *accuracy* at least $1-\epsilon$:
+- PAC learnability: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ with *confidence* paramter at least $1-\delta$ to achieve *accuracy* at least $1-\epsilon$.
+
+- Finite hypothesis classes are PAC learnable, and $m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon$.
+  - proof:
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
