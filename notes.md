@@ -52,7 +52,7 @@ $$
 - Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$, while $
 L_{\mathcal{D}}(h)=0$.
 
-**ERM with restricted hypothesis set (inductive bias)**: $h_S\in\argmin \limits_{h\in\mathcal{H}} L_S(h)$
+**ERM with restricted hypothesis set (inductive bias)**: $h_S\in\arg\min \limits_{h\in\mathcal{H}} L_S(h)$
 
 - Realizability assumption: There exsits $h^*\in\mathcal{H}$, such that $L_{\mathcal{D}, f}(h^*)=0$.
 
