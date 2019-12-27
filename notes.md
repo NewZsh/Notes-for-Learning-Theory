@@ -15,8 +15,8 @@
 - Training data: $S=((x_1, y_1), \cdots, (x_m,y_m))$ is a finite sequence.
   - **A simple data generation model**:
 
-<span style="color:gray;">remark: usually called 'training set', but must be *'training sequence'* more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.</span>
-
+    <font color=gray size=5>gray</font>
+    remark: usually called 'training set', but must be *'training sequence'* more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.
 
 **The learner's output**:
 
