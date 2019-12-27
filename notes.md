@@ -5,6 +5,7 @@
 ## 1. Probably Approximately Correct (PAC)
 
 *Corresponding to Chapter 2-5 in UML.*
+
 *This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
 
 ### 1.1 formulation
@@ -46,15 +47,21 @@ $$
 
 ### 1.4 Error decomposition
 
+### 1.5 Summary
+
 *Now that, we have come to some important conclusions under the PAC learning framework:*
+
 *1. No universal learner;*
+
 *2. inductive bias is neccessary to avoid overfitting;*
+
 *3. sample complexity is function about hypothesis set, confidence level and error, interestingly, it is nothing to do with the dimension of feature space;*
+
 *4. inductive bias controls the balance of approximation error and estimation error.*
 
-### 1.4 Excercises and solutions
+### 1.6 Excercises and solutions
 
-#### 1.4.1 (UML Ex2.1)
+#### 1.6.1 (UML Ex2.1)
 solution
 
-#### 1.4.2 (UML)
+#### 1.6.2 (UML)
