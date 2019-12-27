@@ -49,7 +49,8 @@ $$
 L_{\mathcal{D}}(h) \overset{def}{=} \frac{|\\{i\in \\{1,\cdots,m\\}: h(x_i)\neq y_i\\}|}{m}
 $$
 
-- Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$.
+- Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$, while $
+L_{\mathcal{D}}(h)=0$.
 
 **ERM with restricted hypothesis set (inductive bias)**:
 
@@ -65,7 +66,7 @@ $$
 
 ### 1.5 Summary
 
-*Now that, we have come to some important conclusions under the PAC learning framework:*
+Now that, we have come to some important conclusions under the PAC learning framework:
 
 *1. No universal learner;*
 
@@ -74,6 +75,10 @@ $$
 *3. sample complexity is function about hypothesis set, confidence level and error, interestingly, it is nothing to do with the dimension of feature space;*
 
 *4. inductive bias controls the balance of approximation error and estimation error.*
+
+And we have reached the fundamental question in learning theory:
+
+*Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?*
 
 ### 1.6 Excercises and solutions
 
