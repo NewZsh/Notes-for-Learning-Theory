@@ -2,11 +2,12 @@
 
 *The notes is mainly based on the book **Understanding Machine Learning: From Theory to Algorithms** XXX, 2014?*
 
-## 1. Formulation
+## 1. Probably Approximately Correct (PAC)
 
-### 1.1 Probably Approximately Correct (PAC)
+*Corresponding to Chapter 2-5 in UML.*
+*This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
 
-*Corresponding to Chapter 2-5 in UML. This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
+### 1.1 formulation
 
 **The learner's input**:
 
@@ -30,3 +31,30 @@ $$
   **[NOTE]**: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution \mathcal{D}, such that $h(x)\neq f(x)$.
 
         remark: here we neglect the measurability assumption.
+
+### 1.2 Empirical Risk Minimization (ERM)
+
+- ERM may overfit
+- ERM with restricted hypothesis set: inductive bias is introduced
+- No-Free-Lunch: inductive bias is neccessary
+  
+### 1.3 PAC and Agnostic PAC
+
+- Realizability assumption and finite classes
+- Beyond realizability assumption: Agnostic PAC
+- Beyond binary classification: learning via uniform convergence
+
+### 1.4 Error decomposition
+
+*Now that, we have come to some important conclusions under the PAC learning framework:*
+*1. No universal learner;*
+*2. inductive bias is neccessary to avoid overfitting;*
+*3. sample complexity is function about hypothesis set, confidence level and error, interestingly, it is nothing to do with the dimension of feature space;*
+*4. inductive bias controls the balance of approximation error and estimation error.*
+
+### 1.4 Excercises and solutions
+
+#### 1.4.1 (UML Ex2.1)
+solution
+
+#### 1.4.2 (UML)
