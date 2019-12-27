@@ -13,10 +13,10 @@
 - Domain Set: instance $x \in \mathcal{X}$.
 - Label Set: label $y \in \mathcal{Y}$. Currently, just consider binary classification task, i.e., $y = 0,1 $ or $ -1, +1 $.
 - Training data: $S=((x_1, y_1), \cdots, (x_m,y_m))$ is a finite sequence.
-  - **A simple data generation model**: 
-========
-remark: usually called 'training set', but must be *'training sequence'* more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.
---------
+  - **A simple data generation model**:
+
+<span style="color:gray;">remark: usually called 'training set', but must be *'training sequence'* more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.</span>
+
 
 **The learner's output**:
 
