@@ -13,9 +13,10 @@ Notes of Statistical Machine Learning Theory
 - Domain Set
 - Label Set
 - Training data
+    **A simple data generation model**:
 
 **The learner's output**:
 
-**A simple data generation model**:
+
 
 **Evaluation**:
