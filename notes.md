@@ -37,7 +37,7 @@ $$
 
   **[IMPORTANT]**: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution $\mathcal{D}$, such that $h(x)\neq f(x)$.
 
-    remark: here we neglect the measurability assumption.
+      remark: here we neglect the measurability assumption.
 
 ### 1.2 Empirical Risk Minimization (ERM)
 
