@@ -13,7 +13,7 @@
 **The learner's input**:
 
 - Domain Set: instance $x \in \mathcal{X}$.
-- Label Set: label $y \in \mathcal{Y}$. Currently, just consider the binary classification task, i.e., $y = ${$0,1$,} or {$-1, +1$}.
+- Label Set: label $y \in \mathcal{Y}$. Currently, just consider the binary classification task, i.e., $y = ${$\{0,1$} or {$-1, +1$}.
 - Training data: $S=((x_1, y_1), \cdots, (x_m,y_m))$ is a finite sequence.
 
         remark: usually called 'training set', but must be 'training sequence', because the same sample may appear more than one time, and some training algorithms is order-sensitive.
@@ -29,7 +29,7 @@ $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\{ x:h(x) \neq f(x)\} )
 $$
 
-  **[NOTE]**: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution \mathcal{D}, such that $h(x)\neq f(x)$.
+  **[NOTE]**: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution $\mathcal{D}$, such that $h(x)\neq f(x)$.
 
         remark: here we neglect the measurability assumption.
 
