@@ -24,7 +24,7 @@
 **Evaluation**: *a.k.a* **generalization error**, or true error/risk
 
 $$
-L_{\mathcal{D},f}(h) \overset{def}{=} \mathbb{P}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\{ x:h(x) \neq f(x) \})
+L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\{ x:h(x) \neq f(x) \})
 $$
 
   **[NOTE]**: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution \mathcal{D}, such that $h(x)\neq f(x)$.
