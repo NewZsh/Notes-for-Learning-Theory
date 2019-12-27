@@ -23,7 +23,7 @@
   
 **The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightarrow\mathcal{Y}$.
 
-**Evaluation**: *a.k.a* **generalization error**, or true error/risk
+**Generalization error**: *a.k.a*, true error/risk
 
 $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\{ x:h(x) \neq f(x)\} )
