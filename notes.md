@@ -18,7 +18,7 @@
 
 <font size=7>remark: usually called 'training set', but must be *'training sequence'* more exactly, because the same sample may appear more than one time, and some training algorithms is order-sensitive.</font>
 
-    1 **A simple data generation model**:
+    - **A simple data generation model**:
 
 **The learner's output**:
 
