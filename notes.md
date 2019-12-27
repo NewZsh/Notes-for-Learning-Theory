@@ -41,7 +41,9 @@ $$
 
 ### 1.2 Empirical Risk Minimization (ERM)
 
-- ERM may overfit
+**ERM may overfit**
+- Empirial risk: $L_{\mathcal{D}}(h) \overset{def}{=} \frac{|\\{i\in \\{1,\cdots,m\\}: h(x_i)\neq y_i\\}|}{m}$
+
 - ERM with restricted hypothesis set: inductive bias is introduced
 - No-Free-Lunch: inductive bias is neccessary
   
