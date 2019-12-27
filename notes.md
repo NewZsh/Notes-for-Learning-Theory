@@ -21,10 +21,10 @@
   
 **The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightarrow\mathcal{Y}$.
 
-**Evaluation**:
+**Evaluation**: denote $\mathcal{D}(A)=$
 
 $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathbb{P}_{x}
 $$
 
-    `remark: here we neglect the measurability assumption, which requires that $A$ is a member of $\sigma$-algebra of subsets of $\mathcal{X}$.`
+    `remark: here we neglect the measurability assumption.`
