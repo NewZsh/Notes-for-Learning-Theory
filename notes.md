@@ -65,13 +65,11 @@ $$
 
 $$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
   
-*proof*: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is,
-  
-$$ \mathcal{H}_B = \\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}.$$
+*proof*: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, $ \mathcal{H}_B = \\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$. Let $M$ be the set of 'misleading' samples, that is, $ M=\\{ S|_x:\exists h \in \mathcal{H}_B, L_S(h)=0 \\} $. Note that, 
 
-  Let $M$ be the set of 'misleading samples' (mislead learner to the bad hypothesis), that is,
+$$M=\Cup \limits_{h\in\mathcal{H}_B}$$
 
-$$ M=\\{ S|_x:\exists h \in \mathcal{H}_B, L_S(h)=0 \\} $$.
+The error set 
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
