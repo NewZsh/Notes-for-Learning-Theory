@@ -63,7 +63,8 @@ L_{\mathcal{D}}(h)=0$.
 - PAC learnability: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ with *confidence* paramter at least $1-\delta$ to achieve *accuracy* at least $1-\epsilon$.
 
 - Finite hypothesis classes are PAC learnable, and $m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon$.
-  - proof:
+  
+    `proof:`
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
