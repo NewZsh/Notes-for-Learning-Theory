@@ -69,7 +69,7 @@ $$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
 
 Let $M$ be the set of 'misleading' samples, that is, $M=\\{ S|_x:\exists h \in \mathcal{H}_B, L_S(h)=0 \\}$. Note that,
 
-$$M=\mathop{\cup}\limits_{h\in\mathcal{H}_B} \\{S|_x: L_S(h)=0\\}$$.
+$$M=\mathop{\bigcup}\limits_{h\in\mathcal{H}_B} \\{S|_x: L_S(h)=0\\}$$
 
 Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S) > \epsilon$,
 
