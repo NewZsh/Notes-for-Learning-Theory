@@ -65,9 +65,9 @@ $$
 
 $$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
   
-  proof: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, 
+  proof: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is,
   
-  $${ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$$
+  $$\mathcal{H}_B = \\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$$
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
