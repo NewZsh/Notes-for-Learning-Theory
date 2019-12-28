@@ -61,9 +61,13 @@ $$
 
 - PAC learnability: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ with *confidence* paramter at least $1-\delta$ to achieve *accuracy* at least $1-\epsilon$.
 
-- Finite hypothesis classes are PAC learnable, and $m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon$.
+- Finite hypothesis classes are PAC learnable, and the sample complexity is:
+
+$$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
   
-  proof: Let $\mathcal{H}_B=\\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$ (i.e., a set of 'bad' hypothesis)
+  proof: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, 
+  
+  $${ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$$
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
