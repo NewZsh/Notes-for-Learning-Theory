@@ -49,8 +49,7 @@ $$
 L_{\mathcal{D}}(h) \overset{def}{=} \frac{|\\{i\in \\{1,\cdots,m\\}: h(x_i)\neq y_i\\}|}{m}
 $$
 
-- Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$, while $
-L_{\mathcal{D}}(h)=0$.
+- Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$, while $L_{\mathcal{D}}(h)=0$.
 
 **ERM with restricted hypothesis set (inductive bias)**: $h_S\in\arg\min \limits_{h\in\mathcal{H}} L_S(h)$
 
@@ -64,7 +63,7 @@ L_{\mathcal{D}}(h)=0$.
 
 - Finite hypothesis classes are PAC learnable, and $m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon$.
   
-  - proof:
+  proof: Let $\mathcal{H}_B=\\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$ (i.e., a set of 'bad' hypothesis)
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
