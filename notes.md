@@ -71,7 +71,7 @@ $$ \mathcal{H}_B = \\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\} $$
 
 Let $M$ be the set of 'misleading samples' (mislead learner to the bad hypothesis), that is,
 
-$$ M=\\{ S|_x:\exist h \in \mathcal{H}_B, L_S(h)=0 \\} $$
+$$ M=\\{ S|_x:\exists h \in \mathcal{H}_B, L_S(h)=0 \\} $$
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
