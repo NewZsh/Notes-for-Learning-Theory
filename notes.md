@@ -65,11 +65,14 @@ $$
 
 $$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
   
-*proof*: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, $ \mathcal{H}_B = \\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$. Let $M$ be the set of 'misleading' samples, that is, $ M=\\{ S|_x:\exists h \in \mathcal{H}_B, L_S(h)=0 \\} $. Note that, 
+*proof*: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, $ \mathcal{H}_B = \\{ h\in\mathcal{H}: L_{\mathcal{D},f}(h_S) > \epsilon \\}$. Let $M$ be the set of 'misleading' samples, that is, $ M=\\{ S|_x:\exists h \in \mathcal{H}_B, L_S(h)=0 \\} $. Note that,
 
-$$M=\Cup \limits_{h\in\mathcal{H}_B}$$
+$$M=\cup \limits_{h\in\mathcal{H}_B} \\{S|_x: L_S(h)=0\\}$$.
 
-The error set 
+  Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S) > \epsilon$,
+
+$$\mathcal{D}^m(\\{S|_x:L_{\mathcal{D},f}(h_S) > \epsilon\\}) \leq \mathcal{D}^m(M) = \mathcal{D}^m(\cup \limits_{h\in\mathcal{H}_B} \\{S|_x: L_S(h)=0\\}) \leq \sum_{h\in\mathcal{H}_B}\mathcal{D}^m(\\{S|_x: L_S(h)=0\\})}$$
+
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
