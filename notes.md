@@ -64,7 +64,7 @@ L_{\mathcal{D}}(h)=0$.
 
 - Finite hypothesis classes are PAC learnable, and $m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon$.
   
-    `proof:`
+    `proof:$L_{\mathcal{D}}$`
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
