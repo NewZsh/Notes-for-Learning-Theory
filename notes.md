@@ -87,9 +87,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 
 *4. inductive bias controls the balance of approximation error and estimation error.*
 
-And we have reached the fundamental question in learning theory:
-
-*Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?*
+And we have reached the fundamental question in learning theory: **Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?** Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
 
 ### 1.6 Excercises and solutions
 
