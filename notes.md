@@ -69,7 +69,7 @@ $$
   
 *proof*: Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B> be the set of 'bad' hypothesis, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B\subset\mathcal{H}>, and <img src=http://latex.codecogs.com/gif.latex?{\forall}h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)%3E\epsilon>
 
-Let $M$ be the set of 'misleading' samples, that is, <img src=http://latex.codecogs.com/gif.latex?M=\{\}>. Note that,
+Let $M$ be the set of 'misleading' samples, that is, <img src=http://latex.codecogs.com/gif.latex?M%3D%5C%7BS%3A%7B%5Cexists%7Dh%5Cin%5Cmathcal%7BH%7D_B%2CL_S%28h%29%3D0%5C%7D>. Note that,
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}$>
