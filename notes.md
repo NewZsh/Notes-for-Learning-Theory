@@ -146,7 +146,7 @@ Solution:
 2. Show that <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D> is PAC learnable. Provide an upper bound on the sample complexity.
   
 Solution:
-1. Traverse <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}}> then output <img src=http://latex.codecogs.com/gif.latex?h_z> or <img src=http://latex.codecogs.com/gif.latex?h^-}
+1. Traverse <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}}> then output <img src=http://latex.codecogs.com/gif.latex?h_z> or <img src=http://latex.codecogs.com/gif.latex?h^->
 2. If for any <img src=http://latex.codecogs.com/gif.latex?i\in[1,\cdots,m]>, such that <img src=http://latex.codecogs.com/gif.latex?h_{x_i}> is the true hypothesis, the algorithm can find it in the realizable setup. Otherwise, the algorithm outputs <img src=http://latex.codecogs.com/gif.latex?h^->, which can be either true or false (i.e., the target <img src=http://latex.codecogs.com/gif.latex?z^*> is not in the training set). Note that in the second case, the algorithm only makes a single error when generalize to all cases, and hence <img src=http://latex.codecogs.com/gif.latex?p(z^*)\geq\epsilon> (otherwise, it is meaningless),
 
 <div align=center>
