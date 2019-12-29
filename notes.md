@@ -91,7 +91,7 @@ Since we would like to bound the probability of the event <img src=http://latex.
 <img src=http://latex.codecogs.com/gif.latex?\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon%20m)\leq|\mathcal{H}|\exp(-\epsilon%20m)>
 </div align=center>
 
-Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta/\epsilon)>
+Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta)/\epsilon>
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
@@ -119,16 +119,17 @@ And we have reached the fundamental question in learning theory: **Over which hy
 
 ### 1.5 Excercises and solutions
 
-**1.5.1 (UML Ex2.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S|_x> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
+**1.5.1 (UML Ex2.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)>
+<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)>
 </div align=center>
 
 Solution: according to the definition,
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}[L_S(h)]=\sum_S\mathcal{D}^m(S)\frac{|(x_i,y_i)\in%20S,h(x_i)\neq%20y_i|}{m}>
+<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=\sum_S\mathcal{D}^m(S)\frac{|\{(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}|}{m}>
+<img src=http://latex.codecogs.com/gif.latex?=\sum_S\mathcal{D}\{(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}=\mathcal{D}(\{x:h(x)\neq%20f(x)\})_>
 </div align=center>
 
 #### 1.5.2 (UML)
