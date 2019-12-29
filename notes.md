@@ -153,7 +153,11 @@ Solution:
 <img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\delta>
 </div align=center>
 
-which leads to <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\lceil\frac{\log(1/\delta)}{\epsilon}\rceil>
+which leads to 
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\lceil\frac{\log(1/\delta)}{\epsilon}\rceil>
+</div align=center>
 
 ## 2. VC-dimension
 
