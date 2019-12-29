@@ -59,11 +59,13 @@ $$
 
 - The i.i.d. assumption: the training samples are independently and identically distributed.
 
-- PAC learnability: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ with *confidence* paramter at least $1-\delta$ to achieve *accuracy* at least $1-\epsilon$.
+- PAC learnability: training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> with *confidence* paramter at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon>.
 
 - Finite hypothesis classes are PAC learnable, and the sample complexity is:
 
-$$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon>
+</div align=center>
   
 *proof*: Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B> be the set of 'bad' hypothesis, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B\subset\mathcal{H}>, and <img src=http://latex.codecogs.com/gif.latex?{\forall}h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)%3E\epsilon>
 
