@@ -83,7 +83,7 @@ $$\sum_{h\in\mathcal{H}_B} \prod_{i=1} $$
 
 ![](http://latex.codecogs.com/gif.latex?%5Csum_%7Bh%5Cin%5Cmathcal%7BH%7D_B%7D%20%5Cprod_%7Bi%3D1%7D%5Em)
 
-![](http://latex.codecogs.com/gif.latex?\\sum_{h\in\mathcal{H}_B}\\ \prod_{i=1})
+![](http://latex.codecogs.com/gif.latex?\\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\\{x_i:f(x_i)=h(x_i)\\}))
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
