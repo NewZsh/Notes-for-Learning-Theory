@@ -65,7 +65,7 @@ $$
 
 $$ m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon $$
   
-*proof*: Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B\subset\mathcal{H}>, and <img src=http://latex.codecogs.com/gif.latex?\forallh\in\mathcal{H}_B,L_{\mathcal{D},f}(h)%3E\epsilon>
+*proof*: Let <img src=http://latex.codecogs.com/gif.latex\mathcal{H}_B> be the set of 'bad' hypothesis, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B\subset\mathcal{H}>, and <img src=http://latex.codecogs.com/gif.latex?{\forall}h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)%3E\epsilon>
 
 Let $M$ be the set of 'misleading' samples, that is, <img src=http://latex.codecogs.com/gif.latex?M=\{S:\existsh\in\mathcal{H}_B,L_S(h)=0\}>. Note that,
 
