@@ -89,7 +89,7 @@ Since we would like to bound the probability of the event <img src=http://latex.
 <img src=http://latex.codecogs.com/gif.latex?\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon%20m)\leq|\mathcal{H}|\exp(-\epsilon%20m)>
 </div align=center>
 
-Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq%20m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}/\delta|/\epsilon)>
+Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}/\delta|/\epsilon)>
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
