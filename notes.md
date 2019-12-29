@@ -75,9 +75,11 @@ $$M=\mathop{\bigcup}\limits_{h\in\mathcal{H}_B} \\{S: L_S(h)=0\\}$$
 
 Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S) > \epsilon$,
 
-$$\mathcal{D}^m(\\{S:L_{\mathcal{D},f}(h_S) > \epsilon\\}) \leq \mathcal{D}^m(M) \\ = \mathcal{D}^m(\mathop{\bigcup} \limits_{h\in\mathcal{H}_B} \\{S: L_S(h)=0\\}) $$
+$$\mathcal{D}^m(\\{S:L_{\mathcal{D},f}(h_S) > \epsilon\\}) \leq \mathcal{D}^m(M) = \mathcal{D}^m(\mathop{\bigcup} \limits_{h\in\mathcal{H}_B} \\{S: L_S(h)=0\\}) $$
 
-$$\leq \sum_{h\in\mathcal{H}_B}\mathcal{D}^m(\\{S: L_S(h)=0\\})=\sum_{h\in\mathcal{H}_B}$$
+$$\leq \sum_{h\in\mathcal{H}_B}\mathcal{D}^m(\\{S: L_S(h)=0\\})$$
+
+$$=\sum_{h\in\mathcal{H}_B} (1-L_{\mathcal{D,f}(h)})^m$$
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
