@@ -72,7 +72,7 @@ $$L_{\mathcal{D},f}(h) > \epsilon$$
 Let $M$ be the set of 'misleading' samples, that is, $M=\\{ S:\exists h \in \mathcal{H}_B, L_S(h)=0 \\}$. Note that,
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}$
+<img src=http://latex.codecogs.com/gif.latex?M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}$>
 </div align=center>
 
 Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S) > \epsilon$,
