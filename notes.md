@@ -35,7 +35,7 @@ $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\\{ x:h(x) \neq f(x)\\} )
 $$
 
-  **[IMPORTANT]**: by the subscript <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>, it means that the error of <img src=http://latex.codecogs.com/gif.latex?h> is the probability to draw a random instance <img src=http://latex.codecogs.com/gif.latex?x>, according to the distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}>$, such that <img src=http://latex.codecogs.com/gif.latex?h(x)\neqf(x)>.
+  **[IMPORTANT]**: by the subscript <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>, it means that the error of <img src=http://latex.codecogs.com/gif.latex?h> is the probability to draw a random instance <img src=http://latex.codecogs.com/gif.latex?x>, according to the distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?h(x)\neq%20f(x)>.
 
       remark: here we neglect the measurability assumption.
 
