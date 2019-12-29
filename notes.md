@@ -150,7 +150,6 @@ Solution:
 2. If for any <img src=http://latex.codecogs.com/gif.latex?i\in[1,\cdots,m]>, such that <img src=http://latex.codecogs.com/gif.latex?h_{x_i}> is the true hypothesis, the algorithm can find it in the realizable setup. Otherwise, the algorithm outputs <img src=http://latex.codecogs.com/gif.latex?h^->, which can be either true or false (i.e., the target <img src=http://latex.codecogs.com/gif.latex?z^*> is not in the training set). Note that in the second case, the algorithm only makes a single error when generalize to all cases, and hence <img src=http://latex.codecogs.com/gif.latex?p(z^*)\geq\epsilon> (otherwise, it is meaningless),
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?%5Cmathbb%7BP%7D%28L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h_S%29%3E%5Cepsilon%29%5Cleq%281-p%28z%5E*%29%29%5Em%5Cleq%281-%5Cepsilon%29%5Em%5Cleq%5Cexp%28-%5Cepsilon%20m%29%5Cleq%5Cdelta%20%5CRightarrow%20m_%7B%5Cmathcal%7BH%7D%7D%28%5Cepsilon%2C%5Cdelta%29%5Cleq%20%5Clceil%20%5Cln%281/%5Cdelta%29/%5Cepsilon%20%5Crceil>
 </div align=center>
 
 ## 2. VC-dimension
