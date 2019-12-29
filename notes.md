@@ -32,7 +32,7 @@
 **Generalization error**: *a.k.a*, true error/risk.
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)\overset{def}{=}\mathbb{P}\limits_{x\sim\mathcal{D}}[h(x)\neq%20f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20f(x)\})>
+<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}}[h(x)\neq%20f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20f(x)\})>
 </div align=center>
 
   **[IMPORTANT]**: by the subscript <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>, it means that the error of <img src=http://latex.codecogs.com/gif.latex?h> is the probability to draw a random instance <img src=http://latex.codecogs.com/gif.latex?x>, according to the distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?h(x)\neq%20f(x)>.
