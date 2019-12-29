@@ -49,13 +49,13 @@
 <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}}(h)\overset{def}{=}\frac{|\{i\in\{1,\cdots,m\}:h(x_i)\neq%20y_i\}|}{m}>
 </div align=center>
 
-- Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y=y_i\text{iff.}x=x_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)=1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}}(h)=0>.
+- Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y=y_i%20iff.%20x=x_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)=>, while <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}}(h)=0>.
 
 **ERM with restricted hypothesis set (inductive bias)**: <img src=http://latex.codecogs.com/gif.latex?h_S\in\arg\min\limits_{h\in\mathcal{H}}L_S(h)>
 
 - Realizability assumption: there exists <img src=http://latex.codecogs.com/gif.latex?h^\*\in\mathcal{H}>, such that <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h^*)=0>.
 
-      remark: It implies that $L_S(h^*)=0$, and $L_S(h_S)=0$. However, we are interested in $L_{\mathcal{D}, f}(h_S)$.
+      remark: It implies that <img src=http://latex.codecogs.com/gif.latex?L_S(h^*)=0>, and <img src=http://latex.codecogs.com/gif.latex?L_S(h_S)=0>. However, we are interested in <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h_S)>.
 
 - The i.i.d. assumption: the training samples are independently and identically distributed.
 
