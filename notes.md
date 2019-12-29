@@ -27,7 +27,7 @@
 
       remark: usually called 'training set', but must be 'training sequence', because the same sample may appear more than one time, and some training algorithms is order-sensitive.
   
-**The learner's output**: hypothesis (or classifier, regressor) $h: \mathcal{X}\rightarrow\mathcal{Y}$.
+**The learner's output**: hypothesis (or classifier, regressor) <img src=http://latex.codecogs.com/gif.latex?h:\mathcal{X}\rightarrow\mathcal{Y}>.
 
 **Generalization error**: *a.k.a*, true error/risk.
 
@@ -35,7 +35,7 @@ $$
 L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\\{ x:h(x) \neq f(x)\\} )
 $$
 
-  **[IMPORTANT]**: by the subscript $\mathcal{D}, f$, it means that the error of $h$ is the probability to draw a random instance $x$, according to the distribution $\mathcal{D}$, such that $h(x)\neq f(x)$.
+  **[IMPORTANT]**: by the subscript <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>, it means that the error of <img src=http://latex.codecogs.com/gif.latex?h> is the probability to draw a random instance <img src=http://latex.codecogs.com/gif.latex?x>, according to the distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}>$, such that <img src=http://latex.codecogs.com/gif.latex?h(x)\neqf(x)>.
 
       remark: here we neglect the measurability assumption.
 
