@@ -46,7 +46,7 @@
 - Turn to minimize the Empirial risk:
   
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}}(h)\overset{def}{=}\frac{|\{i\in\{1,\cdots,m\}:h(x_i)\neq%20y_i\}|}{m}>
+<img src=http://latex.codecogs.com/gif.latex?L_S(h)\overset{def}{=}\frac{|(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}|}{m}>
 </div align=center>
 
 - Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S%28h%29%3D0>.
@@ -117,9 +117,11 @@ And we have reached the fundamental question in learning theory: **Over which hy
 
 ### 1.5 Excercises and solutions
 
-#### 1.5.1 (UML Ex2.2) let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S|_x> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
+**1.5.1 (UML Ex2.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S|_x> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
 
-<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}>
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)>
+</div align=center>
 
 solution: 
 
