@@ -31,9 +31,9 @@
 
 **Generalization error**: *a.k.a*, true error/risk.
 
-$$
-L_{\mathcal{D},f}(h) \overset{def}{=} \mathop{\mathbb{P}}\limits_{x \sim \mathcal{D}} [h(x) \neq f(x)] \overset{def}{=} \mathcal{D}(\\{ x:h(x) \neq f(x)\\} )
-$$
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)\overset{def}{=}\mathbb{P}\limits_{x\sim\mathcal{D}}[h(x)\neq%20f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20f(x)\})>
+</div align=center>
 
   **[IMPORTANT]**: by the subscript <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>, it means that the error of <img src=http://latex.codecogs.com/gif.latex?h> is the probability to draw a random instance <img src=http://latex.codecogs.com/gif.latex?x>, according to the distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?h(x)\neq%20f(x)>.
 
@@ -45,9 +45,9 @@ $$
 
 - Turn to minimize the Empirial risk:
   
-$$
-L_{\mathcal{D}}(h) \overset{def}{=} \frac{|\\{i\in \\{1,\cdots,m\\}: h(x_i)\neq y_i\\}|}{m}
-$$
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}}(h)\overset{def}{=}\frac{|\{i\in\{1,\cdots,m\}:h(x_i)\neq%20y_i\}|}{m}>
+</div align=center>
 
 - Consider a 'lazy' learner $h$, which predict $y=y_i$ if $x=x_i$, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D}, f}(h)=1/2$, while $L_{\mathcal{D}}(h)=0$.
 
