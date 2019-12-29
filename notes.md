@@ -86,7 +86,7 @@ Since we would like to bound the probability of the event <img src=http://latex.
 </div align=center>
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq|\mathcal{H}_B|\exp(-\epsilon%20m)\leq|\mathcal{H}|\exp(-\epsilon%20m)>
+<img src=http://latex.codecogs.com/gif.latex?\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon%20m)\leq|\mathcal{H}|\exp(-\epsilon%20m)>
 </div align=center>
 
 **No-Free-Lunch (neccessity of inductive bias)**:
