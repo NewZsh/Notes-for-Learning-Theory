@@ -25,7 +25,9 @@
 
   **[IMPORTANT]**: The learner is blind to <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>.
 
-      remark: usually called 'training set', but must be 'training sequence', because the same sample may appear more than one time, and some training algorithms is order-sensitive.
+      remark: usually called 'training set', but must be 'training sequence', because the same sample may 
+      appear more than one time, and some training algorithms is order-sensitive. And in the following, we
+      do not distinguish the distribution over training set or only over the instances.
   
 **The learner's output**: hypothesis (or classifier, regressor) <img src=http://latex.codecogs.com/gif.latex?h:\mathcal{X}\rightarrow\mathcal{Y}>.
 
@@ -123,7 +125,7 @@ And we have reached the fundamental question in learning theory: **Over which hy
 <img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)>
 </div align=center>
 
-solution: 
+solution: according to 
 
 #### 1.6.2 (UML)
 
