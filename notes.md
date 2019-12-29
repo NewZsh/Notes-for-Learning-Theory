@@ -117,8 +117,11 @@ And we have reached the fundamental question in learning theory: **Over which hy
 
 ### 1.5 Excercises and solutions
 
-#### 1.5.1 (UML Ex2.2) let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>
-solution
+#### 1.5.1 (UML Ex2.2) let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S|_x> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
+
+<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}>
+
+solution: 
 
 #### 1.6.2 (UML)
 
