@@ -53,7 +53,7 @@
 
 **ERM with restricted hypothesis set (inductive bias)**: <img src=http://latex.codecogs.com/gif.latex?h_S\in\arg\min\limits_{h\in\mathcal{H}}L_S(h)>
 
-- Realizability assumption: there exists <img src=http://latex.codecogs.com/gif.latex?h^\*\in\mathcal{H}>, such that <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h^*)=0>.
+- Realizability assumption: there exists <img src=http://latex.codecogs.com/gif.latex?h^*\in\mathcal{H}>, such that <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%5E*%29%3D0>.
 
   **[IMPORTANT]**: It implies that <img src=http://latex.codecogs.com/gif.latex?L_S%28h%5E*%29%3D0>, and <img src=http://latex.codecogs.com/gif.latex?L_S%28h_S%29%3D0>. However, we are interested in <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h_S)>.
 
