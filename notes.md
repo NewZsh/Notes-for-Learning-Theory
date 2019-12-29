@@ -125,13 +125,13 @@ And we have reached the fundamental question in learning theory: **Over which hy
 <img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)>
 </div align=center>
 
-solution: according to the definition,
+Solution: according to the definition,
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S|_x\sim\mathcal{D}^m}[L_S(h)]=\sum_S\mathcal{D}^m(S)\frac{|(x_i,y_i)\in%20S,h(x_i)\neq%20y_i|}{m}>
 </div align=center>
 
-#### 1.6.2 (UML)
+#### 1.5.2 (UML)
 
 ## 2. VC-dimension
 
