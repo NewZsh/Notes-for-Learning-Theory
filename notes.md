@@ -2,10 +2,10 @@
 
 *The notes is mainly based on the following book*
 
-- [Understanding Machine Learning: From Theory to Algorithms](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf)  Shai Shalev-Shwartz and Shai Ben-David, 2014.
-- [pattern recognition and machine learning](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) Christopher M. Bishop, 2006.
-- [Probabilistic Graphical Models: Principles and Techniques](https://mitpress.mit.edu/books/probabilistic-graphical-models) Daphne Koller and Nir Friedman, 2009.
-- [Graphical Models, Exponential Families, and Variational Inference](https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf) Martin J. Wainwright and Michael I. Jordan, 2008.
+- UML: [Understanding Machine Learning: From Theory to Algorithms](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf)  Shai Shalev-Shwartz and Shai Ben-David, 2014.
+- PRML: [pattern recognition and machine learning](http://users.isr.ist.utl.pt/~wurmd/Livros/school/Bishop%20-%20Pattern%20Recognition%20And%20Machine%20Learning%20-%20Springer%20%202006.pdf) Christopher M. Bishop, 2006.
+- PGM: [Probabilistic Graphical Models: Principles and Techniques](https://mitpress.mit.edu/books/probabilistic-graphical-models) Daphne Koller and Nir Friedman, 2009.
+- GEV: [Graphical Models, Exponential Families, and Variational Inference](https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf) Martin J. Wainwright and Michael I. Jordan, 2008.
 
 ## 1. Probably Approximately Correct (PAC)
 
@@ -75,7 +75,7 @@ $$M=\mathop{\bigcup}\limits_{h\in\mathcal{H}_B} \\{S|_x: L_S(h)=0\\}$$
 
 Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S) > \epsilon$,
 
-$$\mathcal{D}^m(\\{S|_x:L_{\mathcal{D},f}(h_S) > \epsilon\\})$$
+$$\mathcal{D}^m()$$
 
 $$\mathcal{D}^m(\\{S|_x:L_{\mathcal{D},f}(h_S) > \epsilon\\}) \leq \mathcal{D}^m(M) \\
 = \mathcal{D}^m(\cup \limits_{h\in\mathcal{H}_B} \\{S|_x: L_S(h)=0\\}) \\
