@@ -75,7 +75,7 @@ Let $M$ be the set of 'misleading' samples, that is, $M=\\{ S:\exists h \in \mat
 <img src=http://latex.codecogs.com/gif.latex?M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}$>
 </div align=center>
 
-Since we would like to bound the probability of the event <img src=L_{\mathcal{D},f}(h_S)%3E\epsilon$>
+Since we would like to bound the probability of the event <img src=L_{\mathcal{D},f}(h_S)%3E\epsilon>
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)%3E\epsilon\})\leq\mathcal{D}^m(M)=\mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})>
