@@ -77,7 +77,7 @@ Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S
 
 $$\mathcal{D}^m(\\{S:L_{\mathcal{D},f}(h_S) > \epsilon\\}) \leq \mathcal{D}^m(M) = \mathcal{D}^m(\mathop{\bigcup} \limits_{h\in\mathcal{H}_B} \\{S: L_S(h)=0\\}) $$
 
-$$\leq \sum_{h\in\mathcal{H}_B}\mathcal{D}^m(\\{S: L_S(h)=0\\}) \overset{i.i.d assumption}{=} \sum_{h\in\mathcal{H}_B} \prod_{i=1}^m \mathcal{D}(\\{x_i: h(x_i)=f(x_i)\\})$$
+$$\leq \sum_{h\in\mathcal{H}_B}\mathcal{D}^m(\\{S: L_S(h)=0\\}) \overset{i.i.d assumption}{=} $$
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
