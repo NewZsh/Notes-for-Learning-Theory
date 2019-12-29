@@ -76,7 +76,7 @@ $$M=\mathop{\bigcup}\limits_{h\in\mathcal{H}_B} \\{S: L_S(h)=0\\}$$
 Since we would like to bound the probability of the event $L_{\mathcal{D},f}(h_S) > \epsilon$,
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)%3E\epsilon\}) \leq \mathcal{D}^m(M) = \mathcal{D}^m(\bigcup \limits_{h\in\mathcal{H}_B}\{S: L_S(h)=0\})>
+<img src=http://latex.codecogs.com/gif.latex?\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)%3E\epsilon\})\leq\mathcal{D}^m(M)= \mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})>
 </div align=center>
 
 <div align=center>
