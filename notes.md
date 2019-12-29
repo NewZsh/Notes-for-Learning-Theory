@@ -49,13 +49,13 @@
 <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}}(h)\overset{def}{=}\frac{|\{i\in\{1,\cdots,m\}:h(x_i)\neq%20y_i\}|}{m}>
 </div align=center>
 
-- Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S(h)=0>.
+- Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S%28h%29%3D0>.
 
 **ERM with restricted hypothesis set (inductive bias)**: <img src=http://latex.codecogs.com/gif.latex?h_S\in\arg\min\limits_{h\in\mathcal{H}}L_S(h)>
 
 - Realizability assumption: there exists <img src=http://latex.codecogs.com/gif.latex?h^\*\in\mathcal{H}>, such that <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h^*)=0>.
 
-  **[IMPORTANT]**: It implies that <img src=http://latex.codecogs.com/gif.latex?L_S(h^*)=0>, and <img src=http://latex.codecogs.com/gif.latex?L_S(h_S)=0>. However, we are interested in <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h_S)>.
+  **[IMPORTANT]**: It implies that <img src=http://latex.codecogs.com/gif.latex?L_S%28h%5E*%29%3D0>, and <img src=http://latex.codecogs.com/gif.latex?L_S%28h_S%29%3D0>. However, we are interested in <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h_S)>.
 
 - The i.i.d. assumption: the training samples are independently and identically distributed.
 
