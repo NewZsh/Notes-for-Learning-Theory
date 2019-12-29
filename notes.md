@@ -82,7 +82,7 @@ Since we would like to bound the probability of the event <img src=http://latex.
 </div align=center>
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?=\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\{x_i:f(x_i)=h(x_i)\})>
+<img src=http://latex.codecogs.com/gif.latex?=\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\{x_i:f(x_i)=h(x_i)\})=\sum_{h\in\mathcal{H}_B}(1-L_{\mathcal{D},f}(h))^m\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\exp(-\epsilon%2Cm)>
 </div align=center>
 
 **No-Free-Lunch (neccessity of inductive bias)**:
