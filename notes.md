@@ -89,7 +89,7 @@ Since we would like to bound the probability of the event <img src=http://latex.
 <img src=http://latex.codecogs.com/gif.latex?\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon%20m)\leq|\mathcal{H}|\exp(-\epsilon%20m)>
 </div align=center>
 
-Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}/\delta|/\epsilon)>
+Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta/\epsilon)>
 
 **No-Free-Lunch (neccessity of inductive bias)**:
 
@@ -115,9 +115,9 @@ Now that, we have come to some important conclusions under the PAC learning fram
 
 And we have reached the fundamental question in learning theory: **Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?** Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
 
-### 1.6 Excercises and solutions
+### 1.5 Excercises and solutions
 
-#### 1.6.1 (UML Ex2.1)
+#### 1.5.1 (UML Ex2.2) let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>
 solution
 
 #### 1.6.2 (UML)
