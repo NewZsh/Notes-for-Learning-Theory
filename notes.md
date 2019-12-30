@@ -101,6 +101,22 @@ Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m
 
 #### 1.2.3 No-Free-Lunch (neccessity of inductive bias)
 
+Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?m> be any number smaller than <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}/2>, representing a training set size. Then, there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=http://latex.codecogs.com/gif.latex?{X}\times\{0,1\}> such that:
+
+1. There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightartow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0>.
+
+2. With probability of at least <img src=http://latex.codecogs.com/gif.latex?1/7> over the choice of <img src=http://latex.codecogs.com/gif.latex?S\sim\mathcal{D}^m> we have that
+<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(A(S))\geq%201/8>.
+
+*Proof*: 
+
+(*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(\theta\geq\frac{1}{8})%3D>
+</div align=center>
+
+  **[IMPORTANT]**
 
 #### 1.2.4 Agnostic PAC
 
