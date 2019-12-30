@@ -55,7 +55,11 @@
 
 - Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S%28h%29%3D0>.
 
-**ERM with restricted hypothesis set (inductive bias)**: <img src=http://latex.codecogs.com/gif.latex?h_S\in\arg\min\limits_{h\in\mathcal{H}}L_S(h)>
+#### 1.2.2 ERM with restricted hypothesis set (inductive bias)
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?h_S\in\arg\min\limits_{h\in\mathcal{H}}L_S(h)>
+</div align=center>
 
 - Realizability assumption: there exists <img src=http://latex.codecogs.com/gif.latex?h^*\in\mathcal{H}>, such that <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%5E*%29%3D0>.
 
@@ -95,10 +99,10 @@ Since we would like to bound the probability of the event <img src=http://latex.
 
 Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta)/\epsilon>
 
-**No-Free-Lunch (neccessity of inductive bias)**:
+#### 1.2.3 No-Free-Lunch (neccessity of inductive bias)
 
 
-**Agnostic PAC**:
+#### 1.2.4 Agnostic PAC
 
 - Beyond realizability assumption
 - Beyond binary classification: learning via uniform convergence
