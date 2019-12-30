@@ -15,7 +15,9 @@
 
 ### 1.1 formulation
 
-**The learner's input**:
+#### 1.1.1 The learner's input, output, and evaluation
+
+**input**:
 
 - Domain Set: instance <img src=http://latex.codecogs.com/gif.latex?x\in\mathcal{X}>.
 - Label Set: label <img src=http://latex.codecogs.com/gif.latex?y\in\mathcal{Y}>. Currently, just consider the binary classification task, i.e., <img src=http://latex.codecogs.com/gif.latex?y%3D%5C%7B0%2C1%5C%7D> or <img src=http://latex.codecogs.com/gif.latex?\{-1,+1\}>.
@@ -29,7 +31,7 @@
       appear more than one time, and some training algorithms is order-sensitive. And for simplification, 
       in the following, I do not distinguish the distribution over the training set or over the instances.
   
-**The learner's output**: hypothesis (or classifier, regressor) <img src=http://latex.codecogs.com/gif.latex?h:\mathcal{X}\rightarrow\mathcal{Y}>.
+**output**: hypothesis (or classifier, regressor) <img src=http://latex.codecogs.com/gif.latex?h:\mathcal{X}\rightarrow\mathcal{Y}>.
 
 **Generalization error**: *a.k.a*, true error/risk.
 
@@ -43,9 +45,9 @@
 
 ### 1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
 
-**ERM may lead to overfitting**:
+#### 1.2.1 ERM may lead to overfitting
 
-- Turn to minimize the Empirial risk:
+- Since the generalzation error is intractable, turn to minimize the Empirial risk:
   
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?L_S(h)\overset{def}{=}\frac{|(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}|}{m}>
