@@ -116,7 +116,7 @@ Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm fo
 <img src=http://latex.codecogs.com/gif.latex?%5Cmathbb%7BP%7D%28%5Ctheta%5Cgeq%5Cfrac%7B1%7D%7B8%7D%29%3D%5Cint_%5Cfrac%7B1%7D%7B8%7D%5E1%20p%28%5Ctheta%29%20%5Ctext%7Bd%7D%5Ctheta%20%5Cgeq%5Cint_%5Cfrac%7B1%7D%7B8%7D%5E1%20%5Ctheta%20p%28%5Ctheta%29%20%5Ctext%7Bd%7D%5Ctheta%3D%5Cmathbb%7BE%7D%28%5Ctheta%29-%5Cint_0%5E%5Cfrac%7B1%7D%7B8%7D%5Ctheta%20p%28%5Ctheta%29%5Ctext%7Bd%7D%5Ctheta%20%5C%5C%20%5Cgeq%5Cmathbb%7BE%7D%28%5Ctheta%29-%5Cfrac%7B1%7D%7B8%7D%5Cint_0%5E%5Cfrac%7B1%7D%7B8%7D%20p%28%5Ctheta%29%5Ctext%7Bd%7D%5Ctheta%20%3D%20%5Cfrac%7B1%7D%7B4%7D%20-%20%5Cfrac%7B1%7D%7B8%7D%5Cleft%28%201-%5Cint%5E1_%5Cfrac%7B1%7D%7B8%7Dp%28%5Ctheta%29%20%5Ctext%7Bd%7D%5Ctheta%20%5Cright%29>
 </div align=center>
 
-which leads to <img src=http://latex.codecogs.com/gif.latex?%5Cmathbb%7BP%7D%28%5Ctheta%5Cgeq%5Cfrac%7B1%7D%7B8%7D%29%3D%5Cgeq\frac{1}{7}>
+which leads to <img src=http://latex.codecogs.com/gif.latex?%5Cmathbb%7BP%7D%28%5Ctheta%5Cgeq%5Cfrac%7B1%7D%7B8%7D%29geq\frac{1}{7}>
 
   **[IMPORTANT]**
 
