@@ -138,6 +138,12 @@ Solution: according to the definition,
 <img src=https://latex.codecogs.com/gif.latex?h%28a_1%2Cb_1%2Ca_2%2Cb_2%29%28x_1%2C%20x_2%29%20%3D%20%5Cleft%5C%7B%5Cbegin%7Baligned%7D%20%261%2C%5Ctext%7B%20if%20%7D%20a_1%20%5Cleq%20x_1%20%5Cleq%20b1%20%5Ctext%7B%20and%20%7D%20a_2%20%5Cleq%20x_2%20%5Cleq%20b_2%20%5C%5C%20%260%2C%5Ctext%7B%20otherwise%7D%20%5Cend%7Baligned%7D%5Cright.>
 </div align=center>
 
+The class of all axis aligned rectangles in the plane is defined as
+
+<div align=center>
+<img src=https://latex.codecogs.com/gif.latex?\mathcal{H}^2_{\text{rec}}=\{h(a_1,b_1,a_2,b_2):a_1\leq%20b_1,\text{and}a_2\leq%20b_2\}.>
+</div align=center>
+
 Solution:
 
 **1.5.3 (UML Ex3.1) Monotonicity of Sample Complexity**
