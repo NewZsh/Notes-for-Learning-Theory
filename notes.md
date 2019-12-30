@@ -155,11 +155,14 @@ Note that this is an infinite size hypothesis class. Throughout this exercise we
 <img src="https://i.ibb.co/d2mzC3Y/1.png" alt="1" border="0" />
 </div align=center>
 
-• Show that <img src=https://latex.codecogs.com/gif.latex?R(S)\subseteq%20R^*>
-• Show that if <img src=https://latex.codecogs.com/gif.latex?S> contains (positive) examples in all of the rectangles
-<img src=https://latex.codecogs.com/gif.latex?R_1,R_2,R_3,R_4>, then the hypothesis returned by <img src=https://latex.codecogs.com/gif.latex?A> has error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
-• For each <img src=https://latex.codecogs.com/gif.latex?i\in\{1,\cdots,4\}>, upper bound the probability that <img src=https://latex.codecogs.com/gif.latex?S> does not contain an example from <img src=https://latex.codecogs.com/gif.latex?R_i>.
-• Use the union bound to conclude the argument.
+    • Show that <img src=https://latex.codecogs.com/gif.latex?R(S)\subseteq%20R^*>
+
+    • Show that if <img src=https://latex.codecogs.com/gif.latex?S> contains (positive) examples in all of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_1,R_2,R_3,R_4>, then the hypothesis returned by <img src=https://latex.codecogs.com/gif.latex?A> has error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
+    
+    • For each <img src=https://latex.codecogs.com/gif.latex?i\in\{1,\cdots,4\}>, upper bound the probability that <img src=https://latex.codecogs.com/gif.latex?S> does not contain an example from <img src=https://latex.codecogs.com/gif.latex?R_i>.
+
+    • Use the union bound to conclude the argument.
+    
 3. Repeat the previous question for the class of axis aligned rectangles in <img src=https://latex.codecogs.com/gif.latex?\mathbb{R}^d>.
 4. Show that the runtime of applying the algorithm <img src=https://latex.codecogs.com/gif.latex?A> mentioned earlier is polynomial in <img src=https://latex.codecogs.com/gif.latex?d,%201/\epsilon>, and in <img src=https://latex.codecogs.com/gif.latex?\log(1/\delta)>.
 
