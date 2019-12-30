@@ -113,7 +113,7 @@ Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm fo
 (*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(\theta\geq\frac{1}{8})%3D\int_\frac{1}{8}^1\theta%20p(\theta)\rm{d}\theta%3D\mathbb{E}(\theta)-\int_0^\frac{1}{8}\theta%20p(\theta)\rm{d}\theta\leq\mathbb{E}(\theta)-\frac{1}{8}\>
+<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(\theta\geq\frac{1}{8})%3D\int_\frac{1}{8}^1%20p(\theta)\rm{d}\theta\geq\int_\frac{1}{8}^1\theta%20p(\theta)\rm{d}\theta%3D\mathbb{E}(\theta)-\int_0^\frac{1}{8}\theta%20p(\theta)\rm{d}\theta\leq\mathbb{E}(\theta)-\frac{1}{8}\>
 </div align=center>
 
   **[IMPORTANT]**
