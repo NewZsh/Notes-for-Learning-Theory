@@ -150,7 +150,7 @@ Solution:
 2. If for any <img src=http://latex.codecogs.com/gif.latex?i\in[1,\cdots,m]>, such that <img src=http://latex.codecogs.com/gif.latex?h_{x_i}> is the true hypothesis, the algorithm can find it in the realizable setup. Otherwise, the algorithm outputs <img src=http://latex.codecogs.com/gif.latex?h^->, which can be either true or false (i.e., the target <img src=http://latex.codecogs.com/gif.latex?z^*> is not in the training set). Note that in the second case, the algorithm only makes a single error when generalize to all cases, and hence <img src=http://latex.codecogs.com/gif.latex?p(z^*)\geq\epsilon> (otherwise, it is meaningless),
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\delta>
+<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\exp(-\epsilon%20m)\leq\delta>
 </div align=center>
 
 which leads to 
