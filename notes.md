@@ -141,7 +141,18 @@ Solution: according to the definition,
 The class of all axis aligned rectangles in the plane is defined as
 
 <div align=center>
-<img src=https://latex.codecogs.com/gif.latex?\mathcal{H}^2_{\text{rec}}=\{h(a_1,b_1,a_2,b_2):a_1\leq%20b_1,\text{and}a_2\leq%20b_2\}.>
+<img src=https://latex.codecogs.com/gif.latex?\mathcal{H}^2_{\text{rec}}=\{h(a_1,b_1,a_2,b_2):a_1\leq%20b_1,\text{and%20}a_2\leq%20b_2\}.>
+</div align=center>
+
+Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
+
+1. . Let <img src=https://latex.codecogs.com/gif.latex?A> be the algorithm that returns the smallest rectangle enclosing all positive examples in the training set. Show that <img src=https://latex.codecogs.com/gif.latex?A> is an ERM.
+
+2. Show that if <img src=https://latex.codecogs.com/gif.latex?A> receives a training set of size <img src=https://latex.codecogs.com/gif.latex?\geq%204\frac{\log(4/\delta)}{\epsilon}>, then, with probability of at least <img src=https://latex.codecogs.com/gif.latex?1-\delta> it returns a hypothesis with error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
+*Hint*: Fix some distribution <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=https://latex.codecogs.com/gif.latex?\mathcal{X}>, let <img src=https://latex.codecogs.com/gif.latex?R^*=R(a^*_1,b^*_1,a^*_2,b^*_2)> be the rectangle that generates the labels, and let <img src=https://latex.codecogs.com/gif.latex?f> be the corresponding hypothesis. Let <img src=https://latex.codecogs.com/gif.latex?a_1\geq%20a^∗_1> be a number such that the probability mass (with respect to <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}>) of the rectangle <img src=https://latex.codecogs.com/gif.latex?R_1=R(a^*_1,a_1,a^*_2,b^*_2)> is exactly <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Similarly, let <img src=https://latex.codecogs.com/gif.latex?\b_1,a_2,b_2> be numbers such that the probability masses of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_2=R(b_1,b^*_1,a^*_2,b^*_2),R_3=R(a^*_1,b^*_1,a^*_2,a_2),R_4=R(a^*_1,b^*_1,b_2,b^*_2)> are all <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Let <img src=https://latex.codecogs.com/gif.latex?\epsilon/R(S)> be the rectangle returned by <img src=https://latex.codecogs.com/gif.latex?A>. See illustration in Figure 2.2.
+
+<div align=center>
+<img src="https://i.ibb.co/d2mzC3Y/1.png" alt="1" border="0" />
 </div align=center>
 
 Solution:
