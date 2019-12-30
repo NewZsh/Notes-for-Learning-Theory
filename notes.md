@@ -132,7 +132,11 @@ Solution: according to the definition,
 <img src=http://latex.codecogs.com/gif.latex?=\sum_S\mathcal{D}\{(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}=\mathcal{D}(\{x:h(x)\neq%20f(x)\})_>
 </div align=center>
 
-**1.5.2 (UML Ex2.3) Axis Aligned rectangles**
+**1.5.2 (UML Ex2.3) Axis Aligned rectangles** An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers <img src=http://latex.codecogs.com/gif.latex?a_1\leq%20b_1,a_2\leq%20b_2>, define the classifier <img src=http://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)> by
+
+<div align=center>
+<img src=https://latex.codecogs.com/gif.latex?h%28a_1%2Cb_1%2Ca_2%2Cb_2%29%28x_1%2C%20x_2%29%20%3D%20%5Cleft%5C%7B%5Cbegin%7Baligned%7D%20%261%2C%5Ctext%7B%20if%20%7D%20a_1%20%5Cleq%20x_1%20%5Cleq%20b1%20%5Ctext%7B%20and%20%7D%20a_2%20%5Cleq%20x_2%20%5Cleq%20b_2%20%5C%5C%20%260%2C%5Ctext%7B%20otherwise%7D%20%5Cend%7Baligned%7D%5Cright.>
+</div align=center>
 
 Solution:
 
