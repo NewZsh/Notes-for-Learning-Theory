@@ -168,7 +168,11 @@ Note that this is an infinite size hypothesis class. Throughout this exercise we
 
 Solution:
 
-**1.5.3 (UML Ex3.1) Monotonicity of Sample Complexity**
+1. In realizable setup, since the tightest rectangle enclosing all positive example is returned, all positive and negative instances are correctly classified.
+
+2. 
+
+**1.5.3 (UML Ex3.1) Monotonicity of Sample Complexity** 1
 
 Solution:
 
