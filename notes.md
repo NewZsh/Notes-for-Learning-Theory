@@ -127,7 +127,7 @@ There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequ
 Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j%3D(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq%20m>. Therefore, for every <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\},i>,
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L>
+<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{2m}\sum_{x\in%20C}\mathbb{1}_{[h(x)\neq%20f(x)]}\geq>
 </div align=center>
 
 In conclusion, it holds that
