@@ -118,14 +118,21 @@ There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequ
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]%3D\frac{1}{k}\sum_{j%3D1}^kL_{\mathcal{D}_i}(A(S_j^i))>
+</div align=center>
+
+Using the facts that 'maximum' is larger than 'average', and that 'average' is larger than 'minimum', we have
+
+<div align=center>
 <img src=http://latex.codecogs.com/gif.latex?%5Cmax_%7Bi%5Cin%5C%7B1%2C%5Ccdots%2CT%5C%7D%7D%20%5Cfrac%7B1%7D%7Bk%7D%5Csum_%7Bj%3D1%7D%5Ek%20L_%7B%5Cmathcal%7BD%7D_i%7D%28A%28S_j%5Ei%29%29%20%5Cgeq%20%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20%5Cfrac%7B1%7D%7Bk%7D%20%5Csum_%7Bj%3D1%7D%5Ek%20L_%7B%5Cmathcal%7BD%7D_i%7D%28A%28S_j%5Ei%29%29%20%5Cgeq%20%5Cmin_%7Bj%5Cin%5C%7B1%2C%5Ccdots%2Ck%5C%7D%7D%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29>
 </div align=center>
 
-Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j%3D(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq%20m>. Therefore, for every <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\},i>,
+Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j%3D(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq%20m>. Therefore, for every <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\}>,
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{2m}\sum_{x\in%20C}\mathbb{I}_{[h(x)\neq%20f_i(x)]}\geq\frac{1}{2p}\sum_{r%3D1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}>
 </div align=center>
+
+and hence, 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq%20f_i(v_r)]}>
 </div align=center>
