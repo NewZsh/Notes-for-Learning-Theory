@@ -126,7 +126,13 @@ There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequ
 
 Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j%3D(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq%20m>. Therefore, for every function <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\}>,
 
+In conclusion, it holds that
 
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq%201/4>
+</div align=center>
+
+This means that for every algorithm that receives a training set of 
 
 (*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
 
