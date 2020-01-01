@@ -125,7 +125,9 @@ Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>.
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{2m}\sum_{x\in%20C}\mathbb{I}_{[h(x)\neq%20f_i(x)]}\geq\frac{1}{2p}\sum_{r%3D1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}>
-<img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29>
+</div align=center>
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq%20f_i(v_r)]}>
 </div align=center>
 
 In conclusion, it holds that
