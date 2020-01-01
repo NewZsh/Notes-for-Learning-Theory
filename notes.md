@@ -108,10 +108,10 @@ Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm fo
 2. With probability of at least <img src=http://latex.codecogs.com/gif.latex?1/7> over the choice of <img src=http://latex.codecogs.com/gif.latex?S\sim\mathcal{D}^m> we have that
 <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(A(S))\geq%201/8>.
 
-*Proof*: Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\subseteq\mathcal{X}> of size <img src=http://latex.codecogs.com/gif.latex?2m>. There are <img src=http://latex.codecogs.com/gif.latex?T%3D2^{2m}> possible functions from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}>. Denote these functions by <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T>. For each such function, let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i> be a distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\times\{0,1\}> defined by
+*Proof*: Let <img src=http://latex.codecogs.com/gif.latex?C\subseteq\mathcal{X}> of size <img src=http://latex.codecogs.com/gif.latex?2m>. There are <img src=http://latex.codecogs.com/gif.latex?T%3D2^{2m}> possible functions <img src=http://latex.codecogs.com/gif.latex?C\rightarrow\{0,1\}>. Denote these functions by <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T>. For each such function, let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i> be a distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\times\{0,1\}> defined by
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_i%28%5C%7B%28x%2Cy%29%5C%7D%29%3D%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%201/%7C%5Cmathcal%7BC%7D%7C%2C%20%26%5Ctext%7B%20if%20%7D%20y%3Df_i%28x%29%20%5C%5C%200%2C%26%5Ctext%7Botherwise%7D%20%5Cend%7Bmatrix%7D%5Cright.>
+<img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_i%28%5C%7B%28x%2Cy%29%5C%7D%29%3D%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%201/C%26%5Ctext%7B%20if%20%7D%20y%3Df_i%28x%29%20%5C%5C%200%2C%26%5Ctext%7Botherwise%7D%20%5Cend%7Bmatrix%7D%5Cright.>
 </div align=center>
 
 There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequences of <img src=http://latex.codecogs.com/gif.latex?m> examples from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}>. Denote these sequences by <img src=http://latex.codecogs.com/gif.latex?S_1,\cdots,S_k>. Also, we denote the sequence <img src=http://latex.codecogs.com/gif.latex?\mathca{S}_j> labeled by the function <img src=http://latex.codecogs.com/gif.latex?f_i> as <img src=http://latex.codecogs.com/gif.latex?\mathcal{S}_j^i>. If the distribuction is <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i>, then the possible training sets are <img src=http://latex.codecogs.com/gif.latex?S_1^i,\cdots,S_k^i> (with equal probability). Therefore,
@@ -119,6 +119,12 @@ There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequ
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]%3D\frac{1}{k}\sum_{j%3D1}^kL_{\mathcal{D}_i}(A(S_j^i))>
 </div align=center>
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?%5Cmax_%7Bi%5Cin%5C%7B1%2C%5Ccdots%2CT%5C%7D%7D%20%5Cfrac%7B1%7D%7Bk%7D%5Csum_%7Bj%3D1%7D%5Ek%20L_%7B%5Cmathcal%7BD%7D_i%7D%28A%28S_j%5Ei%29%29%20%5Cgeq%20%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20%5Cfrac%7B1%7D%7Bk%7D%20%5Csum_%7Bj%3D1%7D%5Ek%20L_%7B%5Cmathcal%7BD%7D_i%7D%28A%28S_j%5Ei%29%29%20%3D%20%5Cfrac%7B1%7D%7Bk%7D%5Csum_%7Bj%3D1%7D%5Ek%20%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29%20%5Cgeq%20%5Cmin_%7Bj%5Cin%5C%7B1%2C%5Ccdots%2Ck%5C%7D%7D%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29>
+</div align=center>
+
+Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j%3D(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq%20m>. Therefore, for every function <img src=http://latex.codecogs.com/gif.latex?h:C → {0, 1} and every i we have
 
 (*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
 
