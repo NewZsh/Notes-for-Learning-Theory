@@ -114,7 +114,11 @@ Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm fo
 <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_i%28%5C%7B%28x%2Cy%29%5C%7D%29%3D%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%201/%7C%5Cmathcal%7BC%7D%7C%2C%20%26%5Ctext%7B%20if%20%7D%20y%3Df_i%28x%29%20%5C%5C%200%2C%26%5Ctext%7Botherwise%7D%20%5Cend%7Bmatrix%7D%5Cright.>
 </div align=center>
 
-There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequences of <img src=http://latex.codecogs.com/gif.latex?m> examples from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}>. Denote these sequences by <img src=http://latex.codecogs.com/gif.latex?S_1,\cdots,S_k>. Also, we denote the sequence <img src=http://latex.codecogs.com/gif.latex?\mathca{S}_j> labeled by the function <img src=http://latex.codecogs.com/gif.latex?f_i> as <img src=http://latex.codecogs.com/gif.latex?\mathcal{S}_j^i>. If the distribuction is <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i> then the possible training sets are <img src=http://latex.codecogs.com/gif.latex?S_1^i,\cdots,S_k^i>
+There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequences of <img src=http://latex.codecogs.com/gif.latex?m> examples from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}>. Denote these sequences by <img src=http://latex.codecogs.com/gif.latex?S_1,\cdots,S_k>. Also, we denote the sequence <img src=http://latex.codecogs.com/gif.latex?\mathca{S}_j> labeled by the function <img src=http://latex.codecogs.com/gif.latex?f_i> as <img src=http://latex.codecogs.com/gif.latex?\mathcal{S}_j^i>. If the distribuction is <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i>, then the possible training sets are <img src=http://latex.codecogs.com/gif.latex?S_1^i,\cdots,S_k^i> (with equal probability). Therefore,
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathbb{E}\limits_{S\sim\mathcal{D}_i^m}[L_\mathcal{D}_i(A(S))]%3D\frac{1}{k}\sum_{j=1}^k>
+</div align=center>
 
 (*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
 
