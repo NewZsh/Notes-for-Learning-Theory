@@ -132,7 +132,7 @@ In conclusion, it holds that
 <img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq%201/4>
 </div align=center>
 
-This means that for every algorithm that receives a training set of 
+This means that for every algorithm, there exists <img src=http://latex.codecogs.com/gif.latex?f,\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0> and <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq%201/4>.
 
 (*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
 
@@ -141,8 +141,6 @@ This means that for every algorithm that receives a training set of
 </div align=center>
 
 which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\geq%201/7}>.
-
-  **[IMPORTANT]**
 
 #### 1.2.4 Agnostic PAC
 
