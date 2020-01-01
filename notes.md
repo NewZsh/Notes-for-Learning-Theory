@@ -108,7 +108,11 @@ Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm fo
 2. With probability of at least <img src=http://latex.codecogs.com/gif.latex?1/7> over the choice of <img src=http://latex.codecogs.com/gif.latex?S\sim\mathcal{D}^m> we have that
 <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(A(S))\geq%201/8>.
 
-*Proof*: 
+*Proof*: Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\subseteq\mathcal{X}> of size <img src=http://latex.codecogs.com/gif.latex?2m>. There are <img src=http://latex.codecogs.com/gif.latex?T%3D2^{2m}> possible functions from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}>. Denote these functions by <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T>. For each such function, let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i> be a distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\times\{0,1\}> defined by
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_i%28%5C%7B%28x%2Cy%29%5C%7D%29%3D%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%201/%7C%5Cmathcal%7BC%7D%7C%2C%20%26%5Ctext%7B%20if%20%7D%20y%3Df_i%28x%29%20%5C%5C%200%2C%26%5Ctext%7Botherwise%7D%20%5Cend%7Bmatrix%7D%5Cright.>
+</div align=center>
 
 (*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
 
