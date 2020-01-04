@@ -167,7 +167,7 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
 ### 1.3 Error decomposition
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)=>
+<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)=\epsilon_{\text{app}}+\epsilon_{\text{est}}>
 </div align=center>
 
 ### 1.4 Summary
