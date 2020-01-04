@@ -67,7 +67,9 @@
 
 - The i.i.d. assumption: the training samples are independently and identically distributed.
 
-- PAC learnability: training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> with *confidence* paramter at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon>.
+#### 1.2.3 PAC learnability
+
+Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> with *confidence* paramter at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon>.
 
 - Finite hypothesis classes are PAC learnable, and the sample complexity is:
 
@@ -99,7 +101,7 @@ Since we would like to bound the probability of the event <img src=http://latex.
 
 Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta)/\epsilon>
 
-#### 1.2.3 No-Free-Lunch (neccessity of inductive bias)
+#### 1.2.4 No-Free-Lunch (neccessity of inductive bias)
 
 Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?m> be any number smaller than <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}/2>, representing a training set size. Then, there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=http://latex.codecogs.com/gif.latex?{X}\times\{0,1\}> such that:
 
@@ -159,7 +161,7 @@ This means that for every algorithm, there exists <img src=http://latex.codecogs
 
 which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\geq%201/7}>.
 
-#### 1.2.4 Agnostic PAC
+#### 1.2.5 Agnostic PAC
 
 - Beyond realizability assumption
 - Beyond binary classification: learning via uniform convergence
@@ -173,7 +175,7 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
 in which
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h)\text{%20%20%20%20,}\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
+<img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h),\text{%20%20%20%20}\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
 </div align=center>
 
 ### 1.4 Summary
