@@ -195,7 +195,7 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]>, or more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>, then a finite hypothsis set <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> enjoys the agnostic PAC learnability with sample complexity
 
   <div align=center>
-  <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq%20m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta(b-a)^2)}{\epsilon^2}\right\rceil>
+  <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq%20m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil>
   </div align=center>
 
 ### 1.3 Error decomposition
