@@ -69,7 +69,7 @@
 
 #### 1.2.3 PAC learnability
 
-Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> with *confidence* paramter at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon>.
+Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> samples, there exists an algorithm to be able to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon> with *confidence* paramter at least <img src=http://latex.codecogs.com/gif.latex?1-\delta>.
 
 - Finite hypothesis classes are PAC learnable, and the sample complexity is:
 
