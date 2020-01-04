@@ -170,6 +170,12 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
 <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)=\epsilon_{\text{app}}+\epsilon_{\text{est}}>
 </div align=center>
 
+in which
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h)\text{%20%20%20%20,}\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
+</div align=center>
+
 ### 1.4 Summary
 
 Now that, we have come to some important conclusions under the PAC learning framework:
