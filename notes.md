@@ -178,11 +178,15 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq%20y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20y\})>
   </div align=center>
 
-- Beyond binary classification: learning via uniform convergence
+- Beyond binary classification
   
-  Multiclass classification: 0-1 loss; regression: square loss.
+  Multiclass classification: 0-1 loss; regression: square loss. Agnostic PAC learnability remains the same with
 
-  
+  <div align=center>
+  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,z)]>
+  </div align=center>
+
+- Learning via uniform convergence
 
 ### 1.3 Error decomposition
 
