@@ -186,7 +186,11 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,z)]>
   </div align=center>
 
-- Learning via uniform convergence
+- Sample complexity under Agnostic PAC setting: via uniform convergence
+
+      Corresponding to Chapter 4 in UML, which is considered to be not that important. The main conclusion is that any finite class is learnable in the agnostic PAC setting with general loss functions, as long as the range of loss function is bounded.
+
+  Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]> (more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>), then the sample complexity 
 
 ### 1.3 Error decomposition
 
