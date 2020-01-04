@@ -137,6 +137,8 @@ and hence,
 <img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq%20f_i(v_r)]}>
 </div align=center>
 
+Next, fix some .
+
 In conclusion, it holds that
 
 <div align=center>
@@ -159,6 +161,10 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
 - Beyond binary classification: learning via uniform convergence
 
 ### 1.3 Error decomposition
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latexL>
+</div align=center>
 
 ### 1.4 Summary
 
