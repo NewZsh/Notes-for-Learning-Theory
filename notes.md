@@ -304,11 +304,21 @@ Solution:
 <img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\exp(-\epsilon%20m)\leq\delta>
 </div align=center>
 
-which leads to 
+which leads to
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 </div align=center>
+
+**1.5.5 (UML Ex3.3)** 
+
+**1.5.6 (UML Ex3.4)** 
+
+**1.5.7 (UML Ex3.7)** 
+
+**1.5.8 (UML Ex3.9)** 
+
+**1.5.9 (UML Ex5.3)** 
 
 ## 2. VC-dimension
 
