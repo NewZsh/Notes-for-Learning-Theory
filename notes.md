@@ -210,6 +210,14 @@ in which
 <img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h),\text{%20%20%20%20}\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
 </div align=center>
 
+- The Approximation Error
+
+  This term measures how much risk we have because we restrict ourselves to a specific class, namely, how much *inductive bias* we have. The approximation error does not depend on the sample size and is determined by the hypothesis class chosen. Enlarging the hypothesis class can decrease the approximation error.
+
+- The Estimation Error
+
+  This term results because the empirical risk (i.e., training error) is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
+
 ### 1.4 Summary
 
 Now that, we have come to some important conclusions under the PAC learning framework:
