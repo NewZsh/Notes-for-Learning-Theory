@@ -69,7 +69,7 @@
 
 #### 1.2.3 PAC learnability
 
-Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> samples, there exists an algorithm to be able to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon> with *confidence* paramter at least <img src=http://latex.codecogs.com/gif.latex?1-\delta>.
+Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> samples, there exists an algorithm to be able to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon> with *confidence* at least <img src=http://latex.codecogs.com/gif.latex?1-\delta>.
 
 - Finite hypothesis classes are PAC learnable, and the sample complexity is:
 
@@ -169,9 +169,14 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Specifically speaking, the true error should be (the empirical error remains the same)
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq%20y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20y\})>
+<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq%20y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20y\})>
 </div align=center>
 
+  Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> samples, there exists an algorithm with *confidence* at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> to achieve that:
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)\leq\min\limits_{h%27\in\mathcal{H}}L_\mathcal{D}(h%27)+\epsilon>
+</div align=center>
 
 - Beyond binary classification: learning via uniform convergence
 
