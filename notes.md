@@ -145,7 +145,7 @@ and hence,
 Next, fix some <img src=http://latex.codecogs.com/gif.latex?r\in[p]>, We can partition all the functions <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T> into <img src=http://latex.codecogs.com/gif.latex?T/2> disjoint pairs, where for a pair <img src=http://latex.codecogs.com/gif.latex?(f_i,f_{i%27})> we have that <img src=http://latex.codecogs.com/gif.latex?\forall%20c\in%20C,f_i(c)\neq%20f_{i%27}(c)> iff. <img src=http://latex.codecogs.com/gif.latex?c%3Dv_r>. Since for such a pair we must have <img src=http://latex.codecogs.com/gif.latex?S_j^i%3DS_j^{i%27}> it follows that <img src=http://latex.codecogs.com/gif.latex?\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i%27})(v_r)\neq%20f_{i%27}(v_r)]}%3D1>, which yields
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i%3D1}^T%3D\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}\frac{1}{2}>
+<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i%3D1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}\frac{1}{2}>
 </div align=center>
 
 In conclusion, it holds that
@@ -310,7 +310,7 @@ which leads to
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 </div align=center>
 
-**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2,\mathcal{Y}=\{0,1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r:r\in\mathbb{R}_+\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{[\Vert%20x\Vert\leq%20r]}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
+**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2\text{,%20}\mathcal{Y}=\{0,1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r:r\in\mathbb{R}_+\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{[\Vert%20x\Vert\leq%20r]}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
