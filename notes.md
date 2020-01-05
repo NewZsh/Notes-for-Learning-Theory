@@ -310,7 +310,7 @@ which leads to
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 </div align=center>
 
-**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2>, <img src=http://latex.codecogs.com/gif.latex?\mathcal{Y}=\{0,1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r:r\in\mathbb{R}_+\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{[\Vert%20x\Vert\leq%20r]}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
+**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BX%7D%3D%5Cmathbb%7BR%7D%5E2>, <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BY%7D%3D%5C%7B0%2C1%5C%7D>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D%3D%5C%7Bh_r%3Ar%5Cin%5Cmathbb%7BR%7D_&plus;%5C%7D>, where <img src=http://latex.codecogs.com/gif.latex?h_r%28x%29%3D%5Cmathbb%7BI%7D_%7B%5B%5CVert%20x%5CVert%5Cleq%20r%5D%7D>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
