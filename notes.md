@@ -101,6 +101,8 @@ Since we would like to bound the probability of the event <img src=http://latex.
 
 Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta)/\epsilon>
 
+      please refer to UML Ex3.1, which states the monotonicity of sample complexity.
+
 #### 1.2.4 No-Free-Lunch (neccessity of inductive bias)
 
 Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?m> be any number smaller than <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}/2>, representing a training set size. Then, there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=http://latex.codecogs.com/gif.latex?{X}\times\{0,1\}> such that:
@@ -287,11 +289,9 @@ Solution:
 
 2. 
 
-**1.5.3 (UML Ex3.1) Monotonicity of Sample Complexity** 1
-
 Solution:
 
-**1.5.4 (UML Ex3.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> be a discrete domain, and let <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D%3D%5C%7Bh_z%3Az%5Cin%5Cmathcal%7BX%7D%5C%7D%5Ccup%5C%7Bh%5E-%5C%7D>, where for each <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}>, <img src=http://latex.codecogs.com/gif.latex?h_z> is the function defined by <img src=http://latex.codecogs.com/gif.latex?h_z%28x%29%3D1> if <img src=http://latex.codecogs.com/gif.latex?x%3Dz> and <img src=http://latex.codecogs.com/gif.latex?h_z(x)%3D0> if <img src=http://latex.codecogs.com/gif.latex?x\neq%20z>. <img src=http://latex.codecogs.com/gif.latex?h^-> is simply the all-negative hypothesis, namely, <img src=http://latex.codecogs.com/gif.latex?\forall%20x\in\mathcal{X},h^-(x)%3D0>. The realizability assumption here implies that the true hypothesis <img src=http://latex.codecogs.com/gif.latex?f> labels negatively all examples in the domain, perhaps except one.
+**1.5.3 (UML Ex3.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> be a discrete domain, and let <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D%3D%5C%7Bh_z%3Az%5Cin%5Cmathcal%7BX%7D%5C%7D%5Ccup%5C%7Bh%5E-%5C%7D>, where for each <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}>, <img src=http://latex.codecogs.com/gif.latex?h_z> is the function defined by <img src=http://latex.codecogs.com/gif.latex?h_z%28x%29%3D1> if <img src=http://latex.codecogs.com/gif.latex?x%3Dz> and <img src=http://latex.codecogs.com/gif.latex?h_z(x)%3D0> if <img src=http://latex.codecogs.com/gif.latex?x\neq%20z>. <img src=http://latex.codecogs.com/gif.latex?h^-> is simply the all-negative hypothesis, namely, <img src=http://latex.codecogs.com/gif.latex?\forall%20x\in\mathcal{X},h^-(x)%3D0>. The realizability assumption here implies that the true hypothesis <img src=http://latex.codecogs.com/gif.latex?f> labels negatively all examples in the domain, perhaps except one.
 
 1. Describe an algorithm that implements the ERM rule for learning <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D> in the realizable setup.
 2. Show that <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D> is PAC learnable. Provide an upper bound on the sample complexity.
@@ -310,15 +310,22 @@ which leads to
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 </div align=center>
 
-**1.5.5 (UML Ex3.3)** 
+**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2,\mathcal{Y}=\{0,1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r:r\in\mathbb{R}_+\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{[\Vert%20x\Vert\leq%20r]}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
 
-**1.5.6 (UML Ex3.4)** 
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
+</div align=center>
 
-**1.5.7 (UML Ex3.7)** 
+Solution:
 
-**1.5.8 (UML Ex3.9)** 
 
-**1.5.9 (UML Ex5.3)** 
+**1.5.5 (UML Ex3.4)** 
+
+**1.5.6 (UML Ex3.7)** 
+
+**1.5.7 (UML Ex3.9)** 
+
+**1.5.8 (UML Ex5.3)** 
 
 ## 2. VC-dimension
 
