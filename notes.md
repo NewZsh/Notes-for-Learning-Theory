@@ -7,11 +7,13 @@
 - PGM: [Probabilistic Graphical Models: Principles and Techniques](https://mitpress.mit.edu/books/probabilistic-graphical-models) Daphne Koller and Nir Friedman, 2009.
 - GEV: [Graphical Models, Exponential Families, and Variational Inference](https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf) Martin J. Wainwright and Michael I. Jordan, 2008.
 
-## 1. Probably Approximately Correct (PAC)
+## Chapter 1. Probably Approximately Correct (PAC)
 
 *Corresponding to Chapter 2-5 in UML.*
 
 *This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
+
+[TOC]
 
 ### 1.1 formulation
 
@@ -318,7 +320,6 @@ which leads to
 
 Solution:
 
-
 **1.5.5 (UML Ex3.4)** 
 
 **1.5.6 (UML Ex3.7)** 
@@ -327,9 +328,10 @@ Solution:
 
 **1.5.8 (UML Ex5.3)** 
 
-## 2. VC-dimension
 
-### 2.1
+### To be continue...
+
+## 2. VC-dimension
 
 ## 3. Bayesian-PAC
 
