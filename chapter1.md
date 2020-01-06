@@ -349,7 +349,13 @@ Solution: similar in the proof above, <img src=http://latex.codecogs.com/gif.lat
 <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{km}\sum_{x\in%20C}\mathbb{I}_{[h(x)\neq%20f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}>
 </div align=center>
 
-And similarily, 
+And similarily,
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq%20f_i(v_r)]}>
+</div align=center>
+
+And the final bound is <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>.
 
       To be continue...
       Chapter 2. VC-dimension
