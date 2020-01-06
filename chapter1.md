@@ -13,9 +13,9 @@
 
 *This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
 
-- [1.1 formulation](#11-formulation)
+- [1.1 Formulation](#11-formulation)
   - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
-- [1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)](#12-from-empirical-risk-minimization-erm-to-probably-approximately-correct-pac)
+- [1.2 From Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)](#12-from-empirical-risk-minimization-erm-to-probably-approximately-correct-pac)
   - [1.2.1 ERM may lead to overfitting](#121-erm-may-lead-to-overfitting)
   - [1.2.2 ERM with restricted hypothesis set (inductive bias)](#122-erm-with-restricted-hypothesis-set-inductive-bias)
   - [1.2.3 PAC learnability](#123-pac-learnability)
@@ -25,7 +25,7 @@
 - [1.4 Summary](#14-summary)
 - [1.5 Excercises and solutions](#15-excercises-and-solutions)
   
-# 1.1 formulation
+# 1.1 Formulation
 
 ## 1.1.1 The learner's input, output, and evaluation
 
@@ -55,7 +55,7 @@
 
       remark: here we neglect the measurability assumption.
 
-# 1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
+# 1.2 From Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
 
 ## 1.2.1 ERM may lead to overfitting
 
