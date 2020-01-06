@@ -13,7 +13,23 @@
 
 *This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
 
-- [1.1 formulation] (# 1.1 formulation)
+- [Notes of Statistical Machine Learning Theory](#notes-of-statistical-machine-learning-theory)
+  - [Chapter 1. Probably Approximately Correct (PAC)](#chapter-1-probably-approximately-correct-pac)
+    - [1.1 formulation](#11-formulation)
+      - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
+    - [1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)](#12-from-empirical-risk-minimization-erm-to-probably-approximately-correct-pac)
+      - [1.2.1 ERM may lead to overfitting](#121-erm-may-lead-to-overfitting)
+      - [1.2.2 ERM with restricted hypothesis set (inductive bias)](#122-erm-with-restricted-hypothesis-set-inductive-bias)
+      - [1.2.3 PAC learnability](#123-pac-learnability)
+      - [1.2.4 No-Free-Lunch (neccessity of inductive bias)](#124-no-free-lunch-neccessity-of-inductive-bias)
+      - [1.2.5 Agnostic PAC](#125-agnostic-pac)
+    - [1.3 Error decomposition](#13-error-decomposition)
+    - [1.4 Summary](#14-summary)
+    - [1.5 Excercises and solutions](#15-excercises-and-solutions)
+    - [To be continue...](#to-be-continue)
+  - [2. VC-dimension](#2-vc-dimension)
+  - [3. Bayesian-PAC](#3-bayesian-pac)
+  - [4. Generalization in Deep Learning](#4-generalization-in-deep-learning)
 
 ### 1.1 formulation
 
