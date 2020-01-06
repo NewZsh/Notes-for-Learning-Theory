@@ -1,4 +1,4 @@
-# Notes of Statistical Machine Learning Theory
+**Notes of Statistical Machine Learning Theory**
 
 *The notes is mainly based on the following book*
 
@@ -7,33 +7,27 @@
 - PGM: [Probabilistic Graphical Models: Principles and Techniques](https://mitpress.mit.edu/books/probabilistic-graphical-models) Daphne Koller and Nir Friedman, 2009.
 - GEV: [Graphical Models, Exponential Families, and Variational Inference](https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf) Martin J. Wainwright and Michael I. Jordan, 2008.
 
-## Chapter 1. Probably Approximately Correct (PAC)
+**Chapter ONE Probably Approximately Correct (PAC)**
 
 *Corresponding to Chapter 2-5 in UML.*
 
 *This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
 
-- [Notes of Statistical Machine Learning Theory](#notes-of-statistical-machine-learning-theory)
-  - [Chapter 1. Probably Approximately Correct (PAC)](#chapter-1-probably-approximately-correct-pac)
-    - [1.1 formulation](#11-formulation)
-      - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
-    - [1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)](#12-from-empirical-risk-minimization-erm-to-probably-approximately-correct-pac)
-      - [1.2.1 ERM may lead to overfitting](#121-erm-may-lead-to-overfitting)
-      - [1.2.2 ERM with restricted hypothesis set (inductive bias)](#122-erm-with-restricted-hypothesis-set-inductive-bias)
-      - [1.2.3 PAC learnability](#123-pac-learnability)
-      - [1.2.4 No-Free-Lunch (neccessity of inductive bias)](#124-no-free-lunch-neccessity-of-inductive-bias)
-      - [1.2.5 Agnostic PAC](#125-agnostic-pac)
-    - [1.3 Error decomposition](#13-error-decomposition)
-    - [1.4 Summary](#14-summary)
-    - [1.5 Excercises and solutions](#15-excercises-and-solutions)
-    - [To be continue...](#to-be-continue)
-  - [2. VC-dimension](#2-vc-dimension)
-  - [3. Bayesian-PAC](#3-bayesian-pac)
-  - [4. Generalization in Deep Learning](#4-generalization-in-deep-learning)
+- [1.1 formulation](#11-formulation)
+  - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
+- [1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)](#12-from-empirical-risk-minimization-erm-to-probably-approximately-correct-pac)
+  - [1.2.1 ERM may lead to overfitting](#121-erm-may-lead-to-overfitting)
+  - [1.2.2 ERM with restricted hypothesis set (inductive bias)](#122-erm-with-restricted-hypothesis-set-inductive-bias)
+  - [1.2.3 PAC learnability](#123-pac-learnability)
+  - [1.2.4 No-Free-Lunch (neccessity of inductive bias)](#124-no-free-lunch-neccessity-of-inductive-bias)
+  - [1.2.5 Agnostic PAC](#125-agnostic-pac)
+- [1.3 Error decomposition](#13-error-decomposition)
+- [1.4 Summary](#14-summary)
+- [1.5 Excercises and solutions](#15-excercises-and-solutions)
+  
+# 1.1 formulation
 
-### 1.1 formulation
-
-#### 1.1.1 The learner's input, output, and evaluation
+## 1.1.1 The learner's input, output, and evaluation
 
 **input**:
 
@@ -61,9 +55,9 @@
 
       remark: here we neglect the measurability assumption.
 
-### 1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
+# 1.2 from Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
 
-#### 1.2.1 ERM may lead to overfitting
+## 1.2.1 ERM may lead to overfitting
 
 - Since the generalzation error is intractable, turn to minimize the Empirial risk:
   
@@ -73,7 +67,7 @@
 
 - Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S%28h%29%3D0>.
 
-#### 1.2.2 ERM with restricted hypothesis set (inductive bias)
+## 1.2.2 ERM with restricted hypothesis set (inductive bias)
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?h_S\in\arg\min\limits_{h\in\mathcal{H}}L_S(h)>
@@ -85,7 +79,7 @@
 
 - The i.i.d. assumption: the training samples are independently and identically distributed.
 
-#### 1.2.3 PAC learnability
+## 1.2.3 PAC learnability
 
 Training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> samples, there exists an algorithm to be able to achieve *accuracy* at least <img src=http://latex.codecogs.com/gif.latex?1-\epsilon> with *confidence* at least <img src=http://latex.codecogs.com/gif.latex?1-\delta>.
 
@@ -121,7 +115,7 @@ Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m
 
       please refer to UML Ex3.1, which states the monotonicity of sample complexity.
 
-#### 1.2.4 No-Free-Lunch (neccessity of inductive bias)
+## 1.2.4 No-Free-Lunch (neccessity of inductive bias)
 
 Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?m> be any number smaller than <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}/2>, representing a training set size. Then, there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=http://latex.codecogs.com/gif.latex?{X}\times\{0,1\}> such that:
 
@@ -182,7 +176,7 @@ This means that for every algorithm, there exists <img src=http://latex.codecogs
 
 which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\geq%201/7}>.
 
-#### 1.2.5 Agnostic PAC
+## 1.2.5 Agnostic PAC
 
 - Beyond realizability assumption
 
@@ -218,7 +212,7 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq%20m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil>
   </div align=center>
 
-### 1.3 Error decomposition
+# 1.3 Error decomposition
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)=\epsilon_{\text{app}}+\epsilon_{\text{est}}>
@@ -238,7 +232,7 @@ in which
 
   This term results because the empirical risk (i.e., training error) is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
 
-### 1.4 Summary
+# 1.4 Summary
 
 Now that, we have come to some important conclusions under the PAC learning framework:
 
@@ -252,7 +246,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 
 And we have reached the fundamental question in learning theory: **Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?** Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
 
-### 1.5 Excercises and solutions
+# 1.5 Excercises and solutions
 
 **1.5.1 (UML Ex2.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
 
@@ -345,10 +339,8 @@ Solution:
 **1.5.8 (UML Ex5.3)** 
 
 
-### To be continue...
 
-## 2. VC-dimension
-
-## 3. Bayesian-PAC
-
-## 4. Generalization in Deep Learning
+      To be continue...
+      Chapter 2. VC-dimension
+      Chapter 3. Bayesian-PAC
+      Chapter 4. Generalization in Deep Learning
