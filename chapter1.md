@@ -157,7 +157,7 @@ and hence,
 Next, fix some <img src=http://latex.codecogs.com/gif.latex?r\in[p]>, We can partition all the functions <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T> into <img src=http://latex.codecogs.com/gif.latex?T/2> disjoint pairs, where for a pair <img src=http://latex.codecogs.com/gif.latex?(f_i,f_{i%27})> we have that <img src=http://latex.codecogs.com/gif.latex?\forall%20c\in%20C,f_i(c)\neq%20f_{i%27}(c)> iff. <img src=http://latex.codecogs.com/gif.latex?c%3Dv_r>. Since for such a pair we must have <img src=http://latex.codecogs.com/gif.latex?S_j^i%3DS_j^{i%27}> it follows that <img src=http://latex.codecogs.com/gif.latex?\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i%27})(v_r)\neq%20f_{i%27}(v_r)]}%3D1>, which yields
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i%3D1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}\frac{1}{2}>
+<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i%3D1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}=\frac{1}{2}>
 </div align=center>
 
 In conclusion, it holds that
@@ -339,7 +339,7 @@ Solution:
 **1.5.8 (UML Ex5.3)** Prove that if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{X}|\geq%20km> for a positive integer <img src=http://latex.codecogs.com/gif.latex?k\geq%202>, then we can replace the lower bound of 1/4 in the No-Free-Lunch theorem with <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>. Namely, for the task of binary classification, 
 there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}\sim\mathcal{X}\times\{0,1\}> such that:
 
-- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0>.
+- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0>.
 
 - <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}>.
 
