@@ -17,4 +17,14 @@
 
 ## 1.1.1 The set of threshold functions is PAC learnable
 
-Consider the set of threshold functions over the real line <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{h_a(x)%3D\mathbb{I}_{[x\leq%20a]},a\in\mathbb{R}\}>,
+Consider the set of threshold functions over the real line
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{h_a(x)%3D\mathbb{I}_{[x\leq%20a]},a\in\mathbb{R}\}>,
+</div align=center>
+
+Let <img src=http://latex.codecogs.com/gif.latex?a^*> be the threshold such that <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h^*)=0>. Let <img src=http://latex.codecogs.com/gif.latex?a_0%3Ca^*%3Ca_1> such that
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a_0,a^*)]%3D\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a^*,a_1)]%3D\epsilon>,
+</div align=center>
