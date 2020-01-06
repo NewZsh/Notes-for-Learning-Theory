@@ -336,16 +336,20 @@ Solution:
 
 **1.5.7 (UML Ex3.9)** 
 
-**1.5.8 (UML Ex5.3)** Prove that if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{X}|\geq%20km> for a positive integer <img src=http://latex.codecogs.com/gif.latex?k\geq%202>, then we can replace the lower bound of 1/4 in the No-Free-Lunch theorem with <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>. Namely, for the task of binary classification, 
+**1.5.8 (UML Ex5.3)** Prove that if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{X}|\geq%20km> for a positive integer <img src=http://latex.codecogs.com/gif.latex?k\geq%202>, then we can replace the lower bound in the No-Free-Lunch theorem. Namely, for the task of binary classification, 
 there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}\sim\mathcal{X}\times\{0,1\}> such that:
 
 - There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0>.
 
 - <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}>.
 
-Solution:
+Solution: similar in the proof above, <img src=http://latex.codecogs.com/gif.latex?p\geq(k-1)m>, then
 
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{km}\sum_{x\in%20C}\mathbb{I}_{[h(x)\neq%20f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}>
+</div align=center>
 
+And similarily, 
 
       To be continue...
       Chapter 2. VC-dimension
