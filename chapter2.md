@@ -40,7 +40,9 @@ Let <img src=http://latex.codecogs.com/gif.latex?a^*> be the threshold such that
 <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a_0,a^*)]%3D\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a^*,a_1)]%3D\epsilon>,
 </div align=center>
 
-## 1.1.2 Shattering 
+## 1.1.2 Shattering
+
+The definition of VC-dimension is motivated from the No-Free-Lunch therorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution.
 
 ## 1.1.3 The VC-dimension
 
