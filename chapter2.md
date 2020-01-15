@@ -54,9 +54,9 @@ Each term on the right-side is bounded by <img src=http://latex.codecogs.com/gif
 
 The definition of VC-dimension is motivated from the No-Free-Lunch therorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution. To make any algorithm fail, the adversary used the power of choosing a target function from the set of all possible labelling functions.
 
-When considering PAC learnability of a hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, the adversary is restricted to constructing distributions for which some hypothesis <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> achieves a zero risk. Since we are considering distributions that are concentrated on elements of <img src=http://latex.codecogs.com/gif.latex?C>, we should study how <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> behaves on <img src=http://latex.codecogs.com/gif.latex?C>.
+When considering PAC learnability of a hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, the adversary is restricted to constructing distributions for which some hypothesis <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}> achieves a zero risk. Since we are considering distributions that are concentrated on elements of <img src=http://latex.codecogs.com/gif.latex?C>, we should study how <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}> behaves on <img src=http://latex.codecogs.com/gif.latex?C>.
 
-**definition: Restriction of <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>**. The restriction of <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be derived from <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. That is,
+**definition: Restriction of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>**. The restriction of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be derived from <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. That is,
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C%3D\{(h(c_1),\cdots,h(c_m):h\in\mathcal{H}\}>,
@@ -64,9 +64,18 @@ When considering PAC learnability of a hypothesis class <img src=http://latex.co
 
 where we represent each function from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> as a vector in <img src=http://latex.codecogs.com/gif.latex?\{0,1\}^{|C|}>.
 
-**definition: Shattering**. A hypothesis class <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> shatters a finite set <img src=http://latex.codecogs.com/gif.latex?C\in\mathcal{X}> if the restriction of <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of all functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}>. That is, <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|%3D2^{|C|}>.
+**definition: Shattering**. A hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> shatters a finite set <img src=http://latex.codecogs.com/gif.latex?C\in\mathcal{X}> if the restriction of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of all functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}>. That is, <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|%3D2^{|C|}>.
 
 ## 1.1.3 The VC-dimension
+
+**definition: VC-dimension**. The VC-dimension of a hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, denoted <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})>, is the maximal size of a set <img src=http://latex.codecogs.com/gif.latex?C\subset\mathcal{X}> that can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. If <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> can shatter sets of arbitrarily large size we say that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> has infinite VC-dimension.
+
+To calculate the VC-dimension for a hypothesis set, we should show that
+
+  - There **exists** a subset of size <img src=http://latex.codecogs.com/gif.latex?d> that can be shattered
+  - **Every** subset of size <img src=http://latex.codecogs.com/gif.latex?d+1> can not be shattered
+
+1. Example1: threshold functions
 
 ## 1.1.4 Examples
 
