@@ -52,7 +52,15 @@ Each term on the right-side is bounded by <img src=http://latex.codecogs.com/gif
 
 ## 1.1.2 Shattering
 
-The definition of VC-dimension is motivated from the No-Free-Lunch therorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution.
+The definition of VC-dimension is motivated from the No-Free-Lunch therorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution. To make any algorithm fail, the adversary used the power of choosing a target function from the set of all possible labelling functions.
+
+When considering PAC learnability of a hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, the adversary is restricted to constructing distributions for which some hypothesis <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> achieves a zero risk. Since we are considering distributions that are concentrated on elements of <img src=http://latex.codecogs.com/gif.latex?C>, we should study how <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> behaves on <img src=http://latex.codecogs.com/gif.latex?C>.
+
+**definition: Restriction of <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>**. The restriction of <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be derived from <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. That is,
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C%3D\{(h(c_1),\cdots,h(c_m):h\in\mathcal{H}\}>,
+</div align=center>
 
 ## 1.1.3 The VC-dimension
 
