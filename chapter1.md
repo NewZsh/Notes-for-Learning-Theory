@@ -176,6 +176,8 @@ This means that for every algorithm, there exists <img src=http://latex.codecogs
 
 which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\geq%201/7}>.
 
+        Philosophically, *if someone can explain every phenomenon, his explanations are worthless.*
+
 ## 1.2.5 Agnostic PAC
 
 - Beyond realizability assumption
