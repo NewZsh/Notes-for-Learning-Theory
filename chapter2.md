@@ -45,7 +45,7 @@ If <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_x(-\infty,a^*)\leq\e
 Given a training set <img src=http://latex.codecogs.com/gif.latex?S>, let <img src=http://latex.codecogs.com/gif.latex?b_0%3D\max\{x:(x,1)\in%20S\}> (if no example is positive then <img src=http://latex.codecogs.com/gif.latex?b_0%3D-\infty>), and <img src=http://latex.codecogs.com/gif.latex?b_1%3D\min\{x:(x,0)\in%20S\}> (if no example is negative then <img src=http://latex.codecogs.com/gif.latex?b_1%3D\infty>). Let <img src=http://latex.codecogs.com/gif.latex?b_S> be the threshold of an ERM hypothesis <img src=http://latex.codecogs.com/gif.latex?h_S>, which implies <img src=http://latex.codecogs.com/gif.latex?b_S\in(b_0,b_1)>, then we have
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}>,
+<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(h_S)%3C\epsilon]\leq\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}[b_0%3Ca_0\]>,
 </div align=center>
 
 ## 1.1.2 Shattering
