@@ -40,6 +40,14 @@ Let <img src=http://latex.codecogs.com/gif.latex?a^*> be the threshold such that
 <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a_0,a^*)]%3D\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a^*,a_1)]%3D\epsilon>,
 </div align=center>
 
+If <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_x(-\infty,a^*)\leq\epsilon> we set <img src=http://latex.codecogs.com/gif.latex?a_0%3D-\infty>, and similarily for <img src=http://latex.codecogs.com/gif.latex?a_1>.
+
+Given a training set <img src=http://latex.codecogs.com/gif.latex?S>, let <img src=http://latex.codecogs.com/gif.latex?b_0%3D\max\{x:(x,1)\in%20S\}> (if no example is positive then <img src=http://latex.codecogs.com/gif.latex?b_0%3D-\infty>), and <img src=http://latex.codecogs.com/gif.latex?b_1%3D\min\{x:(x,0)\in%20S\}> (if no example is negative then <img src=http://latex.codecogs.com/gif.latex?b_1%3D\infty>). Let <img src=http://latex.codecogs.com/gif.latex?b_S> be the threshold of an ERM hypothesis <img src=http://latex.codecogs.com/gif.latex?h_S>, which implies <img src=http://latex.codecogs.com/gif.latex?b_S\in(b_0,b_1)>, then we have
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}>,
+</div align=center>
+
 ## 1.1.2 Shattering
 
 The definition of VC-dimension is motivated from the No-Free-Lunch therorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution.
