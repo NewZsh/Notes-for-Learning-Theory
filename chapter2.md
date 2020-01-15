@@ -62,6 +62,10 @@ When considering PAC learnability of a hypothesis class <img src=http://latex.co
 <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C%3D\{(h(c_1),\cdots,h(c_m):h\in\mathcal{H}\}>,
 </div align=center>
 
+where we represent each function from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> as a vector in <img src=http://latex.codecogs.com/gif.latex?\{0,1\}^{|C|}>.
+
+**definition: Shattering**. A hypothesis class <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> shatters a finite set <img src=http://latex.codecogs.com/gif.latex?C\in\mathcal{X}> if the restriction of <img src=http://latex.codecogs.com/gif.latex?n\in\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of all functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}>. That is, <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|=2^{|C|}>.
+
 ## 1.1.3 The VC-dimension
 
 ## 1.1.4 Examples
