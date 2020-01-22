@@ -77,7 +77,7 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 1. Example1: threshold functions
 
-    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%20\{\mathbb{I}_{x\leq%20a}:a\in\mathbb{R}\}>,
+    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{\mathbb{I}_{x\leq%20a}:a\in\mathbb{R}\}>
   
     For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c\}>, it can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, therefore <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})\geq%201>;
 
@@ -87,7 +87,9 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 2. Example2: Intevals
 
-    For 
+    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%20\{\mathbb{I}_{x\in(a,b)}:a%3Cb,a,b\in\mathbb{R}\}>
+
+    Without loss of generalization, take the set <img src=http://latex.codecogs.com/gif.latex?C%3D\{1,2\}>, it can be shattered. (In the case that the labels are <img src=http://latex.codecogs.com/gif.latex?(0,0)>, let <img src=http://latex.codecogs.com/gif.latex?a%3E2%20\text{or}%20b%3C1>; case <img src=http://latex.codecogs.com/gif.latex?(0,1)>, let <img src=http://latex.codecogs.com/gif.latex?a%3C2%3Cb>; case <img src=http://latex.codecogs.com/gif.latex?(1,0)>, let <img src=http://latex.codecogs.com/gif.latex?a%3C1%3Cb%3C2>; case <img src=http://latex.codecogs.com/gif.latex?(1,1)>, let <img src=http://latex.codecogs.com/gif.latex?a%3C1,b%3E2>)
 
 ## 1.1.4 Examples
 
