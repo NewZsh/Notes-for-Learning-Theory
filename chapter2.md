@@ -99,6 +99,14 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
     <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{\mathbb{I}_{a_1\leq%20x_1\leq%20a_2,b_1\leq%20x_2\leq%20b_2)}:a_1%3Ca_2,b_1%3Cb_2\}>
 
+    Any set with 4 points can be shattered.
+
+    Take the set with 5 points. Suppose that there is 1 point (labelled as 0) surrounded by 4 points (labelled as 1), it cannot be shattered.
+
+    Hence, <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3D4>.
+
+4. Example4: Finite class
+
 ## 1.1.4 Examples
 
 # 1.2 Fundermental theorem of PAC learning
