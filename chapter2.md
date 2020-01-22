@@ -77,9 +77,9 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 1. Example1: threshold functions
 
-<div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{\mathbb{I}_{x\leq%20a}:a\in\mathbb{R}\}>,
-</div align=center>
+  <div align=center>
+  <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{\mathbb{I}_{x\leq%20a}:a\in\mathbb{R}\}>,
+  </div align=center>
   
     For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c\}>, it can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, therefore <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})\geq%201>;
 
