@@ -93,7 +93,11 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
     Take the set <img src=http://latex.codecogs.com/gif.latex?C%3D\{c_1,c_2,c_3\}>, WLOG, let the labels be  <img src=http://latex.codecogs.com/gif.latex?(1,0,1)>, therefore <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> does no shatter  <img src=http://latex.codecogs.com/gif.latex?C>.
 
-    Hence, <img src=http://latex.codecogs.com/gif.latex?\text{VCdim(\mathcal{H})}%3D2>.
+    Hence, <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3D2>.
+
+3. Example3: Axis Aligned Rectangles
+
+    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{\mathbb{I}_{a_1\leq%3Dx_1\leq%3Da_2,b_1\leq%3Dx_2\leq%3Db_2)}:a_1%3Ca_2,b_1%3Cb_2\}>
 
 ## 1.1.4 Examples
 
