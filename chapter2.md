@@ -97,7 +97,7 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 3. Example3: Axis Aligned Rectangles
 
-    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{\mathbb{I}_{a_1\leq%3Dx_1\leq%3Da_2,b_1\leq%3Dx_2\leq%3Db_2)}:a_1%3Ca_2,b_1%3Cb_2\}>
+    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{\mathbb{I}_{a_1\leqx_1\leqa_2,b_1\leqx_2\leqb_2)}:a_1%3Ca_2,b_1%3Cb_2\}>
 
 ## 1.1.4 Examples
 
