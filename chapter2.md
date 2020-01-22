@@ -76,6 +76,10 @@ To calculate the VC-dimension for a hypothesis set, we should show that
   - **Every** subset of size <img src=http://latex.codecogs.com/gif.latex?d+1> can not be shattered
 
 1. Example1: threshold functions
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%20\{\mathbb{I}_{x\leq$20a}:a\in\mathbb{R}\}>,
+</div align=center>
   
     For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c\}>, it can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, therefore <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})\geq%201>;
 
@@ -83,7 +87,7 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
     Hence in conclusion, the VC-dimention of the class of threshold functions is 1.
 
-2. Example2: Intevals
+1. Example2: Intevals
 
     For 
 
