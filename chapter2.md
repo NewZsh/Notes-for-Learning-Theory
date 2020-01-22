@@ -77,17 +77,15 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 1. Example1: threshold functions
 
-<div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{\mathbb{I}_{x\leq%20a}:a\in\mathbb{R}\}>,
-</div align=center>
+    <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{\mathbb{I}_{x\leq%20a}:a\in\mathbb{R}\}>,
   
-  For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c\}>, it can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, therefore <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})\geq%201>;
+    For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c\}>, it can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, therefore <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})\geq%201>;
 
-  For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c_1,c_2\}>, where <img src=http://latex.codecogs.com/gif.latex?c_1\leq%20c_2>, any threshold that assigns 0 to <img src=http://latex.codecogs.com/gif.latex?c_1> must assign 0 to <img src=http://latex.codecogs.com/gif.latex?c_2>, so not all functions from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> are included by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C>. Therefore it can not be shattered.
+    For an arbitary set <img src=http://latex.codecogs.com/gif.latex?\{c_1,c_2\}>, where <img src=http://latex.codecogs.com/gif.latex?c_1\leq%20c_2>, any threshold that assigns 0 to <img src=http://latex.codecogs.com/gif.latex?c_1> must assign 0 to <img src=http://latex.codecogs.com/gif.latex?c_2>, so not all functions from <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> are included by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C>. Therefore it can not be shattered.
 
-  Hence in conclusion, the VC-dimention of the class of threshold functions is 1.
+    Hence in conclusion, the VC-dimention of the class of threshold functions is 1.
 
-1. Example2: Intevals
+2. Example2: Intevals
 
     For 
 
