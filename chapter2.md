@@ -30,8 +30,6 @@
 
 Consider the set of threshold functions over the real line
 
-$$\mathcal{H}=\{h_a(x),\mathbb{I}_{[x\leq a]}\}$$
-
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}%3D\{h_a(x)%3D\mathbb{I}_{[x\leq%20a]},a\in\mathbb{R}\}>,
 </div align=center>
@@ -78,6 +76,12 @@ To calculate the VC-dimension for a hypothesis set, we should show that
   - **Every** subset of size <img src=http://latex.codecogs.com/gif.latex?d+1> can not be shattered
 
 1. Example1: threshold functions
+  
+    For an arbitary set <img src=http://latex.codecogs.com/gif.latex?C=\{c_1\}>
+
+2. Example2: Intevals
+
+    For 
 
 ## 1.1.4 Examples
 
