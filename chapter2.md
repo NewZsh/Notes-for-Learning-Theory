@@ -14,7 +14,6 @@
   - [1.1.1 Finitness is not a necessary condition for learnability](#111-finitness-is-not-a-necessary-condition-for-learnability)
   - [1.1.2 Shattering](#112-shattering)
   - [1.1.3 The VC-dimension](#113-the-vc-dimension)
-  - [1.1.4 Examples](#114-examples)
 - [1.2 Fundermental theorem of PAC learning](#12-fundermental-theorem-of-pac-learning)
   - [1.2.1 Equivalent statements](#121-equivalent-statements)
   - [1.2.2 Quantitative versions](#122-quantitative-versions)
@@ -107,11 +106,16 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 4. Example4: Finite class
 
-    Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a finite class. Then, clearly, for any set  <img src=http://latex.codecogs.com/gif.latex?C> we have <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|> ≤ <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|> and thus it cannot be shattered if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|%3C2^|C|>. This implies that <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3C\log_2|\mathcal{H}|>.
+    Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a finite class. Then, clearly, for any set  <img src=http://latex.codecogs.com/gif.latex?C> we have <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|\leq\mathcal{H}|> and thus it cannot be shattered if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|%3C2^|C|>. This implies that <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3C\log_2|\mathcal{H}|>.
 
-## 1.1.4 Examples
+        Note: In the previous examples, the VC-dimension happened to equal the number of parameters defining. This is not always true. See exercise ? for detail.
 
 # 1.2 Fundermental theorem of PAC learning
+
+**[IMPORTANT]** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a hypothesis class of functions from a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> and let the loss function be the 0-1 loss. Then, the following are equivalent:
+
+ - 1
+ - 2
 
 ## 1.2.1 Equivalent statements
 
