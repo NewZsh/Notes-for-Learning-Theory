@@ -116,7 +116,11 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
  - The hypothesis class has a finite VC-dimension.
  - The hypothesis class has uniform convergence property.
- And the 
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}^{UC}(\epsilon,\delta)%3DO\left(C_2\frac{d+\log(1/\delta)}{\epsilon^2}\right)>,
+</div align=center>
+
  - Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
  - The hypothesis class is agnostic PAC learnable.
  - The hypothesis class is PAC learnable.
