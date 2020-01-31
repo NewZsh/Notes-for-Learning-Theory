@@ -59,7 +59,7 @@ When considering PAC learnability of a hypothesis class <img src=http://latex.co
 **definition: Restriction of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>**. The restriction of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C> is the set of functions from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be derived from <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. That is,
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C%3D\{(h(c_1),\cdots,h(c_m):h\in\mathcal{H}\}>,
+<img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_C%3D\{(h(c_1),\cdots,h(c_m)):h\in\mathcal{H}\}>,
 </div align=center>
 
 where we represent each function from <img src=http://latex.codecogs.com/gif.latex?C> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> as a vector in <img src=http://latex.codecogs.com/gif.latex?\{0,1\}^{|C|}>.
@@ -106,6 +106,8 @@ To calculate the VC-dimension for a hypothesis set, we should show that
     Hence, <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3D4>.
 
 4. Example4: Finite class
+
+    Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a finite class. Then, clearly, for any set  <img src=http://latex.codecogs.com/gif.latex?C> we have <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|> ≤ <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|> and thus it cannot be shattered if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|%3C2^|C|>. This implies that <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3C\log_2|\mathcal{H}|>.
 
 ## 1.1.4 Examples
 
