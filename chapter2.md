@@ -108,7 +108,8 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
     Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a finite class. Then, clearly, for any set  <img src=http://latex.codecogs.com/gif.latex?C> we have <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}_C|\leq|\mathcal{H}|> and thus it cannot be shattered if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|%3C2^{|C|}>. This implies that <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3C\log_2|\mathcal{H}|>.
 
-        Note: In the previous examples, the VC-dimension happened to equal the number of parameters defining. This is not always true. See exercise ? for detail.
+        Note: In the previous examples, the VC-dimension happened to equal the number of parameters defining. 
+        This is not always true. See exercise ? for detail.
 
 # 1.2 Fundermental theorem of PAC learning
 
@@ -118,12 +119,22 @@ To calculate the VC-dimension for a hypothesis set, we should show that
  - The hypothesis class has uniform convergence property.
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}^{UC}(\epsilon,\delta)%3DO\left(C_2\frac{d+\log(1/\delta)}{\epsilon^2}\right)>,
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}^{UC}(\epsilon,\delta)%3DO\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
 </div align=center>
 
  - Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)%3DO\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
+</div align=center>
+
  - The hypothesis class is agnostic PAC learnable.
  - The hypothesis class is PAC learnable.
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}^{UC}(\epsilon,\delta)%3DO\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)>
+</div align=center>
+
  - Any ERM rule is a successful PAC learner for the hypothesis class.
  
 
