@@ -136,10 +136,13 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 ## 1.3 Effective size of a hypothesis class
 
-**Def Growth function** is the number of different functions from a set C of size m to
-{0, 1} that can be obtained by restricting H to C.
+**Def: Growth function** The growth function of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is the number of different functions from a set <img src=http://latex.codecogs.com/gif.latex?C> of size <img src=http://latex.codecogs.com/gif.latex?m> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be obtained by restricting <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>.
 
-**Thm Sauer's lemma**
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\tao_\mathcal{H}(m)%3D\max_{C\in\mathcal{X}:|C|%3Dm}|\mathcal{H}_C|>
+</div align=center>
+
+**Thm: Sauer's lemma**
 
 **Uniform convergence for classes of small effective size**
 
