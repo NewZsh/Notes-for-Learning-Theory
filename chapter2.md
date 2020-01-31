@@ -15,12 +15,7 @@
   - [1.1.2 Shattering](#112-shattering)
   - [1.1.3 The VC-dimension](#113-the-vc-dimension)
 - [1.2 Fundermental theorem of PAC learning](#12-fundermental-theorem-of-pac-learning)
-  - [1.2.1 Equivalent statements](#121-equivalent-statements)
-  - [1.2.2 Quantitative versions](#122-quantitative-versions)
-- [1.3 Growth function](#13-growth-function)
-  - [1.3.1 Growth function](#131-growth-function)
-  - [1.3.2 Sauer's lemma](#132-sauers-lemma)
-  - [1.3.3 Uniform convergence for classes of small effective size](#133-uniform-convergence-for-classes-of-small-effective-size)
+  - [1.3 Effective size of a hypothesis class](#13-effective-size-of-a-hypothesis-class)
 - [1.4 Excercises and solutions](#14-excercises-and-solutions)
 
 # 1.1 The VC-dimension
@@ -67,7 +62,7 @@ where we represent each function from <img src=http://latex.codecogs.com/gif.lat
 
 ## 1.1.3 The VC-dimension
 
-**definition: VC-dimension**. The VC-dimension of a hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, denoted <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})>, is the maximal size of a set <img src=http://latex.codecogs.com/gif.latex?C\subset\mathcal{X}> that can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. If <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> can shatter sets of arbitrarily large size we say that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> has infinite VC-dimension.
+**Def: VC-dimension**. The VC-dimension of a hypothesis class <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>, denoted <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})>, is the maximal size of a set <img src=http://latex.codecogs.com/gif.latex?C\subset\mathcal{X}> that can be shattered by <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. If <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> can shatter sets of arbitrarily large size we say that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> has infinite VC-dimension.
 
 To calculate the VC-dimension for a hypothesis set, we should show that
 
@@ -113,7 +108,7 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 # 1.2 Fundermental theorem of PAC learning
 
-**[IMPORTANT]** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a hypothesis class of functions from a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> and let the loss function be the 0-1 loss. Then, the following are equivalent:
+**Thm** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a hypothesis class of functions from a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> and let the loss function be the 0-1 loss. Then, the following are equivalent:
 
  - The hypothesis class has a finite VC-dimension.
  - The hypothesis class has uniform convergence property.
@@ -123,35 +118,29 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 </div align=center>
 
  - Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
+ - The hypothesis class is agnostic PAC learnable.
 
 <div align=center>
 <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)%3DO\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
 </div align=center>
 
- - The hypothesis class is agnostic PAC learnable.
  - The hypothesis class is PAC learnable.
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}^{UC}(\epsilon,\delta)%3DO\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)>
+<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)%3DO\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)>
 </div align=center>
 
  - Any ERM rule is a successful PAC learner for the hypothesis class.
- 
 
+    Note that 1->2->3->4->5->6 are all learned. The leaving part is 6->1, which is solved below.
 
+## 1.3 Effective size of a hypothesis class
 
-## 1.2.1 Equivalent statements
+**Def Growth function** is the number of different functions from a set C of size m to
+{0, 1} that can be obtained by restricting H to C.
 
-## 1.2.2 Quantitative versions
+**Thm Sauer's lemma**
 
-# 1.3 Growth function
-
-## 1.3.1 Growth function
-
-## 1.3.2 Sauer's lemma
-
-## 1.3.3 Uniform convergence for classes of small effective size
-
-        This part is not that important. The main conclusion is that 
+**Uniform convergence for classes of small effective size**
 
 # 1.4 Excercises and solutions
