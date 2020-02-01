@@ -154,8 +154,12 @@ In particular, if <img src=http://latex.codecogs.com/gif.latex?m%3Ed+1> then <im
 
     The proof is not that important.
 
-The Sauer's lemma says that: If <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3Dd>, then even though <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> might be infinite, when restricting it to a finite set <img src=http://latex.codecogs.com/gif.latex?C\in\mathcal{X}> , its “effective” size, <img src=http://latex.codecogs.com/gif.latex?H_\mathcal{C}>, is only <img src=http://latex.codecogs.com/gif.latex?O(|C|^d)>.
+The Sauer's lemma says that: If <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})%3Dd>, then even though <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> might be infinite, when restricting it to a finite set <img src=http://latex.codecogs.com/gif.latex?C\in\mathcal{X}> , its “effective” size, <img src=http://latex.codecogs.com/gif.latex?H_C>, is only <img src=http://latex.codecogs.com/gif.latex?O(|C|^d)>.
 
-**Uniform convergence for classes of small effective size**
+**Thm: Uniform convergence holds for small effective size** with probability of at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> we have
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?|L_\mathcal{D}(h)-L_S(h)|\leq\frac{4+\sqrt{\log(\tau_\mathcal{H}(2m))}}{\delta\sqrt{2m}}>
+</div align=center>
 
 # 1.4 Excercises and solutions
