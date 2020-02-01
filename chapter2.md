@@ -139,7 +139,7 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 **Def: Growth function** The growth function of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is the number of different functions from a set <img src=http://latex.codecogs.com/gif.latex?C> of size <img src=http://latex.codecogs.com/gif.latex?m> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be obtained by restricting <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>.
 
 <div align=center>
-<img src=http://latex.codecogs.com/gif.latex?\tao_\mathcal{H}(m)%3D\max_{C\in\mathcal{X}:|C|%3Dm}|\mathcal{H}_C|>
+<img src=http://latex.codecogs.com/gif.latex?\tau_\mathcal{H}(m)%3D\max_{C\in\mathcal{X}:|C|%3Dm}|\mathcal{H}_C|>
 </div align=center>
 
 **Thm: Sauer's lemma**
