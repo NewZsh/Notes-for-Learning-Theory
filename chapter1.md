@@ -218,7 +218,7 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq%20L_S(h)+\frac{\epsilon}{2}\leq%20L_S(h)+\frac{\epsilon}{2}\leq%20L_S(h)+\epsilon>
   </div align=center>
 
-  Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq%20\min_{h\in\mathcal{H}L_S(h)+\epsilon}>
+  Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq%20\min_{h\in\mathcal{H}}L_S(h)+\epsilon>
 
   **Agnostic PAC sample complexity** Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]>, or more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>, then a finite hypothsis set <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> enjoys the agnostic PAC learnability with sample complexity
 
