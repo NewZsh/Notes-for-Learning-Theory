@@ -204,9 +204,8 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
 
 - Sample complexity under Agnostic PAC setting: via uniform convergence
 
-      Corresponding to Chapter 4 in UML, which is considered to be not that important. The main conclusion is 
-      that any finite class is learnable in the agnostic PAC setting with general loss functions, as long as 
-      the range of loss function is bounded.
+  **Def: $\epsilon$-representative** -representative sample) A training set S is called -representative
+(w.r.t. domain Z, hypothesis class H, loss function `, and distribution D) if
 
   Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]>, or more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>, then a finite hypothsis set <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> enjoys the agnostic PAC learnability with sample complexity
 
