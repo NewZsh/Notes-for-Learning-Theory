@@ -142,9 +142,15 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 <img src=http://latex.codecogs.com/gif.latex?\tau_\mathcal{H}(m)%3D\max_{C\in\mathcal{X}:|C|%3Dm}|\mathcal{H}_C|>
 </div align=center>
 
-Obviously, the growth function increases exponentially with $m$ if 
+Obviously, the growth function increases exponentially if <img src=http://latex.codecogs.com/gif.latex?m\leq\text{VCdim}(\mathcal{H})>. Otherwise, it increases polynomially, as the following lemma states.
 
-**Thm: Sauer's lemma**
+**Thm: Sauer's lemma** If <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}\leq%20d%3C\infty>. Then,
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?\forall%3Dm,\tau_\mathcal{H}(m)\leq\sum_{i%3D0}^d\binom{m}{i}>
+</div align=center>
+
+In particular, if <img src=http://latex.codecogs.com/gif.latex?m%3Ed+1> then <img src=http://latex.codecogs.com/gif.latex?\tau_\mathcal{H}(m)(em/d)^d>.
 
 **Uniform convergence for classes of small effective size**
 
