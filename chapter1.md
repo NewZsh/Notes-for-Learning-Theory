@@ -215,7 +215,7 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
   *proof*: for every <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>,
 
   <div align=center>
-  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leqL_S(h)+\frac{\epsilon}{2}\leqL_S(h)+\frac{\epsilon}{2}\leqL_S(h)+\epsilon>
+  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq%20L_S(h)+\frac{\epsilon}{2}\leq%20L_S(h)+\frac{\epsilon}{2}\leq%20L_S(h)+\epsilon>
   </div align=center>
 
   Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq\min_{h\in\mathcal{H}L_S(h)+\epsilon}
