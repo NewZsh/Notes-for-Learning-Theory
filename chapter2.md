@@ -152,6 +152,10 @@ Obviously, the growth function increases exponentially if <img src=http://latex.
 
 In particular, if <img src=http://latex.codecogs.com/gif.latex?m%3Ed+1> then <img src=http://latex.codecogs.com/gif.latex?\tau_\mathcal{H}(m)(em/d)^d>.
 
+    The proof is not that important.
+
+The Sauer's lemma says that: If <img src=http://latex.codecogs.com/gif.latex?\text{VCdim}(\mathcal{H})=d>, then even though <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> might be infinite, when restricting it to a finite set <img src=http://latex.codecogs.com/gif.latex?C\in\mathcal{X}> , its “effective” size, <img src=http://latex.codecogs.com/gif.latex?H_\mathcal{C}>, is only <img src=http://latex.codecogs.com/gif.latex?O(|C|^d)>.
+
 **Uniform convergence for classes of small effective size**
 
 # 1.4 Excercises and solutions
