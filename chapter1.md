@@ -204,11 +204,21 @@ which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\
 
 - Sample complexity under Agnostic PAC setting: via uniform convergence
 
-  **Def: $\epsilon$-representative** A training set S is called $\epsilon$-representative if 
+  **Def: $\epsilon$-representative** A training set S is called $\epsilon$-representative if
 
   <div align=center>
-  <img src=http://latex.codecogs.com/gif.latex?\forall%20h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)\leq\epsilon|>
+  <img src=http://latex.codecogs.com/gif.latex?\forall%20h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon>
   </div align=center>
+
+  **Thm** : ERM rule is suitable for $\epsilon/2$-representative samples.
+
+  *proof*: for every <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>,
+
+  <div align=center>
+  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leqL_S(h)+\frac{\epsilon}{2}\leqL_S(h)+\frac{\epsilon}{2}\leqL_S(h)+\frac{\epsilon}{2}+\frac{\epsilon}{2}>
+  </div align=center>
+
+  Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq\min_{h\in\mathcal{H}L_S(h)+\epsilon}
 
   Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]>, or more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>, then a finite hypothsis set <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> enjoys the agnostic PAC learnability with sample complexity
 
