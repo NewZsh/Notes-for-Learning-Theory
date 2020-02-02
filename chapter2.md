@@ -15,8 +15,9 @@
   - [1.1.2 Shattering](#112-shattering)
   - [1.1.3 The VC-dimension](#113-the-vc-dimension)
 - [1.2 Fundermental theorem of PAC learning](#12-fundermental-theorem-of-pac-learning)
-  - [1.3 Effective size of a hypothesis class](#13-effective-size-of-a-hypothesis-class)
-- [1.4 Excercises and solutions](#14-excercises-and-solutions)
+- [1.3 Effective size of a hypothesis class](#13-effective-size-of-a-hypothesis-class)
+- [1.4 Nonuniform learnability](#14-nonuniform-learnability)
+- [1.5 Excercises and solutions](#15-excercises-and-solutions)
 
 # 1.1 The VC-dimension
 
@@ -110,7 +111,6 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 
 **Thm** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a hypothesis class of functions from a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> and let the loss function be the 0-1 loss. Then, the following are equivalent:
 
- - The hypothesis class has a finite VC-dimension.
  - The hypothesis class has uniform convergence property.
 
 <div align=center>
@@ -131,10 +131,11 @@ To calculate the VC-dimension for a hypothesis set, we should show that
 </div align=center>
 
  - Any ERM rule is a successful PAC learner for the hypothesis class.
+ - The hypothesis class has a finite VC-dimension.
 
     Note that 1->2->3->4->5->6 are all learned. The leaving part is 6->1, which is solved below.
 
-## 1.3 Effective size of a hypothesis class
+# 1.3 Effective size of a hypothesis class
 
 **Def: Growth function** The growth function of <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is the number of different functions from a set <img src=http://latex.codecogs.com/gif.latex?C> of size <img src=http://latex.codecogs.com/gif.latex?m> to <img src=http://latex.codecogs.com/gif.latex?\{0,1\}> that can be obtained by restricting <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> to <img src=http://latex.codecogs.com/gif.latex?C>.
 
@@ -162,4 +163,8 @@ The Sauer's lemma says that: If <img src=http://latex.codecogs.com/gif.latex?\te
 <img src=http://latex.codecogs.com/gif.latex?|L_\mathcal{D}(h)-L_S(h)|\leq\frac{4+\sqrt{\log(\tau_\mathcal{H}(2m))}}{\delta\sqrt{2m}}>
 </div align=center>
 
-# 1.4 Excercises and solutions
+# 1.4 Nonuniform learnability
+
+
+
+# 1.5 Excercises and solutions
