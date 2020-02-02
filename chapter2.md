@@ -165,6 +165,12 @@ The Sauer's lemma says that: If <img src=http://latex.codecogs.com/gif.latex?\te
 
 # 1.4 Nonuniform learnability
 
+“Nonuniform learnability” allows the sample size to be nonuniform with respect to the different hypotheses with which the learner is competing. 
 
+A hypothesis is $(\epsilon, \delta)$-competitive with another if
+
+<div align=center>
+<img src=http://latex.codecogs.com/gif.latex?P(L_\mathcal{D}(h)\leq%20L_\mathcal{D}(h)+\epsilon)\geq%201-\epsilon>
+</div align=center>
 
 # 1.5 Excercises and solutions
