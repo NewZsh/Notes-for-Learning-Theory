@@ -7,8 +7,11 @@
 ## 1.1.1 softmax
 
 https://zhuanlan.zhihu.com/p/45014864
+
 https://kexue.fm/archives/3290
+
 http://www.matrix67.com/blog/archives/2830
+
 https://en.wikipedia.org/wiki/LogSumExp
 
 Denote the number of classes to be $C$, a model outputs $C$ scores for each class, the learning objective is: **the target score must be larger than non-target scores**. Mathematically speaking, denote $z=f(x)\in\mathcal{R}^C$, and $y$ is the target class, then it must hold that
@@ -29,7 +32,7 @@ To overcome this problem, we change a form of the training objective, that is: *
 
 $$\max(\max_{i\neq y} \{z_i\}-z_y, 0)$$
 
-However, in each epoch, only two gradients of +1 and -1 make effect on backpropogation, and the learning procedure may be too slow. So we must smooth the maximum function. Note that, the smoothe version of maximum funciton is LogSumExp (https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/LogSumExp) but not softmax.
+However, in each epoch, only two gradients of +1 and -1 make effect on backpropogation, and the learning procedure may be too slow. So we must smooth the maximum function. Note that, the smooth version of maximum funciton is LogSumExp (https://en.wikipedia.org/wiki/LogSumExp) but not softmax.
 
 $$\max \left(\log \left( \sum_{i\neq y} e^{z_i} \right)-z_y, 0 \right)$$
 
