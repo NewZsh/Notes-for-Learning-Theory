@@ -31,7 +31,7 @@ $$\max(\max_{i\neq y} \{z_i\}-z_y, 0)$$
 
 However, in each epoch, only two gradients of +1 and -1 make effect on backpropogation, and the learning procedure may be too slow. So we must smooth the maximum function. Note that, the smoothe version of maximum funciton is LogSumExp (https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/LogSumExp) but not softmax.
 
-$$\max(\log \left( \sum_{i\neq y} e^{z_i} \right)-z_y, 0)$$
+$$\max \left(\log \left( \sum_{i\neq y} e^{z_i} \right)-z_y, 0 \right)$$
 
 also note that the derivative of LogSumExp() function is near to the softmax function.
 
