@@ -14,6 +14,8 @@ http://www.matrix67.com/blog/archives/2830
 
 https://en.wikipedia.org/wiki/LogSumExp
 
+https://zhuanlan.zhihu.com/p/52108088
+
 Denote the number of classes to be $C$, a model outputs $C$ scores for each class, the learning objective is: **the target score must be larger than non-target scores**. Mathematically speaking, denote $z=f(x)\in\mathcal{R}^C$, and $y$ is the target class, then it must hold that
 
 $$\forall j\neq y, \ z_y>z_y$$
@@ -42,6 +44,10 @@ To encourage $z_y$ (ensure generalization), continue smothing the ReLU $\max(x,0
 
 $$\log \left( 1 + \exp \left[ \log \left( \sum_{i\neq y} e^{z_i} \right) - z_y\right] \right) = -\log \frac{e^{z_y}}{\sum_i e^{z_i}} $$
 
+1.1.2 AM softmax loss
+
+The similarity within the same class must be larger than that of the maximum with the any other class.
+
 1.1.2 circle loss
 
 adapt softmax in the case of multiple positive
@@ -56,3 +62,6 @@ Is it balanced? ($K$ positive samples, $L$ negative samples)
 
 $$L_u \sim \left[ \log \left\{ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))  \right\}\right]_+ = \left[ \log \sum_{j=1}^L \exp (\gamma (s_n^j+m)) +  \log \sum_{i=1}^K \exp (\gamma (-s_p^i))  \right]_+ \sim \gamma  \left[\max s_n  - \min s_p + m \right]_+$$
 
+The minimum similarity within the same class must be larger than that of the maximum with the any other class.
+
+Positive and negative samples then obtain equal gradients, perserving the balance property of gradients.
