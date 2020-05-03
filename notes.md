@@ -46,7 +46,7 @@ $$\log \left( 1 + \exp \left[ \log \left( \sum_{i\neq y} e^{z_i} \right) - z_y\r
 
 adapt softmax in the case of multiple positive
 
-$$\mathcal{L}_{uni} =  $$
+$$\mathcal{L}_u =  $$
 $$ = \log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
 
 Is it balanced? ($K$ positive samples, $L$ negative samples)
