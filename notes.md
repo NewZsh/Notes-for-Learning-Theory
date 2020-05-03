@@ -48,13 +48,11 @@ adapt softmax in the case of multiple positive
 
 $$ \mathcal{L}_u $$
 
-$$ \mathcal{L}_u = \log \left[ 1+ \sum_{i=1}^K \sum_{j=1}^L \exp (\gamma (s_n^j-s_p^i+m))\right] = \log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
+$$ \mathcal{L} = \log \left[ 1+ \sum_{i=1}^K \sum_{j=1}^L \exp (\gamma (s_n^j-s_p^i+m))\right] = \log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
 
 $$ L_u = \log \left[ 1+ \sum_{i=1}^K \sum_{j=1}^L \exp (\gamma (s_n^j-s_p^i+m))\right] = \log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
 
 Is it balanced? ($K$ positive samples, $L$ negative samples)
 
-$$\mathcal{L}_{uni} \sim \left[ \log \left\{ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))  \right\}\right]_+ \\
-= \left[ \log \sum_{j=1}^L \exp (\gamma (s_n^j+m)) +  \log \sum_{i=1}^K \exp (\gamma (-s_p^i))  \right]_+ \\
-\sim \gamma  \left[\max s_n  - \min s_p + m \right]_+$$
+$$L_u \sim \left[ \log \left\{ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))  \right\}\right]_+ = \left[ \log \sum_{j=1}^L \exp (\gamma (s_n^j+m)) +  \log \sum_{i=1}^K \exp (\gamma (-s_p^i))  \right]_+ \sim \gamma  \left[\max s_n  - \min s_p + m \right]_+$$
 
