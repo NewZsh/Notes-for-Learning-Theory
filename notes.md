@@ -48,7 +48,9 @@ adapt softmax in the case of multiple positive
 
 $$ \mathcal{L}_u = \log \left[ 1+ \sum_{i=1}^K \sum_{j=1}^L \exp (\gamma (s_n^j-s_p^i+m))\right] $$
 
-$$ = \log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
+Is it balanced?
+
+$$ = \log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m)) \sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
 
 Is it balanced? ($K$ positive samples, $L$ negative samples)
 
