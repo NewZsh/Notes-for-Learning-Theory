@@ -50,7 +50,7 @@ The similarity within the same class must be larger than that of the maximum wit
 
 1.1.2 circle loss
 
-adapt softmax in the case of multiple positive
+insight: classification learning and pairwise learning; adapt softmax in the case of multiple positive
 
 $$ \mathcal{L}_u $$
 
