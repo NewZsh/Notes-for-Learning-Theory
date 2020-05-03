@@ -41,3 +41,17 @@ also note that the derivative of LogSumExp() function is near to the softmax fun
 To encourage $z_y$ (ensure generalization), continue smothing the ReLU $\max(x,0)$, that is, the softpluts function $\log(1+e^x)$.
 
 $$\log \left( 1 + \exp \left[ \log \left( \sum_{i\neq y} e^{z_i} \right) - z_y\right] \right) = -\log \frac{e^{z_y}}{\sum_i e^{z_i}} $$
+
+1.1.2 circle loss
+
+adapt softmax in the case of multiple positive
+
+$$\mathcal{L}_{uni} = \log \left[ 1+ \sum_{i=1}^K \sum_{j=1}^L \exp (\gamma (s_n^j-s_p^i+m))\right] \\
+\log \left[ 1+ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))\right] $$
+
+Is it balanced? ($K$ positive samples, $L$ negative samples)
+
+$$\mathcal{L}_{uni} \sim \left[ \log \left\{ \sum_{j=1}^L \exp (\gamma (s_n^j+m))\sum_{i=1}^K \exp (\gamma (-s_p^i))  \right\}\right]_+ \\
+= \left[ \log \sum_{j=1}^L \exp (\gamma (s_n^j+m)) +  \log \sum_{i=1}^K \exp (\gamma (-s_p^i))  \right]_+ \\
+\sim \gamma  \left[\max s_n  - \min s_p + m \right]_+$$
+
