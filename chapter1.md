@@ -7,13 +7,13 @@
 - PGM: [Probabilistic Graphical Models: Principles and Techniques](https://mitpress.mit.edu/books/probabilistic-graphical-models) Daphne Koller and Nir Friedman, 2009.
 - GEV: [Graphical Models, Exponential Families, and Variational Inference](https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf) Martin J. Wainwright and Michael I. Jordan, 2008.
 
-**Chapter ONE Probably Approximately Correct (PAC)**
+<font size=4>**Chapter ONE Probably Approximately Correct (PAC)**</font>
 
-*Corresponding to Chapter 2-5 in UML.*
+__*Corresponding to Chapter 2-5 in UML.*__
 
-*This part mainly answers the question:*
-- *What can we know about the generalization error?*
-- *How does the hypothesis set (in application, the choice of classifier/regressor or so on) reflect our prior knowledge, or, inductive bias?*
+__*This part mainly answers the question:*__
+- __*What can we know about the generalization error?*__
+- __*How does the hypothesis set (in application, the choice of classifier/regressor or so on) reflect our prior knowledge, or, inductive bias?*__
 
 - [1.1 Formulation](#11-formulation)
   - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
@@ -33,7 +33,7 @@
 
 **input**:
 
-- Domain Set: instance <img src=http://latex.codecogs.com/gif.latex?x\in\mathcal{X}>.
+- Domain Set: instance $x \in \mathcal{X}$.<img src=http://latex.codecogs.com/gif.latex?x\in\mathcal{X}>.
 - Label Set: label <img src=http://latex.codecogs.com/gif.latex?y\in\mathcal{Y}>. Currently, just consider the binary classification task, i.e., <img src=http://latex.codecogs.com/gif.latex?y%3D%5C%7B0%2C1%5C%7D> or <img src=http://latex.codecogs.com/gif.latex?\{-1,+1\}>.
 - Training data: <img src=http://latex.codecogs.com/gif.latex?S%3D%28%28x_1%2Cy_1%29%2C%5Ccdots%2C%28x_m%2Cy_m%29%29> is a finite sequence.
 
