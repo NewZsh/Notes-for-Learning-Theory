@@ -57,7 +57,7 @@ $$L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{x\sim\mathcal{
 
 - Since the generalzation error is intractable, turn to minimize the Empirial risk:
 
-$$L_S(h)\overset{def}{=}\frac{|\{(x_i,y_i)\in S:h(x_i)\neq y_i\}|}{m}$$
+$$L_S(h)\overset{def}{=}\frac{|\left\{(x_i,y_i)\in S:h(x_i)\neq y_i\right\}|}{m}$$
 
 - Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S%28h%29%3D0>.
 
