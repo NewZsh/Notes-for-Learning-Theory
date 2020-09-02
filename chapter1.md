@@ -11,7 +11,9 @@
 
 *Corresponding to Chapter 2-5 in UML.*
 
-*This part mainly answers the quesion: What can we know about the generalization error? How does the hypothesis set (in application, the choice of classifier, regressor or so on) reflect our prior knowledge, or, inductive bias?*
+*This part mainly answers the question:*
+- *What can we know about the generalization error?*
+- *How does the hypothesis set (in application, the choice of classifier/regressor or so on) reflect our prior knowledge, or, inductive bias?*
 
 - [1.1 Formulation](#11-formulation)
   - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
