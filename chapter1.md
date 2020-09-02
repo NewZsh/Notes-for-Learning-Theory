@@ -45,29 +45,19 @@
 
     remark1: The learner is blind to the data generation model.
 
-    remark2: usually called 'training set', but must be 'training sequence', because the same sample may appear more than one time, and some training algorithms is order-sensitive. And for simplification, in the following, I do not distinguish the distribution over the training set or over the instances.
-  
-
+    remark2: usually called 'training set', but must be 'training sequence', because the same sample may repeat, and some training algorithms is order-sensitive.
 
 **Generalization error**: *a.k.a*, true error/risk.
 
-<div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}}[h(x)\neq%20f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20f(x)\})>
-</div align=center>
-
-  **[IMPORTANT]**: by the subscript <img src=http://latex.codecogs.com/gif.latex?\mathcal{D},f>, it means that the error of <img src=http://latex.codecogs.com/gif.latex?h> is the probability to draw a random instance <img src=http://latex.codecogs.com/gif.latex?x>, according to the distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?h(x)\neq%20f(x)>.
-
-      remark: here we neglect the measurability assumption.
+$$L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}}[h(x)\neq f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq f(x)\})$$
 
 # 1.2 From Empirical Risk Minimization (ERM) to Probably Approximately Correct (PAC)
 
 ## 1.2.1 ERM may lead to overfitting
 
 - Since the generalzation error is intractable, turn to minimize the Empirial risk:
-  
-<div align=center>
-<img src=http://latex.codecogs.com/gif.latex?L_S(h)\overset{def}{=}\frac{|(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}|}{m}>
-</div align=center>
+
+$$L_S(h)\overset{def}{=}\frac{|(x_i,y_i)\in S:h(x_i)\neq y_i\}|}{m}$$
 
 - Consider a 'lazy' learner <img src=http://latex.codecogs.com/gif.latex?h>, which predict <img src=http://latex.codecogs.com/gif.latex?y%3Dy_i%5C%20%5Ctext%7Biff.%7D%5C%20x%3Dx_i>, and 0 otherwise, has 1/2 probability to fail for unseen instances, i.e., <img src=http://latex.codecogs.com/gif.latex?L_%7B%5Cmathcal%7BD%7D%2Cf%7D%28h%29%3D1/2>, while <img src=http://latex.codecogs.com/gif.latex?L_S%28h%29%3D0>.
 
