@@ -7,13 +7,13 @@
 - PGM: [Probabilistic Graphical Models: Principles and Techniques](https://mitpress.mit.edu/books/probabilistic-graphical-models) Daphne Koller and Nir Friedman, 2009.
 - GEV: [Graphical Models, Exponential Families, and Variational Inference](https://people.eecs.berkeley.edu/~wainwrig/Papers/WaiJor08_FTML.pdf) Martin J. Wainwright and Michael I. Jordan, 2008.
 
-<font size=4>**Chapter ONE Probably Approximately Correct (PAC)**</font>
+<font size=6>**Chapter ONE Probably Approximately Correct (PAC)**</font>
 
-__*Corresponding to Chapter 2-5 in UML.*__
+<u>*Corresponding to Chapter 2-5 in UML.*</u>
 
-__*This part mainly answers the question:*__
-- __*What can we know about the generalization error?*__
-- __*How does the hypothesis set (in application, the choice of classifier/regressor or so on) reflect our prior knowledge, or, inductive bias?*__
+<u>*This part mainly answers the question:*</u>
+- <u>*What can we know about the generalization error?*</u>
+- <u>*How does the hypothesis set (in application, the choice of classifier/regressor or so on) reflect our prior knowledge, or, inductive bias?*</u>
 
 - [1.1 Formulation](#11-formulation)
   - [1.1.1 The learner's input, output, and evaluation](#111-the-learners-input-output-and-evaluation)
