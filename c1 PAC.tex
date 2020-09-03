@@ -29,7 +29,7 @@
 
 \textit{Corresponding to Chapter 2-5 in UML.}
 
-This part mainly answers the question:
+This part mainly answers the following questions:
 
 \begin{itemize}
 \item What can we know about the generalization error?
@@ -39,7 +39,8 @@ This part mainly answers the question:
 \newpage
 
 \tableofcontents
- 
+\newpage
+
 \section{Formulation}
 
 \subsection{The learner's input, output, and evaluation}
@@ -63,6 +64,8 @@ This part mainly answers the question:
     \textit{\underline{remark1}: The learner is blind to the data generation model.}
 
     \textit{\underline{remark2}: Usually called 'training set', but must be 'training sequence', because the same sample may repeat, and some training algorithms is order-sensitive.}
+    
+    \textit{\underline{remark3}: Strictly speaking, the distribution $\mathcal{D}$ is defined over $\mathcal{X}\times\mathcal{Y}$}.
 
 	\item \textbf{Generalization error}: \textit{a.k.a}, true error/risk.
 	
@@ -100,54 +103,41 @@ This part mainly answers the question:
 
 	\textbf{Definition}: Training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm to be able to achieve \textbf{accuracy} at least $1-\epsilon$ with \textbf{confidence} at least $1-\delta$.
 	
-	\begin{theorem} Finite hypothesis classes are PAC learnable, and the sample complexity is:
+	\begin{theorem} Finite hypothesis classes are PAC learnable, and the sample complexity is: $m_\mathcal{H}(\epsilon,\delta)=\frac{\log(|\mathcal{H}|/\delta)}{\epsilon}$.
 	\end{theorem}
 	
 	\begin{proof}
+	Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, $\mathcal{H}_B\subset\mathcal{H}$, and $\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$. Let $M$ be the set of 'misleading' samples, that is $M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$. Note that, 
 	
+	\begin{equation}
+	M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}
+	\end{equation}
+	
+	The goal is to bound the probability of the event $L_{\mathcal{D},f}(h_S)>\epsilon$,
+	\begin{equation}
+	\begin{split}
+	&\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)>\epsilon\})\leq\mathcal{D}^m(M) \\
+	&=\mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})         
+	=\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\{x_i:f(x_i)=h(x_i)\})  \\
+	&\overset{i.i.d.}{=}\sum_{h\in\mathcal{H}_B}(1-L_{\mathcal{D},f}(h))^m   
+	\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon m) \\
+	&\leq|\mathcal{H}|\exp(-\epsilon m)
+	\end{split}
+	\end{equation}
+
+	Let $|\mathcal{H}|\exp(-\epsilon m)\leq\delta$, we can solve that $m\geq\log(|\mathcal{H}|/\delta)/\epsilon$.
 	\end{proof}
-%
-%-  
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)=\log(|\mathcal{H}|/\delta)/\epsilon>
-%</div align=center>
-%  
-%*proof*: Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B> be the set of 'bad' hypothesis, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_B\subset\mathcal{H}>, and <img src=http://latex.codecogs.com/gif.latex?{\forall}h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)%3E\epsilon>
-%
-%Let <img src=http://latex.codecogs.com/gif.latex?M> be the set of 'misleading' samples, that is, <img src=http://latex.codecogs.com/gif.latex?M%3D%5C%7BS%3A%7B%5Cexists%7Dh%5Cin%5Cmathcal%7BH%7D_B%2CL_S%28h%29%3D0%5C%7D>. Note that,
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}$>
-%</div align=center>
-%
-%Since we would like to bound the probability of the event <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h_S)%3E\epsilon>
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)%3E\epsilon\})\leq\mathcal{D}^m(M)=\mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})>
-%</div align=center>
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?=\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\{x_i:f(x_i)=h(x_i)\})\overset{i.i.d.}{=}\sum_{h\in\mathcal{H}_B}(1-L_{\mathcal{D},f}(h))^m>
-%</div align=center>
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon%20m)\leq|\mathcal{H}|\exp(-\epsilon%20m)>
-%</div align=center>
-%
-%Let <img src=http://latex.codecogs.com/gif.latex?|\mathcal{H}|\exp(-\epsilon%20m)\leq\delta>, we can solve that <img src=http://latex.codecogs.com/gif.latex?m\geq\log(|\mathcal{H}|/\delta)/\epsilon>
-%
-%      please refer to UML Ex3.1, which states the monotonicity of sample complexity.
-%
-%## 1.2.4 No-Free-Lunch (neccessity of inductive bias)
-%
-%Let <img src=http://latex.codecogs.com/gif.latex?A> be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?m> be any number smaller than <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}/2>, representing a training set size. Then, there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=http://latex.codecogs.com/gif.latex?{X}\times\{0,1\}> such that:
-%
-%1. There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightartow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0>.
-%
-%2. With probability of at least <img src=http://latex.codecogs.com/gif.latex?1/7> over the choice of <img src=http://latex.codecogs.com/gif.latex?S\sim\mathcal{D}^m> we have that
-%<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(A(S))\geq%201/8>.
-%
+
+\subsection{No-Free-Lunch}
+
+	\begin{theorem}
+	Let $A$ be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain $\mathcal{X}$. Let $m$ be any number smaller than $\mathcal{X}/2$, representing a training set size. Then, there exists a distribution $\mathcal{D}$ over ${X}\times\{0,1\}$ such that:
+	
+	\begin{itemize}
+	\item There exists a function $f:\mathcal{X}\rightarrow\{0,1\}$ with $L_\mathcal{D}(f)=0$.
+	\item With probability of at least 1/7 over the choice of $S\sim\mathcal{D}^m$ we have that $L_\mathcal{D}(A(S))\geq 1/8$.
+	\end{itemize} 
+	\end{theorem}
 %*Proof*: Let <img src=http://latex.codecogs.com/gif.latex?C\subseteq\mathcal{X}> of size <img src=http://latex.codecogs.com/gif.latex?2m>. There are <img src=http://latex.codecogs.com/gif.latex?T%3D2^{2m}> possible functions <img src=http://latex.codecogs.com/gif.latex?C\rightarrow\{0,1\}>. Denote these functions by <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T>. For each such function, let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i> be a distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\times\{0,1\}> defined by
 %
 %<div align=center>
@@ -200,33 +190,28 @@ This part mainly answers the question:
 %
 %which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\geq%201/7}>.
 %
-%        Philosophically, *if someone can explain every phenomenon, his explanations are worthless.*
-%
-%## 1.2.5 Agnostic PAC
-%
-%- Beyond realizability assumption
-%
-%  In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Then Agnostic PAC learnability is defined as: training on <img src=http://latex.codecogs.com/gif.latex?m\geqm_\mathcal{H}(\epsilon,\delta)> samples, there exists an algorithm with *confidence* at least <img src=http://latex.codecogs.com/gif.latex?1-\delta> to achieve that:
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)\leq\min\limits_{h%27\in\mathcal{H}}L_\mathcal{D}(h%27)+\epsilon>
-%</div align=center>
-%
-%  in which
-%
-%  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq%20y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq%20y\})>
-%  </div align=center>
-%
-%- Beyond binary classification
-%  
-%  Multiclass classification: 0-1 loss; regression: square loss. Agnostic PAC learnability remains the same with
-%
-%  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,z)]>
-%  </div align=center>
-%
-%- Sample complexity under Agnostic PAC setting: via uniform convergence
+	NFL theorem tells the neccessity of inductive bias. Philosophically, if someone can explain every phenomenon, his explanations are worthless.
+	
+\subsection{Agnostic PAC}
+	\subsubsection{Beyond realizability assumption}
+	In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Then Agnostic PAC learnability is defined as: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm with \textbf{confidence} at least $1-\delta$ to achieve that:
+	
+	\begin{equation}
+	L_\mathcal{D}(h)\leq\min\limits_{h'\in\mathcal{H}}L_\mathcal{D}(h')+\epsilon
+	\end{equation}
+in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
+
+	\subsubsection{Beyond binary classification}
+
+	
+	Agnostic PAC learnability remains the same with:
+	
+	\begin{equation}
+	\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,z)]
+	\end{equation}
+in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss for regression. 
+
+	\subsubsection{Sample complexity under Agn-PAC: via uniform convergence}
 %
 %  **Def: $\epsilon$-representative** A training set S is called $\epsilon$-representative if
 %
@@ -250,7 +235,7 @@ This part mainly answers the question:
 %  <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq%20m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil>
 %  </div align=center>
 %
-%# 1.3 Error decomposition
+\section{Error decomposition}
 %
 %<div align=center>
 %<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)=\epsilon_{\text{app}}+\epsilon_{\text{est}}>
@@ -270,7 +255,22 @@ This part mainly answers the question:
 %
 %  This term results because the empirical risk (i.e., training error) is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
 %
-%# 1.5 Excercises and solutions
+
+\section{Summary}
+
+Now that, we have come to some important conclusions under the PAC learning framework:
+
+\begin{enumerate}
+\item No universal learner;
+\item Inductive bias is neccessary to avoid overfitting;
+\item Sample complexity is function about hypothesis set, confidence level and error, interestingly, it is nothing to do with the dimension of feature space;
+\item Inductive bias controls the balance of approximation error and estimation error.
+\end{enumerate}
+
+	We have reached the fundamental question in learning theory: \textbf{Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?} Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
+
+
+\section{Excercises and solutions}
 %
 %**1.5.1 (UML Ex2.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
 %
@@ -385,18 +385,5 @@ This part mainly answers the question:
 %      Chapter 2. VC-dimension
 %      Chapter 3. Bayesian-PAC
 %      Chapter 4. Generalization in Deep Learning$
-
-\section{Summary}
-
-Now that, we have come to some important conclusions under the PAC learning framework:
-
-\begin{enumerate}
-\item No universal learner;
-\item Inductive bias is neccessary to avoid overfitting;
-\item Sample complexity is function about hypothesis set, confidence level and error, interestingly, it is nothing to do with the dimension of feature space;
-\item Inductive bias controls the balance of approximation error and estimation error.
-\end{enumerate}
-
-	We have reached the fundamental question in learning theory: \textbf{Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?} Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
 
 \end{document}
