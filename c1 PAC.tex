@@ -137,49 +137,50 @@ This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the fol
 	\end{theorem}
 	
 	\begin{proof}
-	Let $C\subseteq\mathcal{X}$ of size $2m$. There are $T=2^{2m}$ possible functions $f_1,\cdots,f_T$ defined on $C\rightarrow\{0,1\}$. For each such function, let $\mathcal{D}_i$ be a distribution over $\mathcal{C}\times\{0,1\}$ defined by
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i(\{(x%2Cy)\})=\left\{\begin{matrix} 1/C%26\text{ if } y=f_i(x) \\ 0%2C%26\text{otherwise} \end{matrix}\right.>
-%</div align=center>
-%
-%There are <img src=http://latex.codecogs.com/gif.latex?k=(2m)^m> possible sequences of <img src=http://latex.codecogs.com/gif.latex?m> examples from <img src=http://latex.codecogs.com/gif.latex?C>. Denote these sequences by <img src=http://latex.codecogs.com/gif.latex?S_1,\cdots,S_k>. Also, we denote the sequence <img src=http://latex.codecogs.com/gif.latex?\mathca{S}_j> labeled by the function <img src=http://latex.codecogs.com/gif.latex?f_i> as <img src=http://latex.codecogs.com/gif.latex?\mathcal{S}_j^i>. If the distribuction is <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i>, then the possible training sets are <img src=http://latex.codecogs.com/gif.latex?S_1^i,\cdots,S_k^i> (with equal probability). Therefore,
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]=\frac{1}{k}\sum_{j=1}^kL_{\mathcal{D}_i}(A(S_j^i))>
-%</div align=center>
-%
-%Using the facts that 'maximum' is larger than 'average', and that 'average' is larger than 'minimum', we have
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1%2C\cdots%2CT\}} \frac{1}{k}\sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \frac{1}{T}\sum_{i=1}^T \frac{1}{k} \sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \min_{j\in\{1%2C\cdots%2Ck\}}\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))>
-%</div align=center>
-%
-%Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j=(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq m>. Therefore, for every <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\}>,
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)=\frac{1}{2m}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{2p}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}>
-%</div align=center>
-%
-%and hence,
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}>
-%</div align=center>
-%
-%Next, fix some <img src=http://latex.codecogs.com/gif.latex?r\in[p]>, We can partition all the functions <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T> into <img src=http://latex.codecogs.com/gif.latex?T/2> disjoint pairs, where for a pair <img src=http://latex.codecogs.com/gif.latex?(f_i,f_{i%27})> we have that <img src=http://latex.codecogs.com/gif.latex?\forall c\in C,f_i(c)\neq f_{i%27}(c)> iff. <img src=http://latex.codecogs.com/gif.latex?c=v_r>. Since for such a pair we must have <img src=http://latex.codecogs.com/gif.latex?S_j^i=S_j^{i%27}> it follows that <img src=http://latex.codecogs.com/gif.latex?\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i%27})(v_r)\neq f_{i%27}(v_r)]}=1>, which yields
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}=\frac{1}{2}>
-%</div align=center>
-%
-%In conclusion, it holds that
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq 1/4>
-%</div align=center>
-%
-%This means that for every algorithm, there exists <img src=http://latex.codecogs.com/gif.latex?f,\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0> and <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq 1/4>.
+	Let $C\subseteq\mathcal{X}$ of size $2m$. There are $T=2^{2m}$ possible functions $f_1,\cdots,f_T$ defined on $C\rightarrow\{0,1\}$. For each such function, let $\mathcal{D}_i$ be a distribution over $\mathcal{C}\times\{0,1\}$ defined as follow:
+	
+	\begin{equation*}
+	\mathcal{D}_i(\{(x,y)\})=\left\{
+	\begin{matrix} 1/C,& \mathrm{if} y=f_i(x) \\ 0,& \mathrm{otherwise} 
+	\end{matrix}\right.
+	\end{equation*}
+	
+	There are $k=(2m)^m$ possible sequences of $m$ examples from $C$. Denote these sequences by $S_1,\cdots,S_k$. Also, we denote the sequence $\mathcal{S}_j$ labelled by the function $f_i$ as $\mathcal{S}_j^i$. If the distribution is $\mathcal{D}_i$, then the possible training sets are $S_1^i,\cdots,S_k^i$, with equal probability. Therefore,
+
+	\begin{equation*}
+	\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]=\frac{1}{k}\sum_{j=1}^kL_{\mathcal{D}_i}(A(S_j^i))>
+	\end{equation*}
+	
+	Using the facts that 'maximum' is larger than 'average', and that 'average' is larger than 'minimum', we have
+	
+	\begin{equation*}
+	\max_{i\in\{1,\cdots,T\}} \frac{1}{k}\sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \frac{1}{T}\sum_{i=1}^T \frac{1}{k} \sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \min_{j\in\{1,\cdots,k\}}\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))
+	\end{equation*}
+
+	Next, fix some $j\in\{1,\cdots,k\}$. Denote $S_j=(x_1,\cdots,x_m)$ and let $v_1,\cdots,v_p$ be the examples in $C$ that do not appear in $S_j$. Clearly, $p\geq m$. Therefore, for every $h:C\rightarrow\{0,1\}$,
+	
+	\begin{equation*}
+	L_{\mathcal{D}_i}(h)=\frac{1}{2m}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{2p}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}
+	\end{equation*}
+and hence,
+
+	\begin{equation*}
+	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
+	\end{equation*}
+
+	Next, fix some $r\in[p]$, We can partition all the functions $f_1,\cdots,f_T$ into $T/2$ disjoint pairs, where for a pair $(f_i,f_{i'})$ we have that $\forall c\in C,f_i(c)\neq f_{i'}(c)$ iff. $c=v_r$. Since for such a pair we must have $S_j^i=S_j^{i'}$, it follows that $\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i'})(v_r)\neq f_{i'}(v_r)]}=1$, which yields:
+	
+	\begin{equation*}
+	\frac{1}{T}\sum_{i=1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}=\frac{1}{2}
+	\end{equation*}
+
+	In conclusion, it holds that
+
+	\begin{equation*}
+	\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq 1/4
+	\end{equation*}
+
+	This means that for every algorithm, there exists $f,\mathcal{D}$, such that $L_\mathcal{D}(f)=0$ and $\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq 1/4$.
 
 	\textit{(following is part of UML Ex5.1)} For a random variable $\theta\in[0,1]$ such that $\mathbb{E}(\theta)\geq 1/4$, we have:
 	
@@ -287,7 +288,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %**1.5.2 (UML Ex2.3) Axis Aligned rectangles** An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers <img src=http://latex.codecogs.com/gif.latex?a_1\leq b_1,a_2\leq b_2>, define the classifier <img src=http://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)> by
 %
 %<div align=center>
-%<img src=https://latex.codecogs.com/gif.latex?h(a_1%2Cb_1%2Ca_2%2Cb_2)(x_1%2C x_2) = \left\{\begin{aligned} %261%2C\text{ if } a_1 \leq x_1 \leq b1 \text{ and } a_2 \leq x_2 \leq b_2 \\ %260%2C\text{ otherwise} \end{aligned}\right.>
+%<img src=https://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)(x_1, x_2) = \left\{\begin{aligned} %261,\text{ if } a_1 \leq x_1 \leq b1 \text{ and } a_2 \leq x_2 \leq b_2 \\ %260,\text{ otherwise} \end{aligned}\right.>
 %</div align=center>
 %
 %The class of all axis aligned rectangles in the plane is defined as
@@ -345,7 +346,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 %</div align=center>
 %
-%**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2>, <img src=http://latex.codecogs.com/gif.latex?\mathcal{Y}=\{0%2C1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r%3Ar\in\mathbb{R}_&plus;\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{%5B\Vert x\Vert\leq r%5D}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
+%**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2>, <img src=http://latex.codecogs.com/gif.latex?\mathcal{Y}=\{0,1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r%3Ar\in\mathbb{R}_&plus;\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{%5B\Vert x\Vert\leq r%5D}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
 %
 %<div align=center>
 %<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
