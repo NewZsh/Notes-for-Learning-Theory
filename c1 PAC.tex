@@ -14,22 +14,19 @@
 \begin{document}
 \maketitle  
 
-*The notes is mainly based on the following book*
+The notes is mainly based on the following books:
 
 \begin{itemize}
 \item Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz and Shai Ben-David, 2014 \footnote{https://www.cs.huji.ac.il/\~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf}
 
-\item pattern recognition and machine learning, Christopher M. Bishop, 2006 \footnote{http://users.isr.ist.utl.pt/\~wurmd/Livros/school/Bishop\%20-\%20Pattern\%20Recognition\%20And\%20Machine\%20Learning\%20-\%20Springer\%20\%202006.pdf}
+\item pattern recognition and machine learning, Christopher M. Bishop, 2006 \footnote{http://users.isr.ist.utl.pt/\~wurmd/Livros/school/Bishop\ -\ Pattern\ Recognition\ And\ Machine\ Learning\ -\ Springer\ \ 2006.pdf}
 
 \item Probabilistic Graphical Models: Principles and Techniques, Daphne Koller and Nir Friedman, 2009 \footnote{https://mitpress.mit.edu/books/probabilistic-graphical-models}
 
 \item Graphical Models, Exponential Families, and Variational Inference, Martin J. Wainwright and Michael I. Jordan, 2008 \footnote{https://people.eecs.berkeley.edu/\~wainwrig/Papers/WaiJor08\_FTML.pdf}
 \end{itemize}
 
-
-\textit{Corresponding to Chapter 2-5 in UML.}
-
-This part mainly answers the following questions:
+This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the following questions:
 
 \begin{itemize}
 \item What can we know about the generalization error?
@@ -109,12 +106,12 @@ This part mainly answers the following questions:
 	\begin{proof}
 	Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, $\mathcal{H}_B\subset\mathcal{H}$, and $\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$. Let $M$ be the set of 'misleading' samples, that is $M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$. Note that, 
 	
-	\begin{equation}
+	\begin{equation*}
 	M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}
-	\end{equation}
+	\end{equation*}
 	
 	The goal is to bound the probability of the event $L_{\mathcal{D},f}(h_S)>\epsilon$,
-	\begin{equation}
+	\begin{equation*}
 	\begin{split}
 	&\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)>\epsilon\})\leq\mathcal{D}^m(M) \\
 	&=\mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})         
@@ -123,7 +120,7 @@ This part mainly answers the following questions:
 	\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon m) \\
 	&\leq|\mathcal{H}|\exp(-\epsilon m)
 	\end{split}
-	\end{equation}
+	\end{equation*}
 
 	Let $|\mathcal{H}|\exp(-\epsilon m)\leq\delta$, we can solve that $m\geq\log(|\mathcal{H}|/\delta)/\epsilon$.
 	\end{proof}
@@ -135,61 +132,63 @@ This part mainly answers the following questions:
 	
 	\begin{itemize}
 	\item There exists a function $f:\mathcal{X}\rightarrow\{0,1\}$ with $L_\mathcal{D}(f)=0$.
-	\item With probability of at least 1/7 over the choice of $S\sim\mathcal{D}^m$ we have that $L_\mathcal{D}(A(S))\geq 1/8$.
+	\item With probability of at least $1/7$ over the choice of $S\sim\mathcal{D}^m$ we have that $L_\mathcal{D}(A(S))\geq 1/8$.
 	\end{itemize} 
 	\end{theorem}
-%*Proof*: Let <img src=http://latex.codecogs.com/gif.latex?C\subseteq\mathcal{X}> of size <img src=http://latex.codecogs.com/gif.latex?2m>. There are <img src=http://latex.codecogs.com/gif.latex?T%3D2^{2m}> possible functions <img src=http://latex.codecogs.com/gif.latex?C\rightarrow\{0,1\}>. Denote these functions by <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T>. For each such function, let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i> be a distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{C}\times\{0,1\}> defined by
+	
+	\begin{proof}
+	Let $C\subseteq\mathcal{X}$ of size $2m$. There are $T=2^{2m}$ possible functions $f_1,\cdots,f_T$ defined on $C\rightarrow\{0,1\}$. For each such function, let $\mathcal{D}_i$ be a distribution over $\mathcal{C}\times\{0,1\}$ defined by
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BD%7D_i%28%5C%7B%28x%2Cy%29%5C%7D%29%3D%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%201/C%26%5Ctext%7B%20if%20%7D%20y%3Df_i%28x%29%20%5C%5C%200%2C%26%5Ctext%7Botherwise%7D%20%5Cend%7Bmatrix%7D%5Cright.>
+%<img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i(\{(x%2Cy)\})=\left\{\begin{matrix} 1/C%26\text{ if } y=f_i(x) \\ 0%2C%26\text{otherwise} \end{matrix}\right.>
 %</div align=center>
 %
-%There are <img src=http://latex.codecogs.com/gif.latex?k%3D(2m)^m> possible sequences of <img src=http://latex.codecogs.com/gif.latex?m> examples from <img src=http://latex.codecogs.com/gif.latex?C>. Denote these sequences by <img src=http://latex.codecogs.com/gif.latex?S_1,\cdots,S_k>. Also, we denote the sequence <img src=http://latex.codecogs.com/gif.latex?\mathca{S}_j> labeled by the function <img src=http://latex.codecogs.com/gif.latex?f_i> as <img src=http://latex.codecogs.com/gif.latex?\mathcal{S}_j^i>. If the distribuction is <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i>, then the possible training sets are <img src=http://latex.codecogs.com/gif.latex?S_1^i,\cdots,S_k^i> (with equal probability). Therefore,
+%There are <img src=http://latex.codecogs.com/gif.latex?k=(2m)^m> possible sequences of <img src=http://latex.codecogs.com/gif.latex?m> examples from <img src=http://latex.codecogs.com/gif.latex?C>. Denote these sequences by <img src=http://latex.codecogs.com/gif.latex?S_1,\cdots,S_k>. Also, we denote the sequence <img src=http://latex.codecogs.com/gif.latex?\mathca{S}_j> labeled by the function <img src=http://latex.codecogs.com/gif.latex?f_i> as <img src=http://latex.codecogs.com/gif.latex?\mathcal{S}_j^i>. If the distribuction is <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}_i>, then the possible training sets are <img src=http://latex.codecogs.com/gif.latex?S_1^i,\cdots,S_k^i> (with equal probability). Therefore,
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]%3D\frac{1}{k}\sum_{j%3D1}^kL_{\mathcal{D}_i}(A(S_j^i))>
+%<img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]=\frac{1}{k}\sum_{j=1}^kL_{\mathcal{D}_i}(A(S_j^i))>
 %</div align=center>
 %
 %Using the facts that 'maximum' is larger than 'average', and that 'average' is larger than 'minimum', we have
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?%5Cmax_%7Bi%5Cin%5C%7B1%2C%5Ccdots%2CT%5C%7D%7D%20%5Cfrac%7B1%7D%7Bk%7D%5Csum_%7Bj%3D1%7D%5Ek%20L_%7B%5Cmathcal%7BD%7D_i%7D%28A%28S_j%5Ei%29%29%20%5Cgeq%20%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20%5Cfrac%7B1%7D%7Bk%7D%20%5Csum_%7Bj%3D1%7D%5Ek%20L_%7B%5Cmathcal%7BD%7D_i%7D%28A%28S_j%5Ei%29%29%20%5Cgeq%20%5Cmin_%7Bj%5Cin%5C%7B1%2C%5Ccdots%2Ck%5C%7D%7D%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29>
+%<img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1%2C\cdots%2CT\}} \frac{1}{k}\sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \frac{1}{T}\sum_{i=1}^T \frac{1}{k} \sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \min_{j\in\{1%2C\cdots%2Ck\}}\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))>
 %</div align=center>
 %
-%Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j%3D(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq%20m>. Therefore, for every <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\}>,
+%Next, fix some <img src=http://latex.codecogs.com/gif.latex?j\in\{1,\cdots,k\}>. Denote <img src=http://latex.codecogs.com/gif.latex?S_j=(x_1,\cdots,x_m)> and let <img src=http://latex.codecogs.com/gif.latex?v_1,\cdots,v_p> be the examples in <img src=http://latex.codecogs.com/gif.latex?C> that do not appear in <img src=http://latex.codecogs.com/gif.latex?S_j>. Clearly, <img src=http://latex.codecogs.com/gif.latex?p\geq m>. Therefore, for every <img src=http://latex.codecogs.com/gif.latex?h:C\rightarrow\{0,1\}>,
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{2m}\sum_{x\in%20C}\mathbb{I}_{[h(x)\neq%20f_i(x)]}\geq\frac{1}{2p}\sum_{r%3D1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}>
+%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)=\frac{1}{2m}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{2p}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}>
 %</div align=center>
 %
 %and hence,
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq%20f_i(v_r)]}>
+%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}>
 %</div align=center>
 %
-%Next, fix some <img src=http://latex.codecogs.com/gif.latex?r\in[p]>, We can partition all the functions <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T> into <img src=http://latex.codecogs.com/gif.latex?T/2> disjoint pairs, where for a pair <img src=http://latex.codecogs.com/gif.latex?(f_i,f_{i%27})> we have that <img src=http://latex.codecogs.com/gif.latex?\forall%20c\in%20C,f_i(c)\neq%20f_{i%27}(c)> iff. <img src=http://latex.codecogs.com/gif.latex?c%3Dv_r>. Since for such a pair we must have <img src=http://latex.codecogs.com/gif.latex?S_j^i%3DS_j^{i%27}> it follows that <img src=http://latex.codecogs.com/gif.latex?\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i%27})(v_r)\neq%20f_{i%27}(v_r)]}%3D1>, which yields
+%Next, fix some <img src=http://latex.codecogs.com/gif.latex?r\in[p]>, We can partition all the functions <img src=http://latex.codecogs.com/gif.latex?f_1,\cdots,f_T> into <img src=http://latex.codecogs.com/gif.latex?T/2> disjoint pairs, where for a pair <img src=http://latex.codecogs.com/gif.latex?(f_i,f_{i%27})> we have that <img src=http://latex.codecogs.com/gif.latex?\forall c\in C,f_i(c)\neq f_{i%27}(c)> iff. <img src=http://latex.codecogs.com/gif.latex?c=v_r>. Since for such a pair we must have <img src=http://latex.codecogs.com/gif.latex?S_j^i=S_j^{i%27}> it follows that <img src=http://latex.codecogs.com/gif.latex?\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i%27})(v_r)\neq f_{i%27}(v_r)]}=1>, which yields
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i%3D1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq%20f_i(v_r)]}=\frac{1}{2}>
+%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}=\frac{1}{2}>
 %</div align=center>
 %
 %In conclusion, it holds that
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq%201/4>
+%<img src=http://latex.codecogs.com/gif.latex?\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq 1/4>
 %</div align=center>
 %
-%This means that for every algorithm, there exists <img src=http://latex.codecogs.com/gif.latex?f,\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0> and <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq%201/4>.
-%
-%(*following is part of UML Ex5.1*) For a random variable <img src=http://latex.codecogs.com/gif.latex?\theta\in[0,1]> such that <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}(\theta)\geq%201/4>, we have
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?p%28%5Ctheta%5Cgeq%5Cfrac%7B1%7D%7B8%7D%29%3D%5Cint_%5Cfrac%7B1%7D%7B8%7D%5E1%20p%28%5Ctheta%29%20%5Ctext%7Bd%7D%5Ctheta%20%5Cgeq%5Cint_%5Cfrac%7B1%7D%7B8%7D%5E1%20%5Ctheta%20p%28%5Ctheta%29%20%5Ctext%7Bd%7D%5Ctheta%3D%5Cmathbb%7BE%7D%28%5Ctheta%29-%5Cint_0%5E%5Cfrac%7B1%7D%7B8%7D%5Ctheta%20p%28%5Ctheta%29%5Ctext%7Bd%7D%5Ctheta%20%5C%5C%20%5Cgeq%5Cmathbb%7BE%7D%28%5Ctheta%29-%5Cfrac%7B1%7D%7B8%7D%5Cint_0%5E%5Cfrac%7B1%7D%7B8%7D%20p%28%5Ctheta%29%5Ctext%7Bd%7D%5Ctheta%20%3D%20%5Cfrac%7B1%7D%7B4%7D%20-%20%5Cfrac%7B1%7D%7B8%7D%5Cleft%28%201-%5Cint%5E1_%5Cfrac%7B1%7D%7B8%7Dp%28%5Ctheta%29%20%5Ctext%7Bd%7D%5Ctheta%20%5Cright%29>
-%</div align=center>
-%
-%which leads to <img src=http://latex.codecogs.com/gif.latex?p(\theta\geq%201/8)\geq%201/7}>.
-%
+%This means that for every algorithm, there exists <img src=http://latex.codecogs.com/gif.latex?f,\mathcal{D}>, such that <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0> and <img src=http://latex.codecogs.com/gif.latex?\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq 1/4>.
+
+	\textit{(following is part of UML Ex5.1)} For a random variable $\theta\in[0,1]$ such that $\mathbb{E}(\theta)\geq 1/4$, we have:
+	
+	\begin{equation*}
+	p\left(\theta\geq\frac{1}{8}\right)=\int_\frac{1}{8}^1 p(\theta) \mathrm{d}\theta \geq\int_\frac{1}{8}^1 \theta p(\theta) \mathrm{d}\theta=\mathbb{E}(\theta)-\int_0^\frac{1}{8}\theta p(\theta)\mathrm{d}\theta \geq\mathbb{E}(\theta)-\frac{1}{8}\int_0^\frac{1}{8} p(\theta)\mathrm{d}\theta = \frac{1}{4} - \frac{1}{8}\left( 1-\int^1_\frac{1}{8}p(\theta) \mathrm{d}\theta \right)
+	\end{equation*}
+which leads to $p(\theta\geq 1/8)\geq 1/7$.
+	\end{proof}
+
 	NFL theorem tells the neccessity of inductive bias. Philosophically, if someone can explain every phenomenon, his explanations are worthless.
 	
 \subsection{Agnostic PAC}
@@ -216,7 +215,7 @@ in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss fo
 %  **Def: $\epsilon$-representative** A training set S is called $\epsilon$-representative if
 %
 %  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?\forall%20h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon>
+%  <img src=http://latex.codecogs.com/gif.latex?\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon>
 %  </div align=center>
 %
 %  **Thm** : ERM rule is suitable for $\epsilon/2$-representative samples.
@@ -224,15 +223,15 @@ in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss fo
 %  *proof*: for every <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>,
 %
 %  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq%20L_S(h)+\frac{\epsilon}{2}\leq%20L_S(h)+\frac{\epsilon}{2}\leq%20L_S(h)+\epsilon>
+%  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\epsilon>
 %  </div align=center>
 %
-%  Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq%20\min_{h\in\mathcal{H}}L_S(h)+\epsilon>
+%  Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq \min_{h\in\mathcal{H}}L_S(h)+\epsilon>
 %
 %  **Agnostic PAC sample complexity** Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]>, or more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>, then a finite hypothsis set <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> enjoys the agnostic PAC learnability with sample complexity
 %
 %  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq%20m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil>
+%  <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil>
 %  </div align=center>
 %
 \section{Error decomposition}
@@ -244,7 +243,7 @@ in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss fo
 %in which
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h),\text{%20%20%20%20}\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
+%<img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h),\text{    }\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
 %</div align=center>
 %
 %- The Approximation Error
@@ -281,34 +280,34 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %Solution: according to the definition,
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=\sum_S\mathcal{D}^m(S)\frac{|\{(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}|}{m}>
-%<img src=http://latex.codecogs.com/gif.latex?=\sum_S\mathcal{D}\{(x_i,y_i)\in%20S:h(x_i)\neq%20y_i\}=\mathcal{D}(\{x:h(x)\neq%20f(x)\})_>
+%<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=\sum_S\mathcal{D}^m(S)\frac{|\{(x_i,y_i)\in S:h(x_i)\neq y_i\}|}{m}>
+%<img src=http://latex.codecogs.com/gif.latex?=\sum_S\mathcal{D}\{(x_i,y_i)\in S:h(x_i)\neq y_i\}=\mathcal{D}(\{x:h(x)\neq f(x)\})_>
 %</div align=center>
 %
-%**1.5.2 (UML Ex2.3) Axis Aligned rectangles** An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers <img src=http://latex.codecogs.com/gif.latex?a_1\leq%20b_1,a_2\leq%20b_2>, define the classifier <img src=http://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)> by
+%**1.5.2 (UML Ex2.3) Axis Aligned rectangles** An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers <img src=http://latex.codecogs.com/gif.latex?a_1\leq b_1,a_2\leq b_2>, define the classifier <img src=http://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)> by
 %
 %<div align=center>
-%<img src=https://latex.codecogs.com/gif.latex?h%28a_1%2Cb_1%2Ca_2%2Cb_2%29%28x_1%2C%20x_2%29%20%3D%20%5Cleft%5C%7B%5Cbegin%7Baligned%7D%20%261%2C%5Ctext%7B%20if%20%7D%20a_1%20%5Cleq%20x_1%20%5Cleq%20b1%20%5Ctext%7B%20and%20%7D%20a_2%20%5Cleq%20x_2%20%5Cleq%20b_2%20%5C%5C%20%260%2C%5Ctext%7B%20otherwise%7D%20%5Cend%7Baligned%7D%5Cright.>
+%<img src=https://latex.codecogs.com/gif.latex?h(a_1%2Cb_1%2Ca_2%2Cb_2)(x_1%2C x_2) = \left\{\begin{aligned} %261%2C\text{ if } a_1 \leq x_1 \leq b1 \text{ and } a_2 \leq x_2 \leq b_2 \\ %260%2C\text{ otherwise} \end{aligned}\right.>
 %</div align=center>
 %
 %The class of all axis aligned rectangles in the plane is defined as
 %
 %<div align=center>
-%<img src=https://latex.codecogs.com/gif.latex?\mathcal{H}^2_{\text{rec}}=\{h(a_1,b_1,a_2,b_2):a_1\leq%20b_1,\text{and%20}a_2\leq%20b_2\}.>
+%<img src=https://latex.codecogs.com/gif.latex?\mathcal{H}^2_{\text{rec}}=\{h(a_1,b_1,a_2,b_2):a_1\leq b_1,\text{and }a_2\leq b_2\}.>
 %</div align=center>
 %
 %Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
 %
 %1. Let <img src=https://latex.codecogs.com/gif.latex?A> be the algorithm that returns the smallest rectangle enclosing all positive examples in the training set. Show that <img src=https://latex.codecogs.com/gif.latex?A> is an ERM.
 %
-%2. Show that if <img src=https://latex.codecogs.com/gif.latex?A> receives a training set of size <img src=https://latex.codecogs.com/gif.latex?\geq%204\frac{\log(4/\delta)}{\epsilon}>, then, with probability of at least <img src=https://latex.codecogs.com/gif.latex?1-\delta> it returns a hypothesis with error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
-%*Hint*: Fix some distribution <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=https://latex.codecogs.com/gif.latex?\mathcal{X}>, let <img src=https://latex.codecogs.com/gif.latex?R^*%3DR(a^*_1,b^*_1,a^*_2,b^*_2)> be the rectangle that generates the labels, and let <img src=https://latex.codecogs.com/gif.latex?f> be the corresponding hypothesis. Let <img src=https://latex.codecogs.com/gif.latex?a_1\geq%20a^∗_1> be a number such that the probability mass (with respect to <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}>) of the rectangle <img src=https://latex.codecogs.com/gif.latex?R_1%3DR(a^*_1,a_1,a^*_2,b^*_2)> is exactly <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Similarly, let <img src=https://latex.codecogs.com/gif.latex?b_1,a_2,b_2> be numbers such that the probability masses of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_2%3DR(b_1,b^*_1,a^*_2,b^*_2)>, <img src=https://latex.codecogs.com/gif.latex?R_3%3DR(a^*_1,b^*_1,a^*_2,a_2)>, <img src=https://latex.codecogs.com/gif.latex?R_4%3DR(a^*_1,b^*_1,b_2,b^*_2)> are all <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Let <img src=https://latex.codecogs.com/gif.latex?R(S)> be the rectangle returned by <img src=https://latex.codecogs.com/gif.latex?A>. See illustration in Figure 2.2.
+%2. Show that if <img src=https://latex.codecogs.com/gif.latex?A> receives a training set of size <img src=https://latex.codecogs.com/gif.latex?\geq 4\frac{\log(4/\delta)}{\epsilon}>, then, with probability of at least <img src=https://latex.codecogs.com/gif.latex?1-\delta> it returns a hypothesis with error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
+%*Hint*: Fix some distribution <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=https://latex.codecogs.com/gif.latex?\mathcal{X}>, let <img src=https://latex.codecogs.com/gif.latex?R^*=R(a^*_1,b^*_1,a^*_2,b^*_2)> be the rectangle that generates the labels, and let <img src=https://latex.codecogs.com/gif.latex?f> be the corresponding hypothesis. Let <img src=https://latex.codecogs.com/gif.latex?a_1\geq a^∗_1> be a number such that the probability mass (with respect to <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}>) of the rectangle <img src=https://latex.codecogs.com/gif.latex?R_1=R(a^*_1,a_1,a^*_2,b^*_2)> is exactly <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Similarly, let <img src=https://latex.codecogs.com/gif.latex?b_1,a_2,b_2> be numbers such that the probability masses of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_2=R(b_1,b^*_1,a^*_2,b^*_2)>, <img src=https://latex.codecogs.com/gif.latex?R_3=R(a^*_1,b^*_1,a^*_2,a_2)>, <img src=https://latex.codecogs.com/gif.latex?R_4=R(a^*_1,b^*_1,b_2,b^*_2)> are all <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Let <img src=https://latex.codecogs.com/gif.latex?R(S)> be the rectangle returned by <img src=https://latex.codecogs.com/gif.latex?A>. See illustration in Figure 2.2.
 %
 %<div align=center>
 %<img src="https://i.ibb.co/d2mzC3Y/1.png" alt="1" border="0" />
 %</div align=center>
 %
-%  • Show that <img src=https://latex.codecogs.com/gif.latex?R(S)\subseteq%20R^*>
+%  • Show that <img src=https://latex.codecogs.com/gif.latex?R(S)\subseteq R^*>
 %
 %  • Show that if <img src=https://latex.codecogs.com/gif.latex?S> contains (positive) examples in all of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_1,R_2,R_3,R_4>, then the hypothesis returned by <img src=https://latex.codecogs.com/gif.latex?A> has error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
 %
@@ -317,7 +316,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %  • Use the union bound to conclude the argument.
 %
 %3. Repeat the previous question for the class of axis aligned rectangles in <img src=https://latex.codecogs.com/gif.latex?\mathbb{R}^d>.
-%4. Show that the runtime of applying the algorithm <img src=https://latex.codecogs.com/gif.latex?A> mentioned earlier is polynomial in <img src=https://latex.codecogs.com/gif.latex?d,%201/\epsilon>, and in <img src=https://latex.codecogs.com/gif.latex?\log(1/\delta)>.
+%4. Show that the runtime of applying the algorithm <img src=https://latex.codecogs.com/gif.latex?A> mentioned earlier is polynomial in <img src=https://latex.codecogs.com/gif.latex?d, 1/\epsilon>, and in <img src=https://latex.codecogs.com/gif.latex?\log(1/\delta)>.
 %
 %Solution:
 %
@@ -327,17 +326,17 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %
 %Solution:
 %
-%**1.5.3 (UML Ex3.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> be a discrete domain, and let <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D%3D%5C%7Bh_z%3Az%5Cin%5Cmathcal%7BX%7D%5C%7D%5Ccup%5C%7Bh%5E-%5C%7D>, where for each <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}>, <img src=http://latex.codecogs.com/gif.latex?h_z> is the function defined by <img src=http://latex.codecogs.com/gif.latex?h_z%28x%29%3D1> if <img src=http://latex.codecogs.com/gif.latex?x%3Dz> and <img src=http://latex.codecogs.com/gif.latex?h_z(x)%3D0> if <img src=http://latex.codecogs.com/gif.latex?x\neq%20z>. <img src=http://latex.codecogs.com/gif.latex?h^-> is simply the all-negative hypothesis, namely, <img src=http://latex.codecogs.com/gif.latex?\forall%20x\in\mathcal{X},h^-(x)%3D0>. The realizability assumption here implies that the true hypothesis <img src=http://latex.codecogs.com/gif.latex?f> labels negatively all examples in the domain, perhaps except one.
+%**1.5.3 (UML Ex3.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> be a discrete domain, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_{\text{Singleton}}=\{h_z%3Az\in\mathcal{X}\}\cup\{h^-\}>, where for each <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}>, <img src=http://latex.codecogs.com/gif.latex?h_z> is the function defined by <img src=http://latex.codecogs.com/gif.latex?h_z(x)=1> if <img src=http://latex.codecogs.com/gif.latex?x=z> and <img src=http://latex.codecogs.com/gif.latex?h_z(x)=0> if <img src=http://latex.codecogs.com/gif.latex?x\neq z>. <img src=http://latex.codecogs.com/gif.latex?h^-> is simply the all-negative hypothesis, namely, <img src=http://latex.codecogs.com/gif.latex?\forall x\in\mathcal{X},h^-(x)=0>. The realizability assumption here implies that the true hypothesis <img src=http://latex.codecogs.com/gif.latex?f> labels negatively all examples in the domain, perhaps except one.
 %
-%1. Describe an algorithm that implements the ERM rule for learning <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D> in the realizable setup.
-%2. Show that <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D_%7B%5Ctext%7BSingleton%7D%7D> is PAC learnable. Provide an upper bound on the sample complexity.
+%1. Describe an algorithm that implements the ERM rule for learning <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_{\text{Singleton}}> in the realizable setup.
+%2. Show that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_{\text{Singleton}}> is PAC learnable. Provide an upper bound on the sample complexity.
 %  
 %Solution:
 %1. Traverse <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}}> then output <img src=http://latex.codecogs.com/gif.latex?h_z> or <img src=http://latex.codecogs.com/gif.latex?h^->
 %2. If for any <img src=http://latex.codecogs.com/gif.latex?i\in[1,\cdots,m]>, such that <img src=http://latex.codecogs.com/gif.latex?h_{x_i}> is the true hypothesis, the algorithm can find it in the realizable setup. Otherwise, the algorithm outputs <img src=http://latex.codecogs.com/gif.latex?h^->, which can be either true or false (i.e., the target <img src=http://latex.codecogs.com/gif.latex?z^*> is not in the training set). Note that in the second case, the algorithm only makes a single error when generalize to all cases, and hence <img src=http://latex.codecogs.com/gif.latex?p(z^*)\geq\epsilon> (otherwise, it is meaningless),
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\exp(-\epsilon%20m)\leq\delta>
+%<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\exp(-\epsilon m)\leq\delta>
 %</div align=center>
 %
 %which leads to
@@ -346,7 +345,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 %</div align=center>
 %
-%**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BX%7D%3D%5Cmathbb%7BR%7D%5E2>, <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BY%7D%3D%5C%7B0%2C1%5C%7D>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?%5Cmathcal%7BH%7D%3D%5C%7Bh_r%3Ar%5Cin%5Cmathbb%7BR%7D_&plus;%5C%7D>, where <img src=http://latex.codecogs.com/gif.latex?h_r%28x%29%3D%5Cmathbb%7BI%7D_%7B%5B%5CVert%20x%5CVert%5Cleq%20r%5D%7D>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
+%**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2>, <img src=http://latex.codecogs.com/gif.latex?\mathcal{Y}=\{0%2C1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r%3Ar\in\mathbb{R}_&plus;\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{%5B\Vert x\Vert\leq r%5D}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
 %
 %<div align=center>
 %<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
@@ -360,23 +359,23 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %
 %**1.5.7 (UML Ex3.9)** 
 %
-%**1.5.8 (UML Ex5.3)** Prove that if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{X}|\geq%20km> for a positive integer <img src=http://latex.codecogs.com/gif.latex?k\geq%202>, then we can replace the lower bound in the No-Free-Lunch theorem. Namely, for the task of binary classification, 
+%**1.5.8 (UML Ex5.3)** Prove that if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{X}|\geq km> for a positive integer <img src=http://latex.codecogs.com/gif.latex?k\geq 2>, then we can replace the lower bound in the No-Free-Lunch theorem. Namely, for the task of binary classification, 
 %there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}\sim\mathcal{X}\times\{0,1\}> such that:
 %
-%- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)%3D0>.
+%- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0>.
 %
 %- <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}>.
 %
 %Solution: similar in the proof above, <img src=http://latex.codecogs.com/gif.latex?p\geq(k-1)m>, then
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)%3D\frac{1}{km}\sum_{x\in%20C}\mathbb{I}_{[h(x)\neq%20f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq%20f_i(v_r)]}>
+%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}>
 %</div align=center>
 %
 %And similarily,
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?%5Cfrac%7B1%7D%7BT%7D%5Csum_%7Bi%3D1%7D%5ET%20L_%7B%5Cmathcal%7BD%7D_i%7D%20%28A%28S_j%5Ei%29%29\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq%20f_i(v_r)]}>
+%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}>
 %</div align=center>
 %
 %And the final bound is <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>.
