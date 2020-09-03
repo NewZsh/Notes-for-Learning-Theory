@@ -50,9 +50,9 @@ This part mainly answers the following questions:
 	\item \textbf{input}:
 	
 	\begin{itemize}
-	\item Domain Set: instance $x \in \mathcal{X}$.
-	\item Label Set: label $y \in \mathcal{Y}$. Currently, just consider the binary classification task.
-	\item Training data: $S=((x_1,y_1),\cdots,(x_m,y_m))$ is a finite sequence.
+	\item Domain set: instance $x \in \mathcal{X}$.
+	\item Label set: label $y \in \mathcal{Y}$. Currently, just consider the binary classification task.
+	\item Training set: $S=((x_1,y_1),\cdots,(x_m,y_m))$ is a finite sequence.
 	\end{itemize}	 
 
 	\item \textbf{output}: hypothesis (or classifier, regressor) $h:\mathcal{X}\rightarrow\mathcal{Y}$.
@@ -63,7 +63,7 @@ This part mainly answers the following questions:
 
     \textit{\underline{remark1}: The learner is blind to the data generation model.}
 
-    \textit{\underline{remark2}: Usually called 'training set', but must be 'training sequence', because the same sample may repeat, and some training algorithms is order-sensitive.}
+    \textit{\underline{remark2}: Usually called 'training set', but must be 'training sequence', because the same samples may repeat, and some training algorithms are order-sensitive.}
     
     \textit{\underline{remark3}: Strictly speaking, the distribution $\mathcal{D}$ is defined over $\mathcal{X}\times\mathcal{Y}$}.
 
