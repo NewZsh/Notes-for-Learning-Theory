@@ -141,14 +141,14 @@ This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the fol
 	
 	\begin{equation*}
 	\mathcal{D}_i(\{(x,y)\})=\left\{
-	\begin{matrix} 1/C,& \mathrm{if} y=f_i(x) \\ 0,& \mathrm{otherwise} 
+	\begin{matrix} 1/|C|,& \mathrm{if} y=f_i(x) \\ 0,& \mathrm{otherwise} 
 	\end{matrix}\right.
 	\end{equation*}
 	
-	There are $k=(2m)^m$ possible sequences of $m$ examples from $C$. Denote these sequences by $S_1,\cdots,S_k$. Also, we denote the sequence $\mathcal{S}_j$ labelled by the function $f_i$ as $\mathcal{S}_j^i$. If the distribution is $\mathcal{D}_i$, then the possible training sets are $S_1^i,\cdots,S_k^i$, with equal probability. Therefore,
+	There are $k=(2m)^m$ possible sequences $S_1,\cdots,S_k$, each of $m$ examples from $C$. Also, we denote the sequence $\mathcal{S}_j$ labelled by the function $f_i$ as $\mathcal{S}_j^i$. If the distribution is $\mathcal{D}_i$, then the possible training sets are $S_1^i,\cdots,S_k^i$, with equal probability. Therefore,
 
 	\begin{equation*}
-	\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]=\frac{1}{k}\sum_{j=1}^kL_{\mathcal{D}_i}(A(S_j^i))>
+	\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]=\frac{1}{k}\sum_{j=1}^kL_{\mathcal{D}_i}(A(S_j^i))
 	\end{equation*}
 	
 	Using the facts that 'maximum' is larger than 'average', and that 'average' is larger than 'minimum', we have
@@ -196,9 +196,9 @@ which leads to $p(\theta\geq 1/8)\geq 1/7$.
 	\subsubsection{Beyond realizability assumption}
 	In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Then Agnostic PAC learnability is defined as: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm with \textbf{confidence} at least $1-\delta$ to achieve that:
 	
-	\begin{equation}
+	\begin{equation*}
 	L_\mathcal{D}(h)\leq\min\limits_{h'\in\mathcal{H}}L_\mathcal{D}(h')+\epsilon
-	\end{equation}
+	\end{equation*}
 in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
 
 	\subsubsection{Beyond binary classification}
@@ -212,49 +212,39 @@ in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\
 in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss for regression. 
 
 	\subsubsection{Sample complexity under Agn-PAC: via uniform convergence}
-%
-%  **Def: $\epsilon$-representative** A training set S is called $\epsilon$-representative if
-%
-%  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon>
-%  </div align=center>
-%
-%  **Thm** : ERM rule is suitable for $\epsilon/2$-representative samples.
-%
-%  *proof*: for every <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>,
-%
-%  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\epsilon>
-%  </div align=center>
-%
-%  Hence, <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)\leq \min_{h\in\mathcal{H}}L_S(h)+\epsilon>
-%
-%  **Agnostic PAC sample complexity** Assume that the range of the loss function is <img src=http://latex.codecogs.com/gif.latex?[0,1]>, or more general, <img src=http://latex.codecogs.com/gif.latex?[a,b]>, then a finite hypothsis set <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> enjoys the agnostic PAC learnability with sample complexity
-%
-%  <div align=center>
-%  <img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil>
-%  </div align=center>
-%
+	
+	\textbf{Definition $\epsilon$-representative}: A training set S is called $\epsilon$-representative if $\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$.
+	
+	\begin{theorem}
+	ERM rule is suitable for $\epsilon/2$-representative samples.
+	\end{theorem}
+	
+	\begin{proof}
+	for every $h\in\mathcal{H}$,
+	
+	\begin{equation}
+	L_\mathcal{D}(h_S)\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\epsilon
+	\end{equation}	 
+
+	Hence, $L_\mathcal{D}(h_S)\leq \min_{h\in\mathcal{H}}L_S(h)+\epsilon$.
+	\end{proof}
+
+	\noindent\textbf{Definition Agnostic PAC sample complexity}: Assume that the range of the loss function is <$[0,1]$, or more general, $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity $m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil$.
+
 \section{Error decomposition}
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(h_S)=\epsilon_{\text{app}}+\epsilon_{\text{est}}>
-%</div align=center>
-%
-%in which
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\epsilon_{\text{app}}=\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h),\text{    }\epsilon_{\text{est}}=L_\mathcal{D}(h_S)-\epsilon_{\text{app}}>
-%</div align=center>
-%
-%- The Approximation Error
-%
-%  This term measures how much risk we have because we restrict ourselves to a specific class, namely, how much *inductive bias* we have. The approximation error does not depend on the sample size and is determined by the hypothesis class chosen. Enlarging the hypothesis class can decrease the approximation error.
-%
-%- The Estimation Error
-%
-%  This term results because the empirical risk (i.e., training error) is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
-%
+
+	\begin{equation}
+	\begin{split}
+	L_\mathcal{D}(h_S) &= \epsilon_{\mathrm{app}}+\epsilon_{\mathrm{est}} \\
+	\epsilon_{\mathrm{app}} &= \min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h) \\
+	\epsilon_{\mathrm{est}} &= L_\mathcal{D}(h_S)-\epsilon_{\mathrm{app}}
+	\end{split}
+	\end{equation}		
+
+	\begin{itemize}
+	\item \textbf{The Approximation Error} measures how much risk we have because we restrict ourselves to a specific class, namely, how much *inductive bias* we have. The approximation error does not depend on the sample size and is determined by the hypothesis class chosen. Enlarging the hypothesis class can decrease the approximation error.
+	\item \textbf{The Estimation Error} measures the empirical risk (i.e., training error), which is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
+	\end{itemize}
 
 \section{Summary}
 
@@ -271,18 +261,83 @@ Now that, we have come to some important conclusions under the PAC learning fram
 
 
 \section{Excercises and solutions}
-%
-%**1.5.1 (UML Ex2.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be a class of binary classifiers over a domain <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>. Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}> be an unknown distribution over <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}>, and let <img src=http://latex.codecogs.com/gif.latex?f> be the target hypothesis in <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}>. Fix some <img src=http://latex.codecogs.com/gif.latex?h\in\mathcal{H}>. Show that the expected value of <img src=http://latex.codecogs.com/gif.latex?L_S(h)> over the choice of <img src=http://latex.codecogs.com/gif.latex?S> equals <img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D},f}(h)>, namely,
+
+\begin{itemize}
+\item[Ex1] (UML Ex2.2) Let $\mathcal{H}$ be a class of binary classifiers over a domain $\mathcal{X}$. Let $\mathcal{D}$ be an unknown distribution over $\mathcal{X}$, and let $f$ be the target hypothesis in $\mathcal{H}$. Fix some $h\in\mathcal{H}$, show that the expected value of $L_S(h)$ over the choice of $S$ equals $L_{\mathcal{D},f}(h)$, namely,
+
+\begin{equation*}
+\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)
+\end{equation*}
+
+\item[] \textbf{Solution}: according to the definition, 
+\begin{equation*}
+\begin{split}
+\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)] 
+&= \sum_{S} \mathcal{D}^m(S)\frac{|\{(x_i,y_i)\in S:h(x_i)\neq y_i\}|}{m} \\
+&= \sum_S\mathcal{D}\{(x_i,y_i)\in S:h(x_i)\neq y_i\} \\
+&= \mathcal{D}(\{x:h(x)\neq f(x)\}) = L_{\mathcal{D},f}(h)
+\end{split}
+\end{equation*}
+
+\item[Ex2] (UML Ex2.3)
+
+\item[Ex3] (UML Ex3.2) Let $\mathcal{X}$ be a discrete domain, and let $\mathcal{H}_{\text{Singleton}}=\{h_z:z\in\mathcal{X}\}\cup\{h^-\}$, where for each $z\in\mathcal{X}$, $h_z$ is the function defined by $h_z(x)=1$ if $x=z$ and $h_z(x)=0$ if $x\neq z$. $h^-$ is simply the all-negative hypothesis, namely, $\forall x\in\mathcal{X},h^-(x)=0$. The realizability assumption here implies that the true hypothesis $f$ labels negatively all examples in the domain, perhaps except one.
+
+	\begin{itemize}
+	\item[3.1] Describe an algorithm that implements the ERM rule for learning $\mathcal{H}_{\text{Singleton}}$ in the realizable setup.
+	\item[3.2] Show that $\mathcal{H}_{\text{Singleton}}$ is PAC learnable. Provide an upper bound on the sample complexity.
+	\end{itemize} 
+
+	\item[] \textbf{Solution}:
+	\begin{itemize}
+	\item[3.1] Traverse $z\in\mathcal{X}$ then output $h_z$ or $h^-$.
+	\item[3.2] If for any $i\in[1,\cdots,m]$, $h_{x_i}$ is the true hypothesis, the algorithm can find it in the realizable setup. Otherwise, the algorithm outputs $h^-$, which can be either true or false (i.e., the target $z^*$ is not in the training set). Note that in the second case, the algorithm only makes a single error when generalize to all cases, and hence $p(z^*)\geq\epsilon$ (otherwise, it is meaningless),
+	
+	\begin{equation*}
+	\mathbb{P}(L_{\mathcal{D},f}(h_S)>\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\exp(-\epsilon m)\leq\delta
+	\end{equation*}
+
+which leads to
+	\begin{equation*}
+	m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil
+	\end{equation*}
+	
+
+\item[Ex4] (UML Ex3.3) Let $\mathcal{X}=\mathbb{R}^2$, $\mathcal{Y}=\{0,1\}$, and let $\mathcal{H}$ be the class of concentric circles in the plane, that is, $\mathcal{H}=\{h_r:r\in\mathbb{R}_+\}$, where $h_r(x)=\mathbb{I}_{[\| x\|\leq r]}$. Prove that $\mathcal{H}$ is PAC learnable (assume realizability), and its sample complexity is bounded by
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)>
+%<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
 %</div align=center>
 %
-%Solution: according to the definition,
+%Solution:
+%
+\item[Ex5] (UML Ex3.4)
+
+\item[Ex6] (UML Ex3.7) 
+
+\item[Ex7] (UML Ex3.9)
+
+\item[Ex8] (UML Ex5.3) Prove that if $|\mathcal{X}|\geq km$ for a positive integer $k\geq 2$, then we can replace the lower bound in the No-Free-Lunch theorem. Namely, for the task of binary classification, there exists a distribution $\mathcal{D}\sim\mathcal{X}\times\{0,1\}$ such that:
+%
+%- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0>.
+%
+%- <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}>.
+%
+%Solution: similar in the proof above, <img src=http://latex.codecogs.com/gif.latex?p\geq(k-1)m>, then
 %
 %<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=\sum_S\mathcal{D}^m(S)\frac{|\{(x_i,y_i)\in S:h(x_i)\neq y_i\}|}{m}>
-%<img src=http://latex.codecogs.com/gif.latex?=\sum_S\mathcal{D}\{(x_i,y_i)\in S:h(x_i)\neq y_i\}=\mathcal{D}(\{x:h(x)\neq f(x)\})_>
+%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}>
+%</div align=center>
+%
+%And similarily,
+%
+%<div align=center>
+%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}>
+%</div align=center>
+%
+%And the final bound is <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>.
+\end{itemize} 
+%
 %</div align=center>
 %
 %**1.5.2 (UML Ex2.3) Axis Aligned rectangles** An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers <img src=http://latex.codecogs.com/gif.latex?a_1\leq b_1,a_2\leq b_2>, define the classifier <img src=http://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)> by
@@ -327,63 +382,11 @@ Now that, we have come to some important conclusions under the PAC learning fram
 %
 %Solution:
 %
-%**1.5.3 (UML Ex3.2)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}> be a discrete domain, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_{\text{Singleton}}=\{h_z%3Az\in\mathcal{X}\}\cup\{h^-\}>, where for each <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}>, <img src=http://latex.codecogs.com/gif.latex?h_z> is the function defined by <img src=http://latex.codecogs.com/gif.latex?h_z(x)=1> if <img src=http://latex.codecogs.com/gif.latex?x=z> and <img src=http://latex.codecogs.com/gif.latex?h_z(x)=0> if <img src=http://latex.codecogs.com/gif.latex?x\neq z>. <img src=http://latex.codecogs.com/gif.latex?h^-> is simply the all-negative hypothesis, namely, <img src=http://latex.codecogs.com/gif.latex?\forall x\in\mathcal{X},h^-(x)=0>. The realizability assumption here implies that the true hypothesis <img src=http://latex.codecogs.com/gif.latex?f> labels negatively all examples in the domain, perhaps except one.
-%
-%1. Describe an algorithm that implements the ERM rule for learning <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_{\text{Singleton}}> in the realizable setup.
-%2. Show that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}_{\text{Singleton}}> is PAC learnable. Provide an upper bound on the sample complexity.
-%  
-%Solution:
-%1. Traverse <img src=http://latex.codecogs.com/gif.latex?z\in\mathcal{X}}> then output <img src=http://latex.codecogs.com/gif.latex?h_z> or <img src=http://latex.codecogs.com/gif.latex?h^->
-%2. If for any <img src=http://latex.codecogs.com/gif.latex?i\in[1,\cdots,m]>, such that <img src=http://latex.codecogs.com/gif.latex?h_{x_i}> is the true hypothesis, the algorithm can find it in the realizable setup. Otherwise, the algorithm outputs <img src=http://latex.codecogs.com/gif.latex?h^->, which can be either true or false (i.e., the target <img src=http://latex.codecogs.com/gif.latex?z^*> is not in the training set). Note that in the second case, the algorithm only makes a single error when generalize to all cases, and hence <img src=http://latex.codecogs.com/gif.latex?p(z^*)\geq\epsilon> (otherwise, it is meaningless),
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\mathbb{P}(L_{\mathcal{D},f}(h_S)%3E\epsilon)\leq(1-p(z^*))^m\leq(1-\epsilon)^m\leq\exp(-\epsilon m)\leq\delta>
-%</div align=center>
-%
-%which leads to
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
-%</div align=center>
-%
-%**1.5.4 (UML Ex3.3)** Let <img src=http://latex.codecogs.com/gif.latex?\mathcal{X}=\mathbb{R}^2>, <img src=http://latex.codecogs.com/gif.latex?\mathcal{Y}=\{0,1\}>, and let <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> be the class of concentric circles in the plane, that is, <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}=\{h_r%3Ar\in\mathbb{R}_&plus;\}>, where <img src=http://latex.codecogs.com/gif.latex?h_r(x)=\mathbb{I}_{%5B\Vert x\Vert\leq r%5D}>. Prove that <img src=http://latex.codecogs.com/gif.latex?\mathcal{H}> is PAC learnable (assume realizability), and its sample complexity is bounded by
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?m_\mathcal{H}(\epsilon,\delta)\leq\left\lceil\frac{\log(1/\delta)}{\epsilon}\right\rceil>
-%</div align=center>
-%
-%Solution:
-%
-%**1.5.5 (UML Ex3.4)** 
-%
-%**1.5.6 (UML Ex3.7)** 
-%
-%**1.5.7 (UML Ex3.9)** 
-%
-%**1.5.8 (UML Ex5.3)** Prove that if <img src=http://latex.codecogs.com/gif.latex?|\mathcal{X}|\geq km> for a positive integer <img src=http://latex.codecogs.com/gif.latex?k\geq 2>, then we can replace the lower bound in the No-Free-Lunch theorem. Namely, for the task of binary classification, 
-%there exists a distribution <img src=http://latex.codecogs.com/gif.latex?\mathcal{D}\sim\mathcal{X}\times\{0,1\}> such that:
-%
-%- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0>.
-%
-%- <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}>.
-%
-%Solution: similar in the proof above, <img src=http://latex.codecogs.com/gif.latex?p\geq(k-1)m>, then
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}>
-%</div align=center>
-%
-%And similarily,
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}>
-%</div align=center>
-%
-%And the final bound is <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>.
-%
-%      To be continue...
-%      Chapter 2. VC-dimension
-%      Chapter 3. Bayesian-PAC
-%      Chapter 4. Generalization in Deep Learning$
+\end{itemize}
+\textit{
+      To be continue...
+      Chapter 2. VC-dimension
+      Chapter 3. Bayesian-PAC
+      Chapter 4. Generalization in Deep Learning}
 
 \end{document}
