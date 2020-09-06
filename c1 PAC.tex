@@ -141,7 +141,7 @@ This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the fol
 	
 	\begin{equation*}
 	\mathcal{D}_i(\{(x,y)\})=\left\{
-	\begin{matrix} 1/|C|,& \mathrm{if} y=f_i(x) \\ 0,& \mathrm{otherwise} 
+	\begin{matrix} 1/|C|,& \mathrm{if}\ y=f_i(x) \\ 0,& \mathrm{otherwise} 
 	\end{matrix}\right.
 	\end{equation*}
 	
@@ -229,7 +229,13 @@ in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss fo
 	Hence, $L_\mathcal{D}(h_S)\leq \min_{h\in\mathcal{H}}L_S(h)+\epsilon$.
 	\end{proof}
 
-	\noindent\textbf{Definition Agnostic PAC sample complexity}: Assume that the range of the loss function is <$[0,1]$, or more general, $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity $m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil$.
+	\begin{theorem}
+	\textbf{Agnostic PAC sample complexity} Assume that the range of the loss function is <$[0,1]$, or more general, $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity 
+	
+	\begin{equation}
+	m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil
+	\end{equation}
+	\end{theorem}
 
 \section{Error decomposition}
 
@@ -279,7 +285,53 @@ Now that, we have come to some important conclusions under the PAC learning fram
 \end{split}
 \end{equation*}
 
-\item[Ex2] (UML Ex2.3)
+\item[Ex2] (UML Ex2.3) \textbf{Axis Aligned rectangles}: An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers $a_1\leq b_1,a_2\leq b_2$, define the classifier $h(a_1,b_1,a_2,b_2)$ by:
+
+	\begin{equation*}
+	h(a_1,b_1,a_2,b_2)(x_1, x_2) = \left\{\begin{matrix}
+	1,& \mathrm{if}\ a_1 \leq x_1 \leq b1\ \mathrm{and}\  a_2 \leq x_2 \leq b_2 \\
+	0,& \mathrm{otherwise}
+	\end{matrix}\right.
+	\end{equation*}
+
+	The class of all axis aligned rectangles in the plane is defined as:
+	
+	\begin{equation*}
+	\mathcal{H}^2_{\mathrm{rec}}=\{h_{(a_1,b_1,a_2,b_2)}:a_1\leq b_1,\ \mathrm{and}\ a_2\leq b_2\}
+	\end{equation*}
+Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
+
+	\begin{itemize}
+	\item[2.1] Let $A$ be the algorithm that returns the smallest rectangle enclosing all positive examples in the training set. Show that $A$ is an ERM.
+	\end{itemize}
+%
+%1. 
+%
+%2. Show that if <img src=https://latex.codecogs.com/gif.latex?A> receives a training set of size <img src=https://latex.codecogs.com/gif.latex?\geq 4\frac{\log(4/\delta)}{\epsilon}>, then, with probability of at least <img src=https://latex.codecogs.com/gif.latex?1-\delta> it returns a hypothesis with error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
+%*Hint*: Fix some distribution <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=https://latex.codecogs.com/gif.latex?\mathcal{X}>, let <img src=https://latex.codecogs.com/gif.latex?R^*=R(a^*_1,b^*_1,a^*_2,b^*_2)> be the rectangle that generates the labels, and let <img src=https://latex.codecogs.com/gif.latex?f> be the corresponding hypothesis. Let <img src=https://latex.codecogs.com/gif.latex?a_1\geq a^∗_1> be a number such that the probability mass (with respect to <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}>) of the rectangle <img src=https://latex.codecogs.com/gif.latex?R_1=R(a^*_1,a_1,a^*_2,b^*_2)> is exactly <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Similarly, let <img src=https://latex.codecogs.com/gif.latex?b_1,a_2,b_2> be numbers such that the probability masses of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_2=R(b_1,b^*_1,a^*_2,b^*_2)>, <img src=https://latex.codecogs.com/gif.latex?R_3=R(a^*_1,b^*_1,a^*_2,a_2)>, <img src=https://latex.codecogs.com/gif.latex?R_4=R(a^*_1,b^*_1,b_2,b^*_2)> are all <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Let <img src=https://latex.codecogs.com/gif.latex?R(S)> be the rectangle returned by <img src=https://latex.codecogs.com/gif.latex?A>. See illustration in Figure 2.2.
+%
+%<div align=center>
+%<img src="https://i.ibb.co/d2mzC3Y/1.png" alt="1" border="0" />
+%</div align=center>
+%
+%  • Show that <img src=https://latex.codecogs.com/gif.latex?R(S)\subseteq R^*>
+%
+%  • Show that if <img src=https://latex.codecogs.com/gif.latex?S> contains (positive) examples in all of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_1,R_2,R_3,R_4>, then the hypothesis returned by <img src=https://latex.codecogs.com/gif.latex?A> has error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
+%
+%  • For each <img src=https://latex.codecogs.com/gif.latex?i\in\{1,\cdots,4\}>, upper bound the probability that <img src=https://latex.codecogs.com/gif.latex?S> does not contain an example from <img src=https://latex.codecogs.com/gif.latex?R_i>.
+%
+%  • Use the union bound to conclude the argument.
+%
+%3. Repeat the previous question for the class of axis aligned rectangles in <img src=https://latex.codecogs.com/gif.latex?\mathbb{R}^d>.
+%4. Show that the runtime of applying the algorithm <img src=https://latex.codecogs.com/gif.latex?A> mentioned earlier is polynomial in <img src=https://latex.codecogs.com/gif.latex?d, 1/\epsilon>, and in <img src=https://latex.codecogs.com/gif.latex?\log(1/\delta)>.
+%
+%Solution:
+%
+%1. In realizable setup, since the tightest rectangle enclosing all positive example is returned, all positive and negative instances are correctly classified.
+%
+%2. 
+%
+%Solution:
 
 \item[Ex3] (UML Ex3.2) Let $\mathcal{X}$ be a discrete domain, and let $\mathcal{H}_{\text{Singleton}}=\{h_z:z\in\mathcal{X}\}\cup\{h^-\}$, where for each $z\in\mathcal{X}$, $h_z$ is the function defined by $h_z(x)=1$ if $x=z$ and $h_z(x)=0$ if $x\neq z$. $h^-$ is simply the all-negative hypothesis, namely, $\forall x\in\mathcal{X},h^-(x)=0$. The realizability assumption here implies that the true hypothesis $f$ labels negatively all examples in the domain, perhaps except one.
 
@@ -313,80 +365,53 @@ which leads to
 %
 \item[Ex5] (UML Ex3.4)
 
-\item[Ex6] (UML Ex3.7) 
+\item[Ex6] (UML Ex3.7) The Bayes optimal predictor: Show that for every probability distribution $\mathcal{D}$, the Bayes optimal predictor $f_\mathcal{D}$ is optimal, in the sense that for every classifier $g$ from $X$ to $\{0, 1\}$, $L_\mathcal{D}(f_{\mathcal{D}}) \leq L_\mathcal{D}(g)$.
 
-\item[Ex7] (UML Ex3.9)
+\item[] \textbf{Solution}: The Bayes predictor labels a sample $x$ according to
 
+	\begin{equation*}
+	f_\mathcal{D}(x) = \left\{
+	\begin{matrix} 0,& \mathrm{if}\ \mathcal{D}((x,0))\geq \mathcal{D}((x,1)) \\ 1,& \mathrm{otherwise} 
+	\end{matrix}\right.
+	\end{equation*}
+	
+	When it labels a sample to be class 0, it holds that $\mathcal{D}((x,0))\geq \mathcal{D}((x,1))$. If the true label function also makes such a decision, then Bayes predictor makes no error. Otherwise, $f(x)=1$, but its probability is no more than 1/2. Any other classifier that labels $x$ to be class 1 will suffer a risk no less than 1/2. Hence, in total, Bayes predictor is the optimal.
+
+\item[Ex7] (UML Ex3.9) Consider a variant of the PAC model in which there are two example oracles: one that generates positive examples and one that generates negative examples, both according to the underlying distribution $\mathcal{D} on \mathcal{X}$. Formally, given a target function $f: \mathcal{X}\rightarrow\{0,1\}$, let $\mathcal{D}^+ be the distribution over \mathcal{X}^+ = \{x\in\mathcal{X}: f(x)= 1\}$ defined by $\mathcal{D}^+(A) = \mathcal{D}(A)/\mathcal{D}(\mathcal{X}^+)$, for every $A\in\mathcal{X}^+$. Similarly, $\mathcal{D}^-$ is the distribution over $\mathcal{X}^-$ induced by $\mathcal{D}$. 
+	
+	The definition of PAC learnability in the two-oracle model is the same as the standard definition of PAC learnability except that here the learner has access to $m_\mathcal{H}^+(\epsilon, \delta)$  i.i.d. examples from $\mathcal{D}^+$ and $m^-(\epsilon, \delta)$ i.i.d. examples from $\mathcal{D}^-$. The learner's goal is to output $h$ s.t. with probability at least $1-\delta$ (over the choice of the two training sets, and possibly over the nondeterministic decisions made by the learning algorithm), both $L(\mathcal{D}^+, f)(h)\leq\epsilon$ and $L(\mathcal{D}^-, f)(h)\leq\epsilon$.
+	\begin{itemize}
+	\item[7.1] Show that if $H$ is PAC learnable (in the standard one-oracle model), then $H$ is PAC learnable in the two-oracle model.
+	\item[7.2] Define $h^+$ to be the always-plus hypothesis and $h^-$ to be the always minus hypothesis. Assume that $h^+, h^-\in \mathcal{H}$. Show that if $\mathcal{H}$ is PAC learnable in the two-oracle model, then $\mathcal{H}$ is PAC learnable in the standard one-oracle model.
+	\end{itemize}
+	
 \item[Ex8] (UML Ex5.3) Prove that if $|\mathcal{X}|\geq km$ for a positive integer $k\geq 2$, then we can replace the lower bound in the No-Free-Lunch theorem. Namely, for the task of binary classification, there exists a distribution $\mathcal{D}\sim\mathcal{X}\times\{0,1\}$ such that:
-%
-%- There exists a function <img src=http://latex.codecogs.com/gif.latex?f:\mathcal{X}\rightarrow\{0,1\}> with <img src=http://latex.codecogs.com/gif.latex?L_\mathcal{D}(f)=0>.
-%
-%- <img src=http://latex.codecogs.com/gif.latex?\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}>.
-%
-%Solution: similar in the proof above, <img src=http://latex.codecogs.com/gif.latex?p\geq(k-1)m>, then
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}>
-%</div align=center>
-%
-%And similarily,
-%
-%<div align=center>
-%<img src=http://latex.codecogs.com/gif.latex?\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}>
-%</div align=center>
-%
-%And the final bound is <img src=http://latex.codecogs.com/gif.latex?1/2-1/2k>.
+
+	\begin{itemize}
+	\item[8.1] There exists a function $f:\mathcal{X}\rightarrow\{0,1\}$ with $L_\mathcal{D}(f)=0$.
+	\item[8.2] $\mathbb{E}_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq\frac{1}{2}-\frac{1}{2k}$.
+	\end{itemize}
+
+\item[] \textbf{Solution}:
+	Only the second proposition should be proved. Similar with the proof in above, 
+	\begin{equation*}
+	L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}
+	\end{equation*}
+ 
+And similarity,
+
+	\begin{equation*}
+	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
+	\end{equation*}
+	
+	So the final bound is $1/2-1/2k$.
 \end{itemize} 
-%
-%</div align=center>
-%
-%**1.5.2 (UML Ex2.3) Axis Aligned rectangles** An axis aligned rectangle classifier in the plane is a classifier that assigns the value 1 to a point if and only if it is inside a certain rectangle. Formally, given real numbers <img src=http://latex.codecogs.com/gif.latex?a_1\leq b_1,a_2\leq b_2>, define the classifier <img src=http://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)> by
-%
-%<div align=center>
-%<img src=https://latex.codecogs.com/gif.latex?h(a_1,b_1,a_2,b_2)(x_1, x_2) = \left\{\begin{aligned} %261,\text{ if } a_1 \leq x_1 \leq b1 \text{ and } a_2 \leq x_2 \leq b_2 \\ %260,\text{ otherwise} \end{aligned}\right.>
-%</div align=center>
-%
-%The class of all axis aligned rectangles in the plane is defined as
-%
-%<div align=center>
-%<img src=https://latex.codecogs.com/gif.latex?\mathcal{H}^2_{\text{rec}}=\{h(a_1,b_1,a_2,b_2):a_1\leq b_1,\text{and }a_2\leq b_2\}.>
-%</div align=center>
-%
-%Note that this is an infinite size hypothesis class. Throughout this exercise we rely on the realizability assumption.
-%
-%1. Let <img src=https://latex.codecogs.com/gif.latex?A> be the algorithm that returns the smallest rectangle enclosing all positive examples in the training set. Show that <img src=https://latex.codecogs.com/gif.latex?A> is an ERM.
-%
-%2. Show that if <img src=https://latex.codecogs.com/gif.latex?A> receives a training set of size <img src=https://latex.codecogs.com/gif.latex?\geq 4\frac{\log(4/\delta)}{\epsilon}>, then, with probability of at least <img src=https://latex.codecogs.com/gif.latex?1-\delta> it returns a hypothesis with error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
-%*Hint*: Fix some distribution <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}> over <img src=https://latex.codecogs.com/gif.latex?\mathcal{X}>, let <img src=https://latex.codecogs.com/gif.latex?R^*=R(a^*_1,b^*_1,a^*_2,b^*_2)> be the rectangle that generates the labels, and let <img src=https://latex.codecogs.com/gif.latex?f> be the corresponding hypothesis. Let <img src=https://latex.codecogs.com/gif.latex?a_1\geq a^∗_1> be a number such that the probability mass (with respect to <img src=https://latex.codecogs.com/gif.latex?\mathcal{D}>) of the rectangle <img src=https://latex.codecogs.com/gif.latex?R_1=R(a^*_1,a_1,a^*_2,b^*_2)> is exactly <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Similarly, let <img src=https://latex.codecogs.com/gif.latex?b_1,a_2,b_2> be numbers such that the probability masses of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_2=R(b_1,b^*_1,a^*_2,b^*_2)>, <img src=https://latex.codecogs.com/gif.latex?R_3=R(a^*_1,b^*_1,a^*_2,a_2)>, <img src=https://latex.codecogs.com/gif.latex?R_4=R(a^*_1,b^*_1,b_2,b^*_2)> are all <img src=https://latex.codecogs.com/gif.latex?\epsilon/4>. Let <img src=https://latex.codecogs.com/gif.latex?R(S)> be the rectangle returned by <img src=https://latex.codecogs.com/gif.latex?A>. See illustration in Figure 2.2.
-%
-%<div align=center>
-%<img src="https://i.ibb.co/d2mzC3Y/1.png" alt="1" border="0" />
-%</div align=center>
-%
-%  • Show that <img src=https://latex.codecogs.com/gif.latex?R(S)\subseteq R^*>
-%
-%  • Show that if <img src=https://latex.codecogs.com/gif.latex?S> contains (positive) examples in all of the rectangles <img src=https://latex.codecogs.com/gif.latex?R_1,R_2,R_3,R_4>, then the hypothesis returned by <img src=https://latex.codecogs.com/gif.latex?A> has error of at most <img src=https://latex.codecogs.com/gif.latex?\epsilon>.
-%
-%  • For each <img src=https://latex.codecogs.com/gif.latex?i\in\{1,\cdots,4\}>, upper bound the probability that <img src=https://latex.codecogs.com/gif.latex?S> does not contain an example from <img src=https://latex.codecogs.com/gif.latex?R_i>.
-%
-%  • Use the union bound to conclude the argument.
-%
-%3. Repeat the previous question for the class of axis aligned rectangles in <img src=https://latex.codecogs.com/gif.latex?\mathbb{R}^d>.
-%4. Show that the runtime of applying the algorithm <img src=https://latex.codecogs.com/gif.latex?A> mentioned earlier is polynomial in <img src=https://latex.codecogs.com/gif.latex?d, 1/\epsilon>, and in <img src=https://latex.codecogs.com/gif.latex?\log(1/\delta)>.
-%
-%Solution:
-%
-%1. In realizable setup, since the tightest rectangle enclosing all positive example is returned, all positive and negative instances are correctly classified.
-%
-%2. 
-%
-%Solution:
-%
+
 \end{itemize}
 \textit{
-      To be continue...
-      Chapter 2. VC-dimension
-      Chapter 3. Bayesian-PAC
+      To be continue...\\
+      Chapter 2. VC-dimension\\
+      Chapter 3. Bayesian-PAC\\
       Chapter 4. Generalization in Deep Learning}
 
 \end{document}
