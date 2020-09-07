@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{ntheorem}
+\usepackage{bbm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem*{proof}{Proof}
@@ -82,7 +83,7 @@ This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the fol
 	L_S(h)\overset{def}{=}\frac{|\left\{(x_i,y_i)\in S:h(x_i)\neq y_i \right\}|}{m}
 	\end{equation}
 
-	Consider a 'lazy' learner $h$, which predict $y=y_i$ iff. $x=x_i$, and 0 otherwise. It has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D},f}(h)=1/2$, while $L_S(h)=0$. Hence, it is an excellent learner on the training set, but a poor learner in the universe case. This phenomenon is called 'overfitting'. The lesson behind this learner is: without restriction on the hypothesis set, ERM can lead to overfitting.
+	Consider a 'lazy' learner $h$, which predict $y=y_i$ iff. $x=x_i$, and 0 otherwise. It has 1/2 probability to fail for unseen instances, i.e., $L_{\mathcal{D},f}(h)=1/2$, while $L_S(h)=0$. Hence, it is an excellent learner on the training set, but a poor learner in the universe case. This phenomenon is called 'overfitting'. The lesson behind this learner is: \textbf{without restriction on the hypothesis set, ERM can lead to overfitting.}
 
 \subsection{ERM with restricted hypothesis set (inductive bias)}
 
@@ -190,7 +191,7 @@ and hence,
 which leads to $p(\theta\geq 1/8)\geq 1/7$.
 	\end{proof}
 
-	NFL theorem tells the neccessity of inductive bias. Philosophically, if someone can explain every phenomenon, his explanations are worthless.
+	\textbf{NFL theorem tells the necessity of inductive bias.} Philosophically, if someone can explain every phenomenon, his explanations are worthless.
 	
 \subsection{Agnostic PAC}
 	\subsubsection{Beyond realizability assumption}
@@ -266,7 +267,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 	We have reached the fundamental question in learning theory: \textbf{Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?} Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
 
 
-\section{Excercises and solutions}
+\section{Exercises and solutions}
 
 \begin{itemize}
 \item[Ex1] (UML Ex2.2) Let $\mathcal{H}$ be a class of binary classifiers over a domain $\mathcal{X}$. Let $\mathcal{D}$ be an unknown distribution over $\mathcal{X}$, and let $f$ be the target hypothesis in $\mathcal{H}$. Fix some $h\in\mathcal{H}$, show that the expected value of $L_S(h)$ over the choice of $S$ equals $L_{\mathcal{D},f}(h)$, namely,
@@ -275,13 +276,13 @@ Now that, we have come to some important conclusions under the PAC learning fram
 \mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)]=L_{\mathcal{D},f}(h)
 \end{equation*}
 
-\item[] \textbf{Solution}: according to the definition, 
+\item[] \textbf{Solution}: By the linearity of expectation,
 \begin{equation*}
 \begin{split}
 \mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[L_S(h)] 
-&= \sum_{S} \mathcal{D}^m(S)\frac{|\{(x_i,y_i)\in S:h(x_i)\neq y_i\}|}{m} \\
-&= \sum_S\mathcal{D}\{(x_i,y_i)\in S:h(x_i)\neq y_i\} \\
-&= \mathcal{D}(\{x:h(x)\neq f(x)\}) = L_{\mathcal{D},f}(h)
+&= \mathop\mathbb{E}\limits_{S\sim\mathcal{D}^m}[\frac{1}{m}\sum_{i=1}^m \mathbbm{1}_{[h(x_i)\neq f(x_i)]}] \\
+&= \frac{1}{m}\sum_{i=1}^m \mathop\mathbb{E}\limits_{x_i \sim\mathcal{D}^m}[\mathbbm{1}_{[h(x_i)\neq f(x_i)]}] \\
+&= \frac{1}{m} \cdot m \cdot L_{\mathcal{D},f}(h) = L_{\mathcal{D},f}(h)
 \end{split}
 \end{equation*}
 
