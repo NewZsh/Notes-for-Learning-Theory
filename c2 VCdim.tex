@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ntheorem}
+\usepackage{graphicx}
+\usepackage{bbm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof}{Proof}
+
+\author{Siheng Zhang\\zhangsiheng@cvte.com}
+\title{Chapter TWO VC-dimension}
+\date{\today}      
+\usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
+
+\begin{document}
+\maketitle  
+
+The notes is mainly based on the following books:
+
+\begin{itemize}
+\item Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz and Shai Ben-David, 2014 \footnote{https://www.cs.huji.ac.il/\~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf}
+
+\item pattern recognition and machine learning, Christopher M. Bishop, 2006 \footnote{http://users.isr.ist.utl.pt/\~wurmd/Livros/school/Bishop\ -\ Pattern\ Recognition\ And\ Machine\ Learning\ -\ Springer\ \ 2006.pdf}
+
+\item Probabilistic Graphical Models: Principles and Techniques, Daphne Koller and Nir Friedman, 2009 \footnote{https://mitpress.mit.edu/books/probabilistic-graphical-models}
+
+\item Graphical Models, Exponential Families, and Variational Inference, Martin J. Wainwright and Michael I. Jordan, 2008 \footnote{https://people.eecs.berkeley.edu/\~wainwrig/Papers/WaiJor08\_FTML.pdf}
+\end{itemize}
+
+This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the following questions:
+
+\begin{itemize}
+\item What can we know about the generalization error?
+\item How does the hypothesis set (in application, the choice of classifier/regressor or so on) reflect our prior knowledge, or, inductive bias?
+\end{itemize}
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{The VC-dimension}
+
+\subsection{Shattering}
+
+Consider the set of threshold functions over the real line $\mathcal{H}=\{h_a(x)=\mathbbm{1}_{[x\leq a]},a\in\mathbb{R}\}$. Let $a^*$ be the threshold such that $L_\mathcal{D}(h^*)=0$. Let $a_0<a^*<a_1$ such that:
+
+\begin{equation*}
+\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a_0,a^*)]=\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}_x}[x\in(a^*,a_1)]=\epsilon
+\end{equation*}
+
+If $\mathcal{D}_x(-\infty,a^*)\leq\epsilon$, we set $a_0=-\infty$, and similarly for $a_1$.
+
+Given a training set $S$, let $b_0=\max\{x:(x,1)\in S\}$ (if no example is positive then $b_0=-\infty>$, and $b_1=\min\{x:(x,0)\in S\}$ (if no example is negative then $b_1=\infty$). Let $b_S$ be the threshold of an ERM hypothesis $h_S$, which implies $b_S\in(b_0,b_1)$, then we have
+
+\begin{equation*}
+\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(h_S)<\epsilon]\leq\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}[b_0<a_0]+\mathop{\mathbb{P}}\limits_{S\sim\mathcal{D}^m}[b_1>a_1]
+\end{equation*}
+
+Each term on the right-side is bounded by $(1-\epsilon)^m\leq e^{-\epsilon m}$. Let $m>\log(2/\delta)/\epsilon$, then the left-side is bounded by $\delta$. As a result, the hypothesis class is PAC-learnable.
+
+The example above shows that: \textbf{finiteness is not a necessary condition for learnability}, and hence we turn to the definition of \textbf{shattering}, which describes the ability of a hypothesis set to cover the training set.
+
+The definition of VC-dimension is motivated from the No-Free-Lunch theorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution. To make any algorithm fail, the adversary used the power of choosing a target function from the set of all possible labelling functions.
+
+%When considering PAC learnability of a hypothesis class $\mathcal{H}>, the adversary is restricted to constructing distributions for which some hypothesis $h\in\mathcal{H}> achieves a zero risk. Since we are considering distributions that are concentrated on elements of $C>, we should study how $h\in\mathcal{H}> behaves on $C>.
+%
+%**definition: Restriction of $\mathcal{H}> to $C>**. The restriction of $\mathcal{H}> to $C> is the set of functions from $C> to $\{0,1\}> that can be derived from $\mathcal{H}>. That is,
+%
+%
+%$\mathcal{H}_C=\{(h(c_1),\cdots,h(c_m)):h\in\mathcal{H}\}>,
+%
+%
+%where we represent each function from $C> to $\{0,1\}> as a vector in $\{0,1\}^{|C|}>.
+%
+%**definition: Shattering**. A hypothesis class $\mathcal{H}> shatters a finite set $C\in\mathcal{X}> if the restriction of $\mathcal{H}> to $C> is the set of all functions from $C> to $\{0,1\}>. That is, $|\mathcal{H}_C|=2^{|C|}>.
+%
+\subsection{The VC-dimension}
+%
+%**Def: VC-dimension**. The VC-dimension of a hypothesis class $\mathcal{H}>, denoted $\text{VCdim}(\mathcal{H})>, is the maximal size of a set $C\subset\mathcal{X}> that can be shattered by $\mathcal{H}>. If $\mathcal{H}> can shatter sets of arbitrarily large size we say that $\mathcal{H}> has infinite VC-dimension.
+%
+%To calculate the VC-dimension for a hypothesis set, we should show that
+%
+%  - There **exists** a subset of size $d> that can be shattered
+%  - **Every** subset of size $d+1> can not be shattered
+%
+%1. Example1: threshold functions
+%
+%    $\mathcal{H}=\{\mathbb{I}_{x\leq a}:a\in\mathbb{R}\}>
+%  
+%    For an arbitary set $\{c\}>, it can be shattered by $\mathcal{H}>, therefore $\text{VCdim}(\mathcal{H})\geq 1>;
+%
+%    For an arbitary set $\{c_1,c_2\}>, where $c_1\leq c_2>, any threshold that assigns 0 to $c_1> must assign 0 to $c_2>, so not all functions from $\mathcal{C}> to $\{0,1\}> are included by $\mathcal{H}_C>. Therefore it can not be shattered.
+%
+%    Hence in conclusion, the VC-dimention of the class of threshold functions is 1.
+%
+%2. Example2: Intevals
+%
+%    $\mathcal{H}=\{\mathbb{I}_{x\in(a,b)}:a<b,a,b\in\mathbb{R}\}>
+%
+%    Without loss of generalization, take the set $C=\{1,2\}>, it can be shattered, i.e., in the case that the labels are $(0,0)>, let $a>2> or $b<1>; case $(0,1)>, let $a<2<b>; case $(1,0)>, let $a<1<b<2>; case $(1,1)>, let $a<1,b>2>.
+%
+%    Take the set $C=\{c_1,c_2,c_3\}>, WLOG, let the labels be  $(1,0,1)>, therefore $\mathcal{H}> does no shatter  $C>.
+%
+%    Hence, $\text{VCdim}(\mathcal{H})=2>.
+%
+%3. Example3: Axis Aligned Rectangles
+%
+%    $\mathcal{H}=\{\mathbb{I}_{a_1\leq x_1\leq a_2,b_1\leq x_2\leq b_2)}:a_1<a_2,b_1<b_2\}>
+%
+%    Any set with 4 points can be shattered.
+%
+%    Take the set with 5 points. Suppose that there is 1 point (labelled as 0) surrounded by 4 points (labelled as 1), it cannot be shattered.
+%
+%    Hence, $\text{VCdim}(\mathcal{H})=4>.
+%
+%4. Example4: Finite class
+%
+%    Let $\mathcal{H}> be a finite class. Then, clearly, for any set  $C> we have $|\mathcal{H}_C|\leq|\mathcal{H}|> and thus it cannot be shattered if $|\mathcal{H}|<2^{|C|}>. This implies that $\text{VCdim}(\mathcal{H})<\log_2|\mathcal{H}|>.
+%
+%        Note: In the previous examples, the VC-dimension happened to equal the number of parameters defining. 
+%        This is not always true. See exercise ? for detail.
+%
+\section{Fundermental theorem of PAC learning}
+%
+%**Thm** Let $\mathcal{H}> be a hypothesis class of functions from a domain $\mathcal{X}> to $\{0,1\}> and let the loss function be the 0-1 loss. Then, the following are equivalent:
+%
+% - The hypothesis class has uniform convergence property.
+%
+%
+%$m_\mathcal{H}^{UC}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
+%
+%
+% - Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
+% - The hypothesis class is agnostic PAC learnable.
+%
+%
+%$m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
+%
+%
+% - The hypothesis class is PAC learnable.
+%
+%
+%$m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)>
+%
+%
+% - Any ERM rule is a successful PAC learner for the hypothesis class.
+% - The hypothesis class has a finite VC-dimension.
+%
+%    Note that 1->2->3->4->5->6 are all learned. The leaving part is 6->1, which is solved below.
+%
+%
+\section{Effective size of a hypothesis class}
+
+\section{Non-uniform learnability}
+
+“non-uniform learnability” allows the sample size to be non-uniform with respect to the different hypotheses with which the learner is competing. 
+
+A hypothesis is $(\epsilon, \delta)$-competitive with another if
+\section{Summary}
+%
+%\begin{enumerate}
+%\item ...
+%\end{enumerate}
+
+
+\section{Exercises and solutions}
+
+\textit{
+      To be continue...\\
+      Chapter 3. Bayesian-PAC\\
+      Chapter 4. Generalization in Deep Learning}
+
+\end{document}
