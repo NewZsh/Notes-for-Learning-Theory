@@ -62,31 +62,33 @@ Each term on the right-side is bounded by $(1-\epsilon)^m\leq e^{-\epsilon m}$. 
 
 The example above shows that: \textbf{finiteness is not a necessary condition for learnability}, and hence we turn to the definition of \textbf{shattering}, which describes the ability of a hypothesis set to cover the training set.
 
-The definition of VC-dimension is motivated from the No-Free-Lunch theorem: without restricting the hypothesis class, for any learning algorithm, an adversary can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution. To make any algorithm fail, the adversary used the power of choosing a target function from the set of all possible labelling functions.
+The definition of VC-dimension is motivated from the No-Free-Lunch theorem: without restricting the hypothesis class, for any learning algorithm, an \textbf{adversary} can construct a distribution for which the learning algorithm will perform poorly, while there is another learning algorithm that will succeed on the same distribution. To make any algorithm fail, the \textbf{adversary} used the power of choosing a target function from the set of all possible labelling functions.
 
-%When considering PAC learnability of a hypothesis class $\mathcal{H}>, the adversary is restricted to constructing distributions for which some hypothesis $h\in\mathcal{H}> achieves a zero risk. Since we are considering distributions that are concentrated on elements of $C>, we should study how $h\in\mathcal{H}> behaves on $C>.
-%
-%**definition: Restriction of $\mathcal{H}> to $C>**. The restriction of $\mathcal{H}> to $C> is the set of functions from $C> to $\{0,1\}> that can be derived from $\mathcal{H}>. That is,
-%
-%
-%$\mathcal{H}_C=\{(h(c_1),\cdots,h(c_m)):h\in\mathcal{H}\}>,
-%
-%
-%where we represent each function from $C> to $\{0,1\}> as a vector in $\{0,1\}^{|C|}>.
-%
-%**definition: Shattering**. A hypothesis class $\mathcal{H}> shatters a finite set $C\in\mathcal{X}> if the restriction of $\mathcal{H}> to $C> is the set of all functions from $C> to $\{0,1\}>. That is, $|\mathcal{H}_C|=2^{|C|}>.
+When considering PAC learnability of a hypothesis class $\mathcal{H}$, the \textbf{adversary} is restricted to constructing distributions for which some hypothesis $h\in\mathcal{H}$ achieves a zero risk. Since we are considering distributions that are concentrated on elements of $C$, we should study how $h\in\mathcal{H}$ behaves on $C$.
+
+\textbf{Definition} (Restriction of $\mathcal{H}$ to $C$): The restriction of $\mathcal{H}$ to $C$ is the set of functions from $C$ to $\{0,1\}$ that can be derived from $\mathcal{H}$. That is,
+	\begin{equation}
+	\mathcal{H}_C=\{(h(c_1),\cdots,h(c_m)):h\in\mathcal{H}\}
+	\end{equation}
+where we represent each function from $C$ to $\{0,1\}$ as a vector in $\{0,1\}^{|C|}$.
+
+\textbf{Definition} (Shattering): A hypothesis class $\mathcal{H}$ shatters a finite set $C\in\mathcal{X}$ if the restriction of $\mathcal{H}$ to $C$ is the set of all functions from $C$ to $\{0,1\}$. That is, $|\mathcal{H}_C|=2^{|C|}$.
 %
 \subsection{The VC-dimension}
-%
-%**Def: VC-dimension**. The VC-dimension of a hypothesis class $\mathcal{H}>, denoted $\text{VCdim}(\mathcal{H})>, is the maximal size of a set $C\subset\mathcal{X}> that can be shattered by $\mathcal{H}>. If $\mathcal{H}> can shatter sets of arbitrarily large size we say that $\mathcal{H}> has infinite VC-dimension.
-%
-%To calculate the VC-dimension for a hypothesis set, we should show that
-%
-%  - There **exists** a subset of size $d> that can be shattered
-%  - **Every** subset of size $d+1> can not be shattered
-%
-%1. Example1: threshold functions
-%
+\textbf{Definition} (VC-dimension): The VC-dimension of a hypothesis class $\mathcal{H}$, denoted $\mathrm{VCdim}(\mathcal{H})$, is the maximal size of a set $C\subset\mathcal{X}$ that can be shattered by $\mathcal{H}$. If $\mathcal{H}$ can shatter sets of arbitrarily large size we say that $\mathcal{H}$ has infinite VC-dimension.
+
+\subsubsection{Examples}
+
+	To calculate the VC-dimension for a hypothesis set, we should show that:
+	\begin{itemize}
+	\item There \textbf{exists} a subset of size $d$ that can be shattered;
+	\item \textbf{Every} subset of size $d+1$ can not be shattered.
+	\end{itemize}
+	
+	\begin{itemize}
+	\item [\textbf{1}] Threshold functions
+	\end{itemize}
+
 %    $\mathcal{H}=\{\mathbb{I}_{x\leq a}:a\in\mathbb{R}\}>
 %  
 %    For an arbitary set $\{c\}>, it can be shattered by $\mathcal{H}>, therefore $\text{VCdim}(\mathcal{H})\geq 1>;
