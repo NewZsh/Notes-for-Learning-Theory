@@ -98,14 +98,14 @@ If $\mathcal{H}$ is a class of infinite VC-dimension, then $\mathcal{H}$ is not 
 	\begin{itemize}
 	\item [\textbf{1}] Threshold functions
 		\begin{equation*}
-		\mathcal{H}=\{\mathbb{I}_{x\leq a}:a\in\mathbb{R}\}
+		\mathcal{H}=\{\mathbbm{1}_{x\leq a}:a\in\mathbb{R}\}
 		\end{equation*}
 		
 	For an arbitrary set $C=\{c\}$, $\mathcal{H}$ shatters $C$, therefore $\mathrm{VCdim}(\mathcal{H})\geq 1$; for an arbitrary set $C=\{c_1,c_2\}$, where $c_1\leq c_2$, any threshold that assigns 0 to $c_1$ must assign 0 to $c_2$. In other words, not all functions from $\mathcal{C}$ to $\{0,1\}$ are included by $\mathcal{H}_C$. So, $\mathcal{H}$ does not shatter $C$.
 	
 	\item [\textbf{2}] Intervals
 		\begin{equation*}
-		\mathcal{H}=\{\mathbb{I}_{x\in(a,b)}:a<b,a,b\in\mathbb{R}\}
+		\mathcal{H}=\{\mathbbm{1}_{x\in(a,b)}:a<b,a,b\in\mathbb{R}\}
 		\end{equation*}
 	
 	Denote the set $C=\{c_1, c_2\}$. If we take $a>c_2$ or $b<c_2$, the we have $h_{a,b}(c_1)=0, h_{a,b}(c_2)=0$; if we take $c_1<a<c_2<b$, the we have $h_{a,b}(c_1)=0, h_{a,b}(c_2)=1$; if we take $a<c_1<b<c_2$, the we have $h_{a,b}(c_1)=1, h_{a,b}(c_2)=0$; if we take $a<c1<c2<b$, then we have $h_{a,b}(c_1)=1, h_{a,b}(c_2)=1$. Therefore, $\mathcal{H}_C$ is the set of all functions from $C$ to $\{0,1\}^2$.
@@ -116,7 +116,7 @@ If $\mathcal{H}$ is a class of infinite VC-dimension, then $\mathcal{H}$ is not 
 	
 	\item [\textbf{3}] Axis Aligned Rectangles
 		\begin{equation*}
-		\mathcal{H}=\{\mathbb{I}_{a_1\leq x_1\leq a_2,b_1\leq x_2\leq b_2)}:a_1<a_2,b_1<b_2\}
+		\mathcal{H}=\{\mathbbm{1}_{(a_1\leq x_1\leq a_2,b_1\leq x_2\leq b_2)}:a_1<a_2,b_1<b_2\}
 		\end{equation*}
 	
 	Any set with 4 points can be shattered. Take the set with 5 points. Suppose that there is 1 point (labelled as 0) surrounded by 4 points (labelled as 1), it cannot be shattered. Hence, $\mathrm{VCdim}(\mathcal{H})=4$.
