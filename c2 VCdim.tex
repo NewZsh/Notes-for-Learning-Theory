@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{bbm}
 \newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
 \newtheorem*{proof}{Proof}
 
@@ -66,16 +67,25 @@ The definition of VC-dimension is motivated from the No-Free-Lunch theorem: with
 
 When considering PAC learnability of a hypothesis class $\mathcal{H}$, the \textbf{adversary} is restricted to constructing distributions for which some hypothesis $h\in\mathcal{H}$ achieves a zero risk. Since we are considering distributions that are concentrated on elements of $C$, we should study how $h\in\mathcal{H}$ behaves on $C$.
 
-\textbf{Definition} (Restriction of $\mathcal{H}$ to $C$): The restriction of $\mathcal{H}$ to $C$ is the set of functions from $C$ to $\{0,1\}$ that can be derived from $\mathcal{H}$. That is,
+\noindent\textbf{Definition} (Restriction of $\mathcal{H}$ to $C$): The restriction of $\mathcal{H}$ to $C$ is the set of functions from $C$ to $\{0,1\}$ that can be derived from $\mathcal{H}$. That is,
 	\begin{equation}
 	\mathcal{H}_C=\{(h(c_1),\cdots,h(c_m)):h\in\mathcal{H}\}
 	\end{equation}
 where we represent each function from $C$ to $\{0,1\}$ as a vector in $\{0,1\}^{|C|}$.
 
-\textbf{Definition} (Shattering): A hypothesis class $\mathcal{H}$ shatters a finite set $C\in\mathcal{X}$ if the restriction of $\mathcal{H}$ to $C$ is the set of all functions from $C$ to $\{0,1\}$. That is, $|\mathcal{H}_C|=2^{|C|}$.
-%
+\noindent\textbf{Definition} (Shattering): A hypothesis class $\mathcal{H}$ shatters a finite set $C\in\mathcal{X}$ if the restriction of $\mathcal{H}$ to $C$ is the set of all functions from $C$ to $\{0,1\}$. That is, $|\mathcal{H}_C|=2^{|C|}$.
+
+\begin{corollary*} Let $\mathcal{H}$ be a hypothesis class of functions from $\mathcal{X}$ to $\{0, 1\}$. Let $m$ be a training set size. Assume that there exists a set $C\subset\mathcal{X}$ of size $2m$ that is shattered by $\mathcal{H}$. Then, for any learning algorithm, $A$, there exist a distribution $\mathcal{D}$ over $\mathcal{X} \times \{0, 1\}$ and a predictor $h\in\mathcal{H}$ such that $L_{\mathcal{D}}(h) = 0$ but with probability of at least 1/7 over the choice of $S\sim\mathcal{D}^m$ we have that $L_\mathcal{D}(A(S))\geq 1/8$.
+\end{corollary*}
+
+The corollary shows that \textbf{whenever if $\mathcal{H}$ shatters some set $\mathcal{C}$ of size $2m$, then we cannot learn $\mathcal{H}$ by using $m$ examples.} This leads us directly to the definition of the VC dimension.
+
 \subsection{The VC-dimension}
 \textbf{Definition} (VC-dimension): The VC-dimension of a hypothesis class $\mathcal{H}$, denoted $\mathrm{VCdim}(\mathcal{H})$, is the maximal size of a set $C\subset\mathcal{X}$ that can be shattered by $\mathcal{H}$. If $\mathcal{H}$ can shatter sets of arbitrarily large size we say that $\mathcal{H}$ has infinite VC-dimension.
+
+\begin{theorem}
+If $\mathcal{H}$ is a class of infinite VC-dimension, then $\mathcal{H}$ is not PAC learnable.
+\end{theorem}
 
 \subsubsection{Examples}
 
@@ -87,70 +97,64 @@ where we represent each function from $C$ to $\{0,1\}$ as a vector in $\{0,1\}^{
 	
 	\begin{itemize}
 	\item [\textbf{1}] Threshold functions
+		\begin{equation*}
+		\mathcal{H}=\{\mathbb{I}_{x\leq a}:a\in\mathbb{R}\}
+		\end{equation*}
+		
+	For an arbitrary set $C=\{c\}$, $\mathcal{H}$ shatters $C$, therefore $\mathrm{VCdim}(\mathcal{H})\geq 1$; for an arbitrary set $C=\{c_1,c_2\}$, where $c_1\leq c_2$, any threshold that assigns 0 to $c_1$ must assign 0 to $c_2$. In other words, not all functions from $\mathcal{C}$ to $\{0,1\}$ are included by $\mathcal{H}_C$. So, $\mathcal{H}$ does not shatter $C$.
+	
+	\item [\textbf{2}] Intervals
+		\begin{equation*}
+		\mathcal{H}=\{\mathbb{I}_{x\in(a,b)}:a<b,a,b\in\mathbb{R}\}
+		\end{equation*}
+	
+	Denote the set $C=\{c_1, c_2\}$. If we take $a>c_2$ or $b<c_2$, the we have $h_{a,b}(c_1)=0, h_{a,b}(c_2)=0$; if we take $c_1<a<c_2<b$, the we have $h_{a,b}(c_1)=0, h_{a,b}(c_2)=1$; if we take $a<c_1<b<c_2$, the we have $h_{a,b}(c_1)=1, h_{a,b}(c_2)=0$; if we take $a<c1<c2<b$, then we have $h_{a,b}(c_1)=1, h_{a,b}(c_2)=1$. Therefore, $\mathcal{H}_C$ is the set of all functions from $C$ to $\{0,1\}^2$.
+		
+	Take the set $C=\{c_1,c_2,c_3\}$, without loss of generalization, let the labels be  $(1,0,1)$, therefore $\mathcal{H}$ does no shatter $C$.
+	
+	Hence, $\mathrm{VCdim}(\mathcal{H})=2$.
+	
+	\item [\textbf{3}] Axis Aligned Rectangles
+		\begin{equation*}
+		\mathcal{H}=\{\mathbb{I}_{a_1\leq x_1\leq a_2,b_1\leq x_2\leq b_2)}:a_1<a_2,b_1<b_2\}
+		\end{equation*}
+	
+	Any set with 4 points can be shattered. Take the set with 5 points. Suppose that there is 1 point (labelled as 0) surrounded by 4 points (labelled as 1), it cannot be shattered. Hence, $\mathrm{VCdim}(\mathcal{H})=4$.
+	
+	\item [\textbf{4}] Finite class
+	
+	Let $\mathcal{H}$ be a finite class. Then, clearly, for any set $C$ we have $|\mathcal{H}_C|\leq|\mathcal{H}|$ and thus it cannot be shattered if $|\mathcal{H}|<2^{|C|}$. This implies that $\mathrm{VCdim}(\mathcal{H})<\log_2|\mathcal{H}|$.
+	
+	\textit{\underline{remark1}}: In the previous examples, the VC-dimension happened to equal the number of parameters defining.  This is not always true. See exercise ? for detail.
 	\end{itemize}
 
-%    $\mathcal{H}=\{\mathbb{I}_{x\leq a}:a\in\mathbb{R}\}>
-%  
-%    For an arbitary set $\{c\}>, it can be shattered by $\mathcal{H}>, therefore $\text{VCdim}(\mathcal{H})\geq 1>;
-%
-%    For an arbitary set $\{c_1,c_2\}>, where $c_1\leq c_2>, any threshold that assigns 0 to $c_1> must assign 0 to $c_2>, so not all functions from $\mathcal{C}> to $\{0,1\}> are included by $\mathcal{H}_C>. Therefore it can not be shattered.
-%
-%    Hence in conclusion, the VC-dimention of the class of threshold functions is 1.
-%
-%2. Example2: Intevals
-%
-%    $\mathcal{H}=\{\mathbb{I}_{x\in(a,b)}:a<b,a,b\in\mathbb{R}\}>
-%
-%    Without loss of generalization, take the set $C=\{1,2\}>, it can be shattered, i.e., in the case that the labels are $(0,0)>, let $a>2> or $b<1>; case $(0,1)>, let $a<2<b>; case $(1,0)>, let $a<1<b<2>; case $(1,1)>, let $a<1,b>2>.
-%
-%    Take the set $C=\{c_1,c_2,c_3\}>, WLOG, let the labels be  $(1,0,1)>, therefore $\mathcal{H}> does no shatter  $C>.
-%
-%    Hence, $\text{VCdim}(\mathcal{H})=2>.
-%
-%3. Example3: Axis Aligned Rectangles
-%
-%    $\mathcal{H}=\{\mathbb{I}_{a_1\leq x_1\leq a_2,b_1\leq x_2\leq b_2)}:a_1<a_2,b_1<b_2\}>
-%
-%    Any set with 4 points can be shattered.
-%
-%    Take the set with 5 points. Suppose that there is 1 point (labelled as 0) surrounded by 4 points (labelled as 1), it cannot be shattered.
-%
-%    Hence, $\text{VCdim}(\mathcal{H})=4>.
-%
-%4. Example4: Finite class
-%
-%    Let $\mathcal{H}> be a finite class. Then, clearly, for any set  $C> we have $|\mathcal{H}_C|\leq|\mathcal{H}|> and thus it cannot be shattered if $|\mathcal{H}|<2^{|C|}>. This implies that $\text{VCdim}(\mathcal{H})<\log_2|\mathcal{H}|>.
-%
-%        Note: In the previous examples, the VC-dimension happened to equal the number of parameters defining. 
-%        This is not always true. See exercise ? for detail.
-%
-\section{Fundermental theorem of PAC learning}
-%
-%**Thm** Let $\mathcal{H}> be a hypothesis class of functions from a domain $\mathcal{X}> to $\{0,1\}> and let the loss function be the 0-1 loss. Then, the following are equivalent:
-%
-% - The hypothesis class has uniform convergence property.
+\section{Fundamental theorem of PAC learning}
+
+	\begin{theorem}
+	Let $\mathcal{H}$ be a hypothesis class of functions from a domain $\mathcal{X}$ to $\{0,1\}$ and let the loss function be the 0-1 loss. Then, the following are equivalent:
+	
+	1. The hypothesis class has uniform convergence property.
 %
 %
 %$m_\mathcal{H}^{UC}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
 %
-%
-% - Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
-% - The hypothesis class is agnostic PAC learnable.
-%
-%
+
+	2. Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
+	
+	3. The hypothesis class is agnostic PAC learnable.
+
 %$m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
-%
-%
-% - The hypothesis class is PAC learnable.
-%
-%
+
+	4. The hypothesis class is PAC learnable.
+
 %$m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)>
-%
-%
-% - Any ERM rule is a successful PAC learner for the hypothesis class.
-% - The hypothesis class has a finite VC-dimension.
+
+	5. Any ERM rule is a successful PAC learner for the hypothesis class.
+	
+	6. The hypothesis class has a finite VC-dimension.
 %
 %    Note that 1->2->3->4->5->6 are all learned. The leaving part is 6->1, which is solved below.
+	\end{theorem}		
 %
 %
 \section{Effective size of a hypothesis class}
