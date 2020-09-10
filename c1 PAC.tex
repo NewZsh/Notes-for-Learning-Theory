@@ -6,6 +6,7 @@
 \usepackage{bbm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
 \newtheorem*{proof}{Proof}
 
 \author{Siheng Zhang\\zhangsiheng@cvte.com}
@@ -194,8 +195,8 @@ which leads to $p(\theta\geq 1/8)\geq 1/7$.
 
 	\textbf{NFL theorem tells the necessity of inductive bias.} Philosophically, if someone can explain every phenomenon, his explanations are worthless.
 	
-\subsection{Agnostic PAC}
-	\subsubsection{Beyond realizability assumption}
+\section{Agnostic PAC}
+	\subsection{Beyond realizability assumption}
 	In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Then Agnostic PAC learnability is defined as: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm with \textbf{confidence} at least $1-\delta$ to achieve that:
 	
 	\begin{equation*}
@@ -203,9 +204,8 @@ which leads to $p(\theta\geq 1/8)\geq 1/7$.
 	\end{equation*}
 in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
 
-	\subsubsection{Beyond binary classification}
+	\subsection{Beyond binary classification}
 
-	
 	Agnostic PAC learnability remains the same with:
 	
 	\begin{equation}
@@ -213,23 +213,34 @@ in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\
 	\end{equation}
 in which $l(\cdot)$ is 0-1 loss for multiclass classification and square loss for regression. 
 
-	\subsubsection{Sample complexity under Agn-PAC: via uniform convergence}
+	\subsection{Sample complexity under A-PAC: via uniform convergence}
 	
-	\textbf{Definition $\epsilon$-representative}: A training set S is called $\epsilon$-representative if $\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$.
+	\textbf{Definition} ($\epsilon$-representative): A training set $S$ is called $\epsilon$-representative (w.r.t. domain $Z$, hypothesis set $\mathcal{H}$, loss function $l$, and distribution $\mathcal{D}$) if $\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$.
 	
-	\begin{theorem}
-	ERM rule is suitable for $\epsilon/2$-representative samples.
-	\end{theorem}
+	\begin{lemma}
+	Assume that a training set $S$ is $\epsilon/2$-representative. Then, any $h_S\in\arg\min_{h\in\mathcal{H}}L_S(h)$ satisfies
+	\begin{equation}
+	L_\mathcal{D}(h_S) \leq L_S(h)+\epsilon
+	\end{equation}
+	\end{lemma}
 	
 	\begin{proof}
 	for every $h\in\mathcal{H}$,
 	
-	\begin{equation}
-	L_\mathcal{D}(h_S)\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\frac{\epsilon}{2}\leq L_S(h)+\epsilon
-	\end{equation}	 
-
-	Hence, $L_\mathcal{D}(h_S)\leq \min_{h\in\mathcal{H}}L_S(h)+\epsilon$.
+	\begin{equation*}
+	L_\mathcal{D}(h_S) \leq L_S(h_S)+\frac{\epsilon}{2}
+	\leq L_S(h)+\frac{\epsilon}{2} \leq L_\mathcal{D}(h)+\frac{\epsilon}{2}+\frac{\epsilon}{2}
+	\leq L_\mathcal{D}(h)+\epsilon
+	\end{equation*}	 
 	\end{proof}
+	
+	The lemma states that the ERM learning rule is guaranteed to return a good hypothesis for any $\epsilon/2$-representative sample set. It implies that to ensure that the ERM rule is an agnostic PAC learner, it suffices to show that with probability of at least $1-\delta$ over the random choice of a training set, it will be an $\epsilon$-representative training set. The following definition measures how many examples we need to ensure this condition.
+	
+\noindent\textbf{Definition} (Uniform Convergence): We say that a hypothesis class $\mathcal{H}$ has the uniform convergence property if there exists a function $m^{UC}_\mathcal{H}:(0,1)^2\rightarrow \mathbb{N}$ such that for every $\epsilon,\delta \in (0, 1)$ and for every probability distribution $\mathcal{D}$ over $Z$, if $S$ is a sample set of size $m\geq m^{UC}_\mathcal{H}(\epsilon, \delta)$ examples drawn i.i.d. according to $\mathcal{D}$, then, with probability of at least $1-\delta$, $S$ is $\epsilon$-representative.
+
+	\begin{corollary}
+	If a class $\mathcal{H}$ has the uniform convergence property with a function $m^{UC}_\mathcal{H}$ then the class is agnostic PAC learnable with the sample complexity $m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)$, and the ERM$_\mathcal{H}$ paradigm is a successful agnostic PAC learner for $\mathcal{H}$.
+	\end{corollary}
 
 	\begin{theorem}
 	\textbf{Agnostic PAC sample complexity} Assume that the range of the loss function is <$[0,1]$, or more general, $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity 
