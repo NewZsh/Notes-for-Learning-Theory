@@ -27,7 +27,26 @@ This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter ? in PRML, Chapt
 \tableofcontents
 \newpage
 
-\section{Naive Bayes}
+\section{Bayesian classifier}
+
+	Recall that the Bayes optimal classifier (\textit{in Chapter 1, Ex6}) is:
+	
+	\begin{equation*}
+	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} \mathcal{P} (Y=y|X=\mathbf{x})
+	\end{equation*}
+	
+	To describe the posterior probability function we need $2^d$ parameters, this implies that the number of examples we need grows exponentially with the number of features. To avoid this problem, we assume that given the label, the features are independent of each other, i.e., 
+	
+	\begin{equation*}
+	\mathcal{P} (X=\mathbf{x}|Y=y) = \prod_{i=d}^d \mathcal{P} (X_i=\mathbf{x}_i|Y=y)
+	\end{equation*}
+	
+	Together with Bayes' rule, the Bayes optimal classifier can be simplified as:
+	
+	\begin{equation}
+	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} \mathcal{P} (Y=y) \prod_{i=d}^d \mathcal{P} (X_i=\mathbf{x}_i|Y=y)
+	\end{equation}
+Now the number of parameters we need to estimate is only $2d + 1$. When we also estimate the parameters using the maximum likelihood principle (see below), the resulting classifier is called the \textit{Naive Bayes} classifier.
 
 \section{Density estimation}
 	\subsection{Parametric methods}
@@ -42,7 +61,7 @@ This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter ? in PRML, Chapt
 	\subsection{HMM (Hidden Markov models)}
 	\subsection{\textit{v.s.} discriminant models}
 	\subsection{Naive Bayes to linear discriminant models}
-
+	The usual assumption in Naive Bayes classifier is that each conditional probability $\mathcal{P} (X_i=\mathbf{x}_i|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the 
 
 \section{Exercises and solutions}
 
