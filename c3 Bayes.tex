@@ -27,24 +27,24 @@ This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter ? in PRML, Chapt
 \tableofcontents
 \newpage
 
-\section{Bayesian classifier}
+\section{Naive Bayes}
 
 	Recall that the Bayes optimal classifier (\textit{in Chapter 1, Ex6}) is:
 	
 	\begin{equation*}
-	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} \mathcal{P} (Y=y|X=\mathbf{x})
+	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y|X=\mathbf{x})
 	\end{equation*}
 	
 	To describe the posterior probability function we need $2^d$ parameters, this implies that the number of examples we need grows exponentially with the number of features. To avoid this problem, we assume that given the label, the features are independent of each other, i.e., 
 	
 	\begin{equation*}
-	\mathcal{P} (X=\mathbf{x}|Y=y) = \prod_{i=d}^d \mathcal{P} (X_i=\mathbf{x}_i|Y=y)
+	\mathcal{P} (X=\mathbf{x}|Y=y) = \prod_{i=1}^d p (X_i=\mathbf{x}_i|Y=y)
 	\end{equation*}
 	
 	Together with Bayes' rule, the Bayes optimal classifier can be simplified as:
 	
 	\begin{equation}
-	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} \mathcal{P} (Y=y) \prod_{i=d}^d \mathcal{P} (X_i=\mathbf{x}_i|Y=y)
+	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y) \prod_{i=1}^d p (X_i=\mathbf{x}_i|Y=y)
 	\end{equation}
 Now the number of parameters we need to estimate is only $2d + 1$. When we also estimate the parameters using the maximum likelihood principle (see below), the resulting classifier is called the \textit{Naive Bayes} classifier.
 
@@ -59,10 +59,39 @@ Now the number of parameters we need to estimate is only $2d + 1$. When we also 
 \section{Generative models}
 	\subsection{GMM (Gaussian mixture models)}
 	\subsection{HMM (Hidden Markov models)}
-	\subsection{\textit{v.s.} discriminant models}
+	
 	\subsection{Naive Bayes to linear discriminant models}
-	The usual assumption in Naive Bayes classifier is that each conditional probability $\mathcal{P} (X_i=\mathbf{x}_i|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the 
+	The usual assumption in Naive Bayes classifier is that each conditional probability $p(X=\mathbf{x}|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the two conditional distribution as $\mathcal{N}(\mathbf{\mu}_0,\Sigma_0)$, $\mathcal{N}(\mathbf{\mu}_1,\Sigma_1)$, we will predict $h_{\mathrm{Bayes}}(\mathbf{x})=1$ iff.
+	
+	\begin{equation*}
+	\begin{split}
+	&\frac{p(Y=0) p(X=\mathbf{x}|Y=0)}{p(Y=1) p(X=\mathbf{x}|Y=1)} > 1 \\
+	&\iff \log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\mathbf{x}|Y=0) - \log p(X=\mathbf{x}|Y=1) > 0 \\
+	&\iff -\frac{1}{2}(\mathbf{x}-\mathbf{\mu}_0)^\top \Sigma_0^{-1}(\mathbf{x}-\mathbf{\mu}_0) + \frac{1}{2}(\mathbf{x}-\mathbf{\mu}_1)^\top \Sigma_1^{-1}(\mathbf{x}-\mathbf{\mu}_1) +  \frac{1}{2}\log\frac{|\Sigma_1|}{|\Sigma_0|} + \log \frac{p(Y=0)}{p(Y=1)} > 0 \\
+	&\iff \frac{1}{2} \mathbf{x}^\top ( \Sigma_1^{-1} - \Sigma_0^{-1}) \mathbf{x} + (\mathbf{\mu}_0^\top\Sigma_0^{-1} - \mathbf{\mu}_1^\top\Sigma_1^{-1}) \mathbf{x} + \underbrace{\frac{1}{2} (\mathbf{\mu}_1^\top\Sigma_1^{-1}\mathbf{\mu}_1 - \mathbf{\mu}_0^\top\Sigma_0^{-1}\mathbf{\mu}_0 ) + \frac{1}{2}\log\frac{|\Sigma_1|}{|\Sigma_0|} + \log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
+	\end{split}
+	\end{equation*}
+which is a quadratic discriminant function.
 
+	Further, if we assume that $\Sigma_0=\Sigma_1=\Sigma$, the classifier can be simplified to be a linear discriminant function $\mathbf{w}\cdot\mathbf{x}+b$, with $\mathbf{w}=(\mathbf{\mu}_0 - \mathbf{\mu}_1)^\top\Sigma_1^{-1}$ and $b=\frac{1}{2} (\mathbf{\mu}_1^\top\Sigma^{-1}\mathbf{\mu}_1 - \mathbf{\mu}_0^\top\Sigma^{-1}\mathbf{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
+	
+	\subsection{\textit{v.s.} discriminant models}
+	
+	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
+	
+	Of course, if we succeed in learning the underlying distribution accurately, prediction from the Bayes optimal classifier is reliable. The problem is that, it is usually more difficult to learn the underlying distribution than to learn an accurate predictor. This was phrased by Vladimir Vapnik:
+\begin{center}
+\textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
+\end{center}
+
+	However, in some situations, it is reasonable to adopt the generative models. Sometimes it is easier (computationally) to estimate the parameters of the model than to learn a discriminative predictor. Additionally, in some cases we do not have a specific task at hand but rather would like to use the data at a later time.
+	
+	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in the real world. The intuition behind this approach follows a famous quote from Richard Feynman:
+
+\begin{center}
+\textit{"What I cannot create, I do not understand."}
+\end{center}
+	
 \section{Exercises and solutions}
 
 \textit{
