@@ -150,18 +150,18 @@ This part corresponds to \textbf{Chapter 2-5 in UML}, and mainly answers the fol
 	Next, fix some $j\in\{1,\cdots,k\}$. Denote $S_j=(x_1,\cdots,x_m)$ and let $v_1,\cdots,v_p$ be the examples in $C$ that do not appear in $S_j$. Clearly, $p\geq m$. Therefore, for every $h:C\rightarrow\{0,1\}$,
 	
 	\begin{equation*}
-	L_{\mathcal{D}_i}(h)=\frac{1}{2m}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{2p}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}
+	L_{\mathcal{D}_i}(h)=\frac{1}{2m}\sum_{x\in C}\mathbbm{1}_{[h(x)\neq f_i(x)]}\geq\frac{1}{2p}\sum_{r=1}^p\mathbbm{1}_{[h(v_r)\neq f_i(v_r)]}
 	\end{equation*}
 and hence,
 
 	\begin{equation*}
-	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
+	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbbm{1}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
 	\end{equation*}
 
-	Next, fix some $r\in[p]$, We can partition all the functions $f_1,\cdots,f_T$ into $T/2$ disjoint pairs, where for a pair $(f_i,f_{i'})$ we have that $\forall c\in C,f_i(c)\neq f_{i'}(c)$ iff. $c=v_r$. Since for such a pair we must have $S_j^i=S_j^{i'}$, it follows that $\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbb{I}_{[A(S_j^{i'})(v_r)\neq f_{i'}(v_r)]}=1$, which yields:
+	Next, fix some $r\in[p]$, We can partition all the functions $f_1,\cdots,f_T$ into $T/2$ disjoint pairs, where for a pair $(f_i,f_{i'})$ we have that $\forall c\in C,f_i(c)\neq f_{i'}(c)$ iff. $c=v_r$. Since for such a pair we must have $S_j^i=S_j^{i'}$, it follows that $\mathbbm{1}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbbm{1}_{[A(S_j^{i'})(v_r)\neq f_{i'}(v_r)]}=1$, which yields:
 	
 	\begin{equation*}
-	\frac{1}{T}\sum_{i=1}^T\mathbb{I}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}=\frac{1}{2}
+	\frac{1}{T}\sum_{i=1}^T\mathbbm{1}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}=\frac{1}{2}
 	\end{equation*}
 
 	In conclusion, it holds that
@@ -228,13 +228,36 @@ in which $l(\cdot)$ is 0-1 loss for multi-class classification and square loss f
 	\begin{corollary}
 	If a class $\mathcal{H}$ has the uniform convergence property with a function $m^{UC}_\mathcal{H}$ then the class is agnostic PAC learnable with the sample complexity $m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)$, and the ERM$_\mathcal{H}$ paradigm is a successful agnostic PAC learner for $\mathcal{H}$.
 	\end{corollary}
+	
+	\begin{lemma}
+	(Hoeffding's Inequality) Let $\theta_1,\cdots,\theta_m$ be a sequence of i.i.d. random variables and assume that $\forall i, \mathbb{E}[\theta_i]=\mu$ and $P[a\leq\theta_i\leq b]=1$. Then, for any $\epsilon>0$,
+	\begin{equation*}
+	P\left[\left| \frac{1}{m}\sum_{i=1}^m\theta_i - \mu \right| >\epsilon \right] \leq 2 \exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right)
+	\end{equation*}
+	\end{lemma}
 
 	\begin{theorem}
-	\textbf{Agnostic PAC sample complexity} Assume that the range of the loss function is <$[0,1]$, or more general, $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity 
+	\textbf{Agnostic PAC sample complexity} Assume that the range of the loss function is $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity 
 	
 	\begin{equation}
 	m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil
 	\end{equation}
+	
+	\begin{proof}
+	Fix some $\epsilon,\delta$, we need to find a sample size $m$ that guarantees that: For any $\mathcal{D}$, with probability of at least $1-\delta$ of the choice of $S=(z_1,\cdots,z_m)$ sampled i.i.d. from $\mathcal{D}$, such that
+	\begin{equation*}
+	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) < \delta
+	\end{equation*}
+	Since
+	\begin{equation*}
+	\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\} = \Cup_{h\in\mathcal{H}}\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\}
+	\end{equation*}
+the left side can be bounded by
+	\begin{equation*}
+	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq \sum_{h\in\mathcal{H}} \mathcal{D}^m(\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\})
+	\end{equation*}
+	Recall that $L_S(h)=\frac{1}{m}\sum_{i=1}^m l(h,z_i)$ and $L_\mathcal{D}(h)=\mathbb{E}_{z\sim\mathcal{D}}[l(h,z)]$. Since each $z_i$ is sampled i.i.d. from $\mathcal{D}$, by the linearity of expectation, $\mathbb{E}_(L_S(h))=\frac{1}{m}\sum_{i=1}^m \mathbb{E}_(l(h,z_i))=L_\mathcal{D}(h)$. Hence, the quantity $|L_\mathcal{D}(h)-L_S(h)|$ is the deviation of the random variable $L_S(h)$ from its expectation. We therefore need to show that the measure of $L_S(h)$ is concentrated around its expected value. Using the Hoeffding's Inequality directly leads to the final conclusion.
+	\end{proof}	
 	\end{theorem}
 
 \section{Error decomposition}
@@ -427,13 +450,13 @@ which implies $L_{(\mathcal{D}^+,f)}(h)\leq\epsilon$ and $L_{(\mathcal{D}^-,f)}(
 \item[] \textbf{Solution}:
 	Only the second proposition should be proved. Similar with the proof in above, 
 	\begin{equation*}
-	L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbb{I}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbb{I}_{[h(v_r)\neq f_i(v_r)]}
+	L_{\mathcal{D}_i}(h)=\frac{1}{km}\sum_{x\in C}\mathbbm{1}_{[h(x)\neq f_i(x)]}\geq\frac{1}{km}\sum_{r=1}^p\mathbbm{1}_{[h(v_r)\neq f_i(v_r)]}\geq\frac{k-1}{pk}\sum_{r=1}^p\mathbbm{1}_{[h(v_r)\neq f_i(v_r)]}
 	\end{equation*}
  
 And similarity,
 
 	\begin{equation*}
-	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbb{I}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
+	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{k-1}{k}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbbm{1}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
 	\end{equation*}
 	
 	So the final bound is $1/2-1/2k$.
