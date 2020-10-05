@@ -250,13 +250,21 @@ in which $l(\cdot)$ is 0-1 loss for multi-class classification and square loss f
 	\end{equation*}
 	Since
 	\begin{equation*}
-	\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\} = \Cup_{h\in\mathcal{H}}\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\}
+	\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\} = \cup_{h\in\mathcal{H}}\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\}
 	\end{equation*}
 the left side can be bounded by
 	\begin{equation*}
 	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq \sum_{h\in\mathcal{H}} \mathcal{D}^m(\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\})
 	\end{equation*}
-	Recall that $L_S(h)=\frac{1}{m}\sum_{i=1}^m l(h,z_i)$ and $L_\mathcal{D}(h)=\mathbb{E}_{z\sim\mathcal{D}}[l(h,z)]$. Since each $z_i$ is sampled i.i.d. from $\mathcal{D}$, by the linearity of expectation, $\mathbb{E}_(L_S(h))=\frac{1}{m}\sum_{i=1}^m \mathbb{E}_(l(h,z_i))=L_\mathcal{D}(h)$. Hence, the quantity $|L_\mathcal{D}(h)-L_S(h)|$ is the deviation of the random variable $L_S(h)$ from its expectation. We therefore need to show that the measure of $L_S(h)$ is concentrated around its expected value. Using the Hoeffding's Inequality directly leads to the final conclusion.
+	Recall that $L_S(h)=\frac{1}{m}\sum_{i=1}^m l(h,z_i)$ and $L_\mathcal{D}(h)=\mathbb{E}_{z\sim\mathcal{D}}[l(h,z)]$. Since each $z_i$ is sampled i.i.d. from $\mathcal{D}$, by the linearity of expectation, $\mathbb{E}(L_S(h))=\frac{1}{m}\sum_{i=1}^m \mathbb{E}(l(h,z_i))=L_\mathcal{D}(h)$. Hence, the quantity $|L_\mathcal{D}(h)-L_S(h)|$ is the deviation of the random variable $L_S(h)$ from its expectation. We therefore need to show that the measure of $L_S(h)$ is concentrated around its expected value. Using the Hoeffding's Inequality directly leads to the following:
+	\begin{equation*}
+	\mathcal{D}^m(\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq 2 \exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right)
+	\end{equation*}
+	Combining the equations above,
+	\begin{equation*}
+	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq \sum_{h\in\mathcal{H}} 2 \exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right) = 2|\mathcal{H}|\exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right)
+	\end{equation*}
+	Choose $m\geq\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}$, then the left-side is bounded by $\delta$.
 	\end{proof}	
 	\end{theorem}
 
