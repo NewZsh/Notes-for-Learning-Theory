@@ -120,29 +120,32 @@ If $\mathcal{H}$ is a class of infinite VC-dimension, then $\mathcal{H}$ is not 
 	Let $\mathcal{H}$ be a hypothesis class of functions from a domain $\mathcal{X}$ to $\{0,1\}$ and let the loss function be the 0-1 loss. Then, the following are equivalent:
 	
 	1. The hypothesis class has uniform convergence property.
-%
-%
-%$m_\mathcal{H}^{UC}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
-%
+
+	\begin{equation}
+	m_\mathcal{H}^{UC}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)	
+	\end{equation}
 
 	2. Any ERM rule is a successful agnostic PAC learner for the hypothesis class.
 	
 	3. The hypothesis class is agnostic PAC learnable.
-
-%$m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)>
+	
+	\begin{equation}
+	m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d+\log(1/\delta)}{\epsilon^2}\right)	
+	\end{equation}
 
 	4. The hypothesis class is PAC learnable.
 
-%$m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)>
+	\begin{equation}
+	m_\mathcal{H}(\epsilon,\delta)=O\left(\frac{d\log(1/\epsilon)+\log(1/\delta)}{\epsilon}\right)
+	\end{equation}
 
 	5. Any ERM rule is a successful PAC learner for the hypothesis class.
 	
 	6. The hypothesis class has a finite VC-dimension.
-%
-%    Note that 1->2->3->4->5->6 are all learned. The leaving part is 6->1, which is solved below.
-	\end{theorem}		
-%
-%
+	\end{theorem}
+	
+	\textit{remark1: 1->2->3->4->5->6 are all learned. The leaving part is 6->1, which is solved below.}
+
 \section{Effective size of a hypothesis class}
 
 \section{Non-uniform learnability}
