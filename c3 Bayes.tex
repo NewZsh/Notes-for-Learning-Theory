@@ -54,12 +54,26 @@ Now the number of parameters we need to estimate is only $2d + 1$. When we also 
 
 \section{Bayesian Reasoning}
 
-\section{PAC-Bayes}
-
 \section{Generative models}
 	\subsection{GMM (Gaussian mixture models)}
 	\subsection{HMM (Hidden Markov models)}
+
+\section{\textit{v.s.} discriminant models}
 	
+	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
+	
+	Of course, if we succeed in learning the underlying distribution accurately, prediction from the Bayes optimal classifier is reliable. The problem is that, it is usually more difficult to learn the underlying distribution than to learn an accurate predictor. This was phrased by Vladimir Vapnik:
+	\begin{center}
+	\textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
+	\end{center}
+
+	However, in some situations, it is reasonable to adopt the generative models. Sometimes it is easier (computationally) to estimate the parameters of the model than to learn a discriminative predictor. Additionally, in some cases we do not have a specific task at hand but rather would like to use the data at a later time.
+	
+	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in the real world. The intuition behind this approach follows a famous quote from Richard Feynman:	
+	\begin{center}
+	\textit{"What I cannot create, I do not understand."}
+	\end{center}
+
 	\subsection{Naive Bayes to linear discriminant models}
 	The usual assumption in Naive Bayes classifier is that each conditional probability $p(X=\mathbf{x}|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the two conditional distribution as $\mathcal{N}(\mathbf{\mu}_0,\Sigma_0)$, $\mathcal{N}(\mathbf{\mu}_1,\Sigma_1)$, we will predict $h_{\mathrm{Bayes}}(\mathbf{x})=1$ iff.
 	
@@ -75,22 +89,8 @@ which is a quadratic discriminant function.
 
 	Further, if we assume that $\Sigma_0=\Sigma_1=\Sigma$, the classifier can be simplified to be a linear discriminant function $\mathbf{w}\cdot\mathbf{x}+b$, with $\mathbf{w}=(\mathbf{\mu}_0 - \mathbf{\mu}_1)^\top\Sigma_1^{-1}$ and $b=\frac{1}{2} (\mathbf{\mu}_1^\top\Sigma^{-1}\mathbf{\mu}_1 - \mathbf{\mu}_0^\top\Sigma^{-1}\mathbf{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
 	
-	\subsection{\textit{v.s.} discriminant models}
 	
-	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
 	
-	Of course, if we succeed in learning the underlying distribution accurately, prediction from the Bayes optimal classifier is reliable. The problem is that, it is usually more difficult to learn the underlying distribution than to learn an accurate predictor. This was phrased by Vladimir Vapnik:
-\begin{center}
-\textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
-\end{center}
-
-	However, in some situations, it is reasonable to adopt the generative models. Sometimes it is easier (computationally) to estimate the parameters of the model than to learn a discriminative predictor. Additionally, in some cases we do not have a specific task at hand but rather would like to use the data at a later time.
-	
-	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in the real world. The intuition behind this approach follows a famous quote from Richard Feynman:
-
-\begin{center}
-\textit{"What I cannot create, I do not understand."}
-\end{center}
 	
 \section{Exercises and solutions}
 
