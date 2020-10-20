@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{amsmath}
+\usepackage{amsmath,bm}
 \usepackage{amssymb}
 \usepackage{ntheorem}
 \usepackage{graphicx}
@@ -17,7 +17,7 @@
 \begin{document}
 \maketitle  
 
-This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter ? in PRML, Chapter ? in PGM}, and mainly answers the following questions:
+This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter 1, 2 in PRML}, and mainly answers the following questions:
 
 \begin{itemize}
 \item 
@@ -32,24 +32,74 @@ This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter ? in PRML, Chapt
 	Recall that the Bayes optimal classifier (\textit{in Chapter 1, Ex6}) is:
 	
 	\begin{equation*}
-	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y|X=\mathbf{x})
+	h_{\mathrm{Bayes}}(\bm{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y|X=\bm{x})
 	\end{equation*}
 	
 	To describe the posterior probability function we need $2^d$ parameters, this implies that the number of examples we need grows exponentially with the number of features. To avoid this problem, we assume that given the label, the features are independent of each other, i.e., 
 	
 	\begin{equation*}
-	\mathcal{P} (X=\mathbf{x}|Y=y) = \prod_{i=1}^d p (X_i=\mathbf{x}_i|Y=y)
+	p (X=\bm{x}|Y=y) = \prod_{i=1}^d p (X_i=x_i|Y=y)
 	\end{equation*}
 	
 	Together with Bayes' rule, the Bayes optimal classifier can be simplified as:
 	
 	\begin{equation}
-	h_{\mathrm{Bayes}}(\mathbf{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y) \prod_{i=1}^d p (X_i=\mathbf{x}_i|Y=y)
+	h_{\mathrm{Bayes}}(\bm{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y) \prod_{i=1}^d p (X_i=x_i|Y=y)
 	\end{equation}
 Now the number of parameters we need to estimate is only $2d + 1$. When we also estimate the parameters using the maximum likelihood principle (see below), the resulting classifier is called the \textit{Naive Bayes} classifier.
 
 \section{Density estimation}
-	\subsection{Parametric methods}
+
+	To apply the Bayesian decision principle, we should know the probability distribution. In fact, machine learning can be treated as '\textbf{\textit{fitting the underlying distribution}}' (see \ref{sec:final}). There are two classes of methods for estimation, parametric and non-parametric methods.
+	
+	\subsection{Parametric method: maximum likelihood}
+	Assume that the form of distribution is known, the problem is to estimate the parameters. Specifically, given an i.i.d. training set $S = (\bm{x}_1,\cdots,\bm{x}_m)$ sampled according to a density distribution, the likelihood of $S$ given $\theta$ is:
+	\begin{equation*}
+	L(S;\theta) = \prod_{i=1}^m  p(\bm{x}_i;\theta)
+	\end{equation*}
+Usually, we turn to optimize its logarithm, that is
+	\begin{equation}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta)
+	\end{equation}
+	\begin{itemize}
+	\item [\textbf{1}] Bernoulli distribution
+	\item [\textbf{2}] Multinomial distribution
+	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
+	
+	The log likelihood function is given by
+	\begin{equation*}
+	\begin{split}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) &= \sum_{i=1}^m \log \left[ \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2}(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu}) \right) \right]  \\
+	&= \sum_{i=1}^m \left[\frac{-d}{2} \log (2\pi) - \frac{1}{2}\log |\bm{\Sigma}| -\frac{1}{2}(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu}) \right]  \\
+	&= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
+	\end{split}
+	\end{equation*}
+	The derivative of the log likelihood with respect to $\bm{\mu}$ is given by
+	\begin{equation*}
+	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
+	\end{equation*}
+and setting it to zero leads to $\bm{\mu}_{\mathrm{ML}}=\sum_{i=1}^m \bm{x}_i / m$.
+
+	\textit{\underline{remark1}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:
+	\begin{small}
+	\begin{itemize}
+	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
+	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
+	\item $\frac{\partial tr[\bm{A} \bm{B}]}{\partial \bm{A}} = \bm{B}^\top$;
+	\item $\frac{\partial \log |\bm{A}|}{\partial \bm{A}} = (\bm{A}^{-1})^\top$;
+	\item $\frac{\partial tr(\bm{A}\bm{X}^{-1}\bm{B})}{\partial \bm{X}} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
+	\end{itemize}
+	\end{small}
+	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
+	\begin{equation*}
+	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
+	\end{equation*}
+Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top / m$.
+	\item [\textbf{4}] Periodic variables
+	\item [\textbf{5}] Exponential family
+	\end{itemize}
+	\subsection{Expectation maximization: maximum likelihood for partial observed data}
+	\subsection{Conjugate prior: beyond point estimation}
 	\subsection{Non-parametric methods}
 
 \section{Bayesian Reasoning}
@@ -59,7 +109,7 @@ Now the number of parameters we need to estimate is only $2d + 1$. When we also 
 	\subsection{HMM (Hidden Markov models)}
 
 \section{\textit{v.s.} discriminant models}
-	
+	\label{sec:final}
 	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
 	
 	Of course, if we succeed in learning the underlying distribution accurately, prediction from the Bayes optimal classifier is reliable. The problem is that, it is usually more difficult to learn the underlying distribution than to learn an accurate predictor. This was phrased by Vladimir Vapnik:
@@ -75,19 +125,19 @@ Now the number of parameters we need to estimate is only $2d + 1$. When we also 
 	\end{center}
 
 	\subsection{Naive Bayes to linear discriminant models}
-	The usual assumption in Naive Bayes classifier is that each conditional probability $p(X=\mathbf{x}|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the two conditional distribution as $\mathcal{N}(\mathbf{\mu}_0,\Sigma_0)$, $\mathcal{N}(\mathbf{\mu}_1,\Sigma_1)$, we will predict $h_{\mathrm{Bayes}}(\mathbf{x})=1$ iff.
+	The usual assumption in Naive Bayes classifier is that each conditional probability $p(X=\bm{x}|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the two conditional distribution as $\mathcal{N}(\bm{\mu}_0,\bm{\Sigma}_0)$, $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$, we will predict $h_{\mathrm{Bayes}}(\bm{x})=1$ iff.
 	
 	\begin{equation*}
 	\begin{split}
-	&\frac{p(Y=0) p(X=\mathbf{x}|Y=0)}{p(Y=1) p(X=\mathbf{x}|Y=1)} > 1 \\
-	&\iff \log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\mathbf{x}|Y=0) - \log p(X=\mathbf{x}|Y=1) > 0 \\
-	&\iff -\frac{1}{2}(\mathbf{x}-\mathbf{\mu}_0)^\top \Sigma_0^{-1}(\mathbf{x}-\mathbf{\mu}_0) + \frac{1}{2}(\mathbf{x}-\mathbf{\mu}_1)^\top \Sigma_1^{-1}(\mathbf{x}-\mathbf{\mu}_1) +  \frac{1}{2}\log\frac{|\Sigma_1|}{|\Sigma_0|} + \log \frac{p(Y=0)}{p(Y=1)} > 0 \\
-	&\iff \frac{1}{2} \mathbf{x}^\top ( \Sigma_1^{-1} - \Sigma_0^{-1}) \mathbf{x} + (\mathbf{\mu}_0^\top\Sigma_0^{-1} - \mathbf{\mu}_1^\top\Sigma_1^{-1}) \mathbf{x} + \underbrace{\frac{1}{2} (\mathbf{\mu}_1^\top\Sigma_1^{-1}\mathbf{\mu}_1 - \mathbf{\mu}_0^\top\Sigma_0^{-1}\mathbf{\mu}_0 ) + \frac{1}{2}\log\frac{|\Sigma_1|}{|\Sigma_0|} + \log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
+	&\frac{p(Y=0) p(X=\bm{x}|Y=0)}{p(Y=1) p(X=\bm{x}|Y=1)} > 1 \\
+	&\iff \log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\bm{x}|Y=0) - \log p(X=\bm{x}|Y=1) > 0 \\
+	&\iff -\frac{1}{2}(\bm{x}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1}(\bm{x}-\bm{\mu}_0) + \frac{1}{2}(\bm{x}-\bm{\mu}_1)^\top \bm{\Sigma}_1^{-1}(\bm{x}-\bm{\mu}_1) +  \frac{1}{2}\log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + \log \frac{p(Y=0)}{p(Y=1)} > 0 \\
+	&\iff \frac{1}{2} \bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 ) + \frac{1}{2}\log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + \log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
 	\end{split}
 	\end{equation*}
 which is a quadratic discriminant function.
 
-	Further, if we assume that $\Sigma_0=\Sigma_1=\Sigma$, the classifier can be simplified to be a linear discriminant function $\mathbf{w}\cdot\mathbf{x}+b$, with $\mathbf{w}=(\mathbf{\mu}_0 - \mathbf{\mu}_1)^\top\Sigma_1^{-1}$ and $b=\frac{1}{2} (\mathbf{\mu}_1^\top\Sigma^{-1}\mathbf{\mu}_1 - \mathbf{\mu}_0^\top\Sigma^{-1}\mathbf{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
+	Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
 	
 	
 	
@@ -95,6 +145,7 @@ which is a quadratic discriminant function.
 \section{Exercises and solutions}
 
 \textit{
-      Chapter 4. Linear models, perceptron, MLP, deep learning, Generalization bounds on deep learning.}
+	  Chapter 4. Decision stumps, ensemble learning, Bayes PAC \\
+      Chapter 5. Linear models, perceptron, MLP, deep learning, Generalization bounds on deep learning.}
 
 \end{document}
