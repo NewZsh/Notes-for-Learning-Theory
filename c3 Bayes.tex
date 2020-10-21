@@ -63,7 +63,17 @@ Usually, we turn to optimize its logarithm, that is
 	\end{equation}
 	\begin{itemize}
 	\item [\textbf{1}] Bernoulli distribution
+	
+	\begin{footnotesize}
+	\textit{\underline{remark1}}: 
+	\end{footnotesize}
+	
 	\item [\textbf{2}] Multinomial distribution
+	
+	\begin{footnotesize}
+	\textit{\underline{remark2}}:
+	\end{footnotesize}
+	
 	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
 	
 	The log likelihood function is given by
@@ -78,10 +88,14 @@ Usually, we turn to optimize its logarithm, that is
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
-and setting it to zero leads to $\bm{\mu}_{\mathrm{ML}}=\sum_{i=1}^m \bm{x}_i / m$.
+and setting it to zero leads to:
+	
+	\begin{equation}
+	\bm{\mu}_{\mathrm{ML}}= \frac{\sum_{i=1}^m \bm{x}_i}{m}
+	\end{equation}
 
-	\textit{\underline{remark1}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:
-	\begin{small}
+	\begin{footnotesize}
+	\textit{\underline{remark3}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
 	\begin{itemize}
 	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
 	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
@@ -89,17 +103,44 @@ and setting it to zero leads to $\bm{\mu}_{\mathrm{ML}}=\sum_{i=1}^m \bm{x}_i / 
 	\item $\frac{\partial \log |\bm{A}|}{\partial \bm{A}} = (\bm{A}^{-1})^\top$;
 	\item $\frac{\partial tr(\bm{A}\bm{X}^{-1}\bm{B})}{\partial \bm{X}} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
 	\end{itemize}
-	\end{small}
+	\end{footnotesize}
 	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
 	\end{equation*}
-Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top / m$.
+Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to:
+	\begin{equation}
+	\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m \frac{(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top}{m}
+	\end{equation}
+	
+	\begin{footnotesize}
+	\textit{\underline{remark4}}: Again, we consider the property of MLE result. The estimation of $\bm{\mu}$ is unbiased,
+	\begin{equation*}
+	\mathbb{E} (\bm{\mu}_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m \bm{x}_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i)}{m} = \mathbb{E}(\bm{x}) = \bm{\mu}
+	\end{equation*}
+However, the estimation of $\bm{\Sigma}$ is biased,
+	\begin{equation*}
+	\begin{split}
+	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) &= \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
+	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top + \bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top - 2\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m} \\
+	&= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top + \bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top - 2\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m} \\
+	\end{split}
+	\end{equation*}
+	\end{footnotesize}
+	
 	\item [\textbf{4}] Periodic variables
 	\item [\textbf{5}] Exponential family
 	\end{itemize}
+	
 	\subsection{Expectation maximization: maximum likelihood for partial observed data}
-	\subsection{Conjugate prior: beyond point estimation}
+	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
+	\begin{equation*}
+	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i,y_i) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i|y_i)p_\theta(y_i)
+	\end{equation*}
+	The maximum-likelihood estimator is therefore the solution of the maximization problem:
+	\begin{equation}
+	\log L(S;\theta) = \sum{i=1}^m \log p_\theta(x_i|y_i)p_\theta(y_i)
+	\end{equation}
 	\subsection{Non-parametric methods}
 
 \section{Bayesian Reasoning}
