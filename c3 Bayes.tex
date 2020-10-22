@@ -123,7 +123,20 @@ However, the estimation of $\bm{\Sigma}$ is biased,
 	\begin{split}
 	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) &= \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
 	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top + \bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top - 2\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m} \\
-	&= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top + \bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top - 2\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m} \\
+	&= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m} \\
+	\end{split}
+	\end{equation*}
+	Consider each term in the numerator, note that each pair of samples is independent,
+	\begin{equation*}
+	\begin{split}
+	\mathbb{E}(\bm{x}_i \bm{x}_i^\top) &= \bm{\Sigma} + \bm{\mu}\bm{\mu}^\top  \\
+	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) &= 
+	\frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m \bm{x}_i \bm{x}_j^\top\right)  \\
+	&= \frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m (\bm{x}_i-\bm{\mu}) (\bm{x}_j-\bm{\mu})^\top + 2\bm{\mu} \sum_{i=1}^m (\bm{x}_i-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu}\bm{\mu}^\top \right) \\
+	&= \frac{1}{m^2} \left( \sum_{i=1}^m \mathbb{E}((\bm{x}_i-\bm{\mu}) (\bm{x}_i-\bm{\mu})^\top)+ m \bm{\mu}\bm{\mu}^\top \right)\\
+	&= \frac{\bm{\Sigma}}{m} + \frac{\bm{\mu}\bm{\mu}^\top}{m} \\
+	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) &=  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right) = \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + \bm{\mu}\sum_{j=1}^m \bm{x}_j^\top + \sum_{j=1}^m \bm{\mu} \bm{x}_i^\top  + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) \\
+	&= \frac{\bm{\Sigma}}{m} + 3 \bm{\mu} \bm{\mu}^\top
 	\end{split}
 	\end{equation*}
 	\end{footnotesize}
