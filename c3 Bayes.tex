@@ -62,8 +62,19 @@ Usually, we turn to optimize its logarithm, that is
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta)
 	\end{equation}
 	\begin{itemize}
-	\item [\textbf{1}] Bernoulli distribution
-	
+	\item [\textbf{1}] Bernoulli distribution, $\theta={\mu}$
+	Bernoulli distribution describes the probability of a binary variable (here we consider only the scalar case) $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so,
+	\begin{equation*}
+	p(x;\theta)=\mu^x(1-\mu)^{(1-x)}
+	\end{equation*}
+	The log likelihood function is given by
+	\begin{equation*}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(x_i;\theta) = \sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu)
+	\end{equation*}
+The derivative of the log likelihood with respect to $\mu$ is given by
+	\begin{equation*}
+	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \frac{x_i}{\mu} + \frac{1-x_i}{1-\mu}
+	\end{equation*}
 	\begin{footnotesize}
 	\textit{\underline{remark1}}: 
 	\end{footnotesize}
