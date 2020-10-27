@@ -61,8 +61,12 @@ Usually, we turn to optimize its logarithm, that is
 	\begin{equation}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta)
 	\end{equation}
+	
+	Following is the examples:
+	
 	\begin{itemize}
 	\item [\textbf{1}] Bernoulli distribution, $\theta={\mu}$
+	
 	Bernoulli distribution describes the probability of a binary variable (here we consider only the scalar case) $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so,
 	\begin{equation*}
 	p(x;\theta)=\mu^x(1-\mu)^{(1-x)}
@@ -73,37 +77,64 @@ Usually, we turn to optimize its logarithm, that is
 	\end{equation*}
 The derivative of the log likelihood with respect to $\mu$ is given by
 	\begin{equation*}
-	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \frac{x_i}{\mu} + \frac{1-x_i}{1-\mu}
+	\frac{\partial \log L(S;\theta)}{\partial \mu} = \sum_{i=1}^m \frac{x_i}{\mu} - \frac{1-x_i}{1-\mu} = \sum_{i=1}^m \frac{x_i-\mu}{\mu(1-\mu)}
 	\end{equation*}
+which leads to $\mu_{\mathrm{ML}}=\frac{1}{m}\sum_{i=1}^m x_i$.
 	\begin{footnotesize}
-	\textit{\underline{remark1}}: 
+	
+	\textit{\underline{remark1}}: $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence we can calculate its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In this example,
+	\begin{equation*} 
+	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
+	\end{equation*}
 	\end{footnotesize}
 	
-	\item [\textbf{2}] Multinomial distribution
+	\item [\textbf{2}] Multinomial distribution, $\theta=\bm{\mu}$
 	
+	Multinomial distribution extends the binary variable to one of $d$ possible value. The random variable can be represented by a $d$-dimensional vector $\bm{x}$, in which only one element equals 1 and others equal 0. Denote the probability of $x_j=1$ by $\mu_j$, then the distribution is given by
+	
+	\begin{equation*}
+	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j}
+	\end{equation*}
+in which $\sum_{j=1}^d \mu_j=1, \mu_j\geq 0$.
+		
+	The corresponding log likelihood function is given by
+	\begin{equation*}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j
+	\end{equation*}
+To maximize the log likelihood function with respect to $\mu_j$ must take account of the constraint that $\sum_{j=1}^d \mu_j=1$. Using Lagrange multiplier $\lambda$, we should maximize 
+	
+	\begin{equation*}
+	L = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right)
+	\end{equation*}
+Take derivative with regard to  $\mu_j$
+	\begin{equation*}
+	\frac{\partial L}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda
+	\end{equation*}
+which leads to $\mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda$. Recall that $\sum_{j=1}^d \mu_j=-\sum_{j=1}^d \sum_{i=1}^m  x_{ij}/\lambda = -m/\lambda=1$, $\lambda$ is set to $-m$, and hence,
+
+	\begin{equation}
+	\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i
+	\end{equation}
+
 	\begin{footnotesize}
-	\textit{\underline{remark2}}:
+	\textit{\underline{remark2}}: The estimation is unbiased too.
 	\end{footnotesize}
 	
 	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
-	
+	The Gaussian distribution is 
+	\begin{equation}
+	p(\bm{x}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right)
+	\end{equation}
 	The log likelihood function is given by
 	\begin{equation*}
-	\begin{split}
-	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) &= \sum_{i=1}^m \log \left[ \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2}(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu}) \right) \right]  \\
-	&= \sum_{i=1}^m \left[\frac{-d}{2} \log (2\pi) - \frac{1}{2}\log |\bm{\Sigma}| -\frac{1}{2}(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu}) \right]  \\
-	&= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
-	\end{split}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) 
+	= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
 	The derivative of the log likelihood with respect to $\bm{\mu}$ is given by
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
-and setting it to zero leads to:
-	
-	\begin{equation}
-	\bm{\mu}_{\mathrm{ML}}= \frac{\sum_{i=1}^m \bm{x}_i}{m}
-	\end{equation}
+and setting it to zero leads to: $\bm{\mu}_{\mathrm{ML}}= \sum_{i=1}^m \bm{x}_i / m$.
 
 	\begin{footnotesize}
 	\textit{\underline{remark3}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
@@ -125,11 +156,7 @@ Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directl
 	\end{equation}
 	
 	\begin{footnotesize}
-	\textit{\underline{remark4}}: Again, we consider the property of MLE result. The estimation of $\bm{\mu}$ is unbiased,
-	\begin{equation*}
-	\mathbb{E} (\bm{\mu}_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m \bm{x}_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i)}{m} = \mathbb{E}(\bm{x}) = \bm{\mu}
-	\end{equation*}
-However, the estimation of $\bm{\Sigma}$ is biased,
+	\textit{\underline{remark4}}: Again, we consider the property of MLE result. The estimation of $\bm{\mu}$ is unbiased. However, the estimation of $\bm{\Sigma}$ is biased,
 	\begin{equation*}
 	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
 	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
@@ -162,7 +189,7 @@ Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which 
 	\end{equation*}
 	The maximum-likelihood estimator is therefore the solution of the maximization problem:
 	\begin{equation}
-	\log L(S;\theta) = \sum{i=1}^m \log p_\theta(x_i|y_i)p_\theta(y_i)
+	\log L(S;\theta) = \sum_{i=1}^m \log p_\theta(x_i|y_i)p_\theta(y_i)
 	\end{equation}
 	\subsection{Non-parametric methods}
 
