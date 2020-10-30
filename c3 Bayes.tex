@@ -20,8 +20,10 @@
 This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter 1, 2 in PRML}, and mainly answers the following questions:
 
 \begin{itemize}
-\item 
-\item 
+\item How to bring Bayes Optimal classifier into application? (Feature independent assumption)
+\item To estimate the class conditional probability distribution for Bayes classifier, we study both the parametric (\textit{includes a family of basic probability distributions}) and non-parametric methods.
+\item A glance for generative and discriminant models. Naive Bayes, GMM, and etc, belong to the former, which requires estimation of underlying distribution. This is more general and hence difficult. Discriminant models try to avoid it by optimization.
+\item Last but not the least, there is a connection between generative and discriminant models. At last of this chapter, we point out how to derive a linear discriminant from Bayes classifier. As we will see in the next chapter, discriminant with penalization also has a intrinsic connection with generative models with some prior distribution.
 \end{itemize}
 
 \tableofcontents
@@ -67,7 +69,7 @@ Usually, we turn to optimize its logarithm, that is
 	\begin{itemize}
 	\item [\textbf{1}] Bernoulli distribution, $\theta={\mu}$
 	
-	Bernoulli distribution describes the probability of a binary variable (here we consider only the scalar case) $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so,
+	Bernoulli distribution describes the probability of a binary variable $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so,
 	\begin{equation*}
 	p(x;\theta)=\mu^x(1-\mu)^{(1-x)}
 	\end{equation*}
@@ -81,12 +83,16 @@ The derivative of the log likelihood with respect to $\mu$ is given by
 	\end{equation*}
 which leads to $\mu_{\mathrm{ML}}=\frac{1}{m}\sum_{i=1}^m x_i$.
 	\begin{footnotesize}
+		
+	
 	
 	\textit{\underline{remark1}}: $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence we can calculate its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In this example,
 	\begin{equation*} 
 	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
 	\end{equation*}
 	\end{footnotesize}
+		
+	
 	
 	\item [\textbf{2}] Multinomial distribution, $\theta=\bm{\mu}$
 	
@@ -115,10 +121,7 @@ which leads to $\mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda$. Recall that
 	\begin{equation}
 	\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i
 	\end{equation}
-
-	\begin{footnotesize}
-	\textit{\underline{remark2}}: The estimation is unbiased too.
-	\end{footnotesize}
+which is also unbiased.
 	
 	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
 	The Gaussian distribution is 
@@ -135,9 +138,11 @@ which leads to $\mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda$. Recall that
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
 and setting it to zero leads to: $\bm{\mu}_{\mathrm{ML}}= \sum_{i=1}^m \bm{x}_i / m$.
-
+	
+	
+	
 	\begin{footnotesize}
-	\textit{\underline{remark3}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
+	\textit{\underline{remark2}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
 	\begin{itemize}
 	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
 	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
@@ -146,6 +151,9 @@ and setting it to zero leads to: $\bm{\mu}_{\mathrm{ML}}= \sum_{i=1}^m \bm{x}_i 
 	\item $\frac{\partial tr(\bm{A}\bm{X}^{-1}\bm{B})}{\partial \bm{X}} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
 	\end{itemize}
 	\end{footnotesize}
+	
+	
+	
 	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
@@ -154,9 +162,9 @@ Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directl
 	\begin{equation}
 	\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m \frac{(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top}{m}
 	\end{equation}
-	
+		
 	\begin{footnotesize}
-	\textit{\underline{remark4}}: Again, we consider the property of MLE result. The estimation of $\bm{\mu}$ is unbiased. However, the estimation of $\bm{\Sigma}$ is biased,
+	\textit{\underline{remark3}}: Again, we consider the property of MLE result. The estimation of $\bm{\mu}$ is unbiased. However, the estimation of $\bm{\Sigma}$ is biased,
 	\begin{equation*}
 	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
 	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
@@ -178,8 +186,40 @@ Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directl
 Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
 	\end{footnotesize}
 	
-	\item [\textbf{4}] Periodic variables
-	\item [\textbf{5}] Exponential family
+	
+	
+	\item [\textbf{4}] Exponential family
+	The exponential family is defined to be the set of distributions of the form
+	\begin{equation}
+	p(\bm{x}|\bm{\eta}) = h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \}
+	\end{equation}
+	
+	
+	
+	\begin{footnotesize}
+	\textit{\underline{remark4}}: Bernoulli distribution is a member in this family,
+	\begin{equation*}
+	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \ln \mu + (1-x) \ln (1-\mu) \} = \exp\left\{ \ln \left( \frac{\mu}{1-\mu}\right) x + \ln(1-\mu)\right\}
+	\end{equation*}
+	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\ln \frac{\mu}{1-\mu} $, and $A(\eta)=\ln (1+\exp(\eta))$.
+
+	\textit{\underline{remark5}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
+	\begin{equation*}
+	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \ln \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \ln \mu_j + \left(1-\sum_{j=1}^{d-1} x_k \right) \ln \left(1-\sum_{j=1}^{d-1} \mu_k \right) \right\}
+	\end{equation*}
+	Compare with the general form shows that
+	
+	\textit{\underline{remark6}}: Gaussian distribution is a member in this family.
+	\begin{equation*}
+	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
+	\end{equation*}
+	Compare with the general form shows that
+	\end{footnotesize}
+	
+	
+	
+	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution.
+	
 	\end{itemize}
 	
 	\subsection{Expectation maximization: maximum likelihood for partial observed data}
@@ -191,13 +231,10 @@ Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which 
 	\begin{equation}
 	\log L(S;\theta) = \sum_{i=1}^m \log p_\theta(x_i|y_i)p_\theta(y_i)
 	\end{equation}
+	GMM (Gaussian mixture models) is a typical example.
 	\subsection{Non-parametric methods}
 
 \section{Bayesian Reasoning}
-
-\section{Generative models}
-	\subsection{GMM (Gaussian mixture models)}
-	\subsection{HMM (Hidden Markov models)}
 
 \section{\textit{v.s.} discriminant models}
 	\label{sec:final}
@@ -236,7 +273,8 @@ which is a quadratic discriminant function.
 \section{Exercises and solutions}
 
 \textit{
-	  Chapter 4. Decision stumps, ensemble learning, Bayes PAC \\
-      Chapter 5. Linear models, perceptron, MLP, deep learning, Generalization bounds on deep learning.}
+	Chapter 4. Linear models, penalization \\
+	  Chapter 5. Decision stumps, ensemble learning, Bayes PAC \\
+      Chapter 6. Perceptron, MLP, deep learning, Generalization bounds on deep learning.}
 
 \end{document}
