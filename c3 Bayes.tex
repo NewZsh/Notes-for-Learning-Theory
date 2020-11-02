@@ -107,21 +107,16 @@ in which $\sum_{j=1}^d \mu_j=1, \mu_j\geq 0$.
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j
 	\end{equation*}
-To maximize the log likelihood function with respect to $\mu_j$ must take account of the constraint that $\sum_{j=1}^d \mu_j=1$. Using Lagrange multiplier $\lambda$, we should maximize 
+To maximize it with respect to $\mu_j$ must take account of the constraint that $\sum_{j=1}^d \mu_j=1$. Using Lagrange multiplier $\lambda$, it is equivalent to maximize 
 	
 	\begin{equation*}
-	L = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right)
+	L' = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right)
 	\end{equation*}
 Take derivative with regard to  $\mu_j$
 	\begin{equation*}
-	\frac{\partial L}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda
+	\frac{\partial L'}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda
 	\end{equation*}
-which leads to $\mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda$. Recall that $\sum_{j=1}^d \mu_j=-\sum_{j=1}^d \sum_{i=1}^m  x_{ij}/\lambda = -m/\lambda=1$, $\lambda$ is set to $-m$, and hence,
-
-	\begin{equation}
-	\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i
-	\end{equation}
-which is also unbiased.
+which leads to $\mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda$. Besides, $\sum_{j=1}^d \mu_j=-\sum_{j=1}^d \sum_{i=1}^m  x_{ij}/\lambda = -m/\lambda=1$, thereby leading to $\lambda=-m$. Hence, $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, which is also unbiased.
 	
 	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
 	The Gaussian distribution is 
@@ -199,42 +194,74 @@ Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which 
 	\begin{footnotesize}
 	\textit{\underline{remark4}}: Bernoulli distribution is a member in this family,
 	\begin{equation*}
-	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \ln \mu + (1-x) \ln (1-\mu) \} = \exp\left\{ \ln \left( \frac{\mu}{1-\mu}\right) x + \ln(1-\mu)\right\}
+	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \log \mu + (1-x) \log (1-\mu) \} = \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
 	\end{equation*}
-	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\ln \frac{\mu}{1-\mu} $, and $A(\eta)=\ln (1+\exp(\eta))$.
+	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\log \frac{\mu}{1-\mu} $, and $A(\eta)=\log (1+\exp(\eta))$.
 
 	\textit{\underline{remark5}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
 	\begin{equation*}
-	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \ln \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \ln \mu_j + \left(1-\sum_{j=1}^{d-1} x_k \right) \ln \left(1-\sum_{j=1}^{d-1} \mu_k \right) \right\}
+	\begin{split}
+	p(\bm{x}|\bm{\mu}) &= \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
+	&= \exp\left\{ \sum_{j=1}^{d-1} x_j \log \left( \frac{\mu_j}{1-\sum_{k=1}^{d-1} \mu_k} \right) +  \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\}
+	\end{split}
 	\end{equation*}
-	Compare with the general form shows that
+	Define $\eta_j =  \log \frac{\mu_j}{1-\sum_{k=1}^d \mu_k}$, then $\mu_j = \frac{\exp\eta_j}{1+\sum_{k=1}^d \exp \eta_k}$, and $1-\sum_{j=1}^{d-1} \mu_j = 1-\frac{\sum_{j=1}^{d-1} \exp \eta_j}{1+\sum_{k=1}^d \exp \eta_k}=\frac{\exp \eta_{d}}{1+\sum_{k=1}^d \exp \eta_k}$. Compare with the general form shows that $h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^d \exp \eta_k)-\eta_d$.
 	
 	\textit{\underline{remark6}}: Gaussian distribution is a member in this family.
 	\begin{equation*}
-	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
+	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
 	\end{equation*}
-	Compare with the general form shows that
+	Since $\bm{x}^\top \bm{\Sigma}^{-1} \bm{x} = tr [\bm{x}^\top \bm{\Sigma}^{-1} \bm{x}] = tr [\bm{\Sigma}^{-1} \bm{x} \bm{x}^\top ]$. Compare with the general form shows that $h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$.
 	\end{footnotesize}
 	
+	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution. The log likelihood function is given by
 	
+	\begin{equation*}
+	\sum_{i=1}^m \log h(\bm{x}_i) + \eta^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
+	\end{equation*}
+Take derivative with regard to $\bm{\eta}$ leas to
 	
-	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution.
+	\begin{equation}
+	\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \frac{1}{m} \sum_{i=1}^m \bm{x}_i
+	\end{equation}
+which can in principle be solved to obtain $\bm{\eta}_\mathrm{ML}$.
 	
+	Note that $\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} = 1$. Take derivatives of both sides with regard to $\bm{\eta}$, we have,
+	\begin{equation*}
+	\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} \left(\bm{u}(\bm{x}) - \frac{\partial A(\bm{\eta})}{\partial \eta} \right) = 0
+	\end{equation*}
+which leads to
+	\begin{equation}
+	\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \mathbb{E} [u(\bm{x})]
+	\end{equation}
+
+	Therefore, $\sum_i u(\bm{x}_i)$ is called the sufficient statistic. Also note that the covariance of $u(\bm{x})$ can be expressed in terms of the second derivatives $A(\bm{\eta})$, and similarly for higher order moments. Thus, provided we can normalize a distribution from the exponential family, we can always find its moments by simple differentiation.
 	\end{itemize}
 	
 	\subsection{Expectation maximization: maximum likelihood for partial observed data}
 	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
 	\begin{equation*}
-	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i,y_i) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i|y_i)p_\theta(y_i)
+	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
 	\end{equation*}
 	The maximum-likelihood estimator is therefore the solution of the maximization problem:
 	\begin{equation}
-	\log L(S;\theta) = \sum_{i=1}^m \log p_\theta(x_i|y_i)p_\theta(y_i)
+	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
 	\end{equation}
 	GMM (Gaussian mixture models) is a typical example.
 	\subsection{Non-parametric methods}
 
 \section{Bayesian Reasoning}
+
+	Maximum likelihood estimation can give severely over-fitted results for small data sets. To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. To determine the prior distribution, we expect that the posterior distribution will have the same functional form as the prior. This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
+	
+	\begin{itemize}
+	\item [\textbf{1}] Beta distribution for Bernoulli distribution
+	Recall that the likelihood of Bernoulli distribution is proportional to $\mu^x (1-\mu)^{1-x}$,	we choose a prior to be proportional to powers of $\mu$ and $1-\mu$, then the posterior distribution, which is proportional to the product of the
+prior and the likelihood function, will have the same functional form as the prior.
+	\item [\textbf{2}] Dirichlet distribution for multinomial distribution
+	\item [\textbf{3}] Gaussian distribution
+	\item [\textbf{4}] Exponential distribution
+	\end{itemize}
 
 \section{\textit{v.s.} discriminant models}
 	\label{sec:final}
@@ -273,7 +300,7 @@ which is a quadratic discriminant function.
 \section{Exercises and solutions}
 
 \textit{
-	Chapter 4. Linear models, penalization \\
+	Chapter 4. Linear models for classification and regression, penalization \\
 	  Chapter 5. Decision stumps, ensemble learning, Bayes PAC \\
       Chapter 6. Perceptron, MLP, deep learning, Generalization bounds on deep learning.}
 
