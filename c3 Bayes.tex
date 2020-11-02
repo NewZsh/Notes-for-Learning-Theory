@@ -8,7 +8,7 @@
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
 \newtheorem*{proof}{Proof}
-
+\setlength{\parindent}{2em}
 \author{Siheng Zhang\\zhangsiheng@cvte.com}
 \title{Chapter \textbf{\textit{3}} Generative Models}
 \date{\today}      
@@ -69,11 +69,7 @@ Usually, we turn to optimize its logarithm, that is
 	\begin{itemize}
 	\item [\textbf{1}] Bernoulli distribution, $\theta={\mu}$
 	
-	Bernoulli distribution describes the probability of a binary variable $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so,
-	\begin{equation*}
-	p(x;\theta)=\mu^x(1-\mu)^{(1-x)}
-	\end{equation*}
-	The log likelihood function is given by
+	Bernoulli distribution describes the probability of a binary variable $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so, $p(x;\theta)=\mu^x(1-\mu)^{(1-x)}$. The log likelihood function is given by
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(x_i;\theta) = \sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu)
 	\end{equation*}
@@ -153,13 +149,10 @@ and setting it to zero leads to: $\bm{\mu}_{\mathrm{ML}}= \sum_{i=1}^m \bm{x}_i 
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
 	\end{equation*}
-Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to:
-	\begin{equation}
-	\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m \frac{(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top}{m}
-	\end{equation}
+Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top/m $
 		
 	\begin{footnotesize}
-	\textit{\underline{remark3}}: Again, we consider the property of MLE result. The estimation of $\bm{\mu}$ is unbiased. However, the estimation of $\bm{\Sigma}$ is biased,
+	\textit{\underline{remark3}}: Again, the estimation of $\bm{\mu}$ is unbiased. However, the estimation of $\bm{\Sigma}$ is biased,
 	\begin{equation*}
 	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
 	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
@@ -174,8 +167,7 @@ Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directl
 	&= \frac{1}{m^2} \left( \sum_{i=1}^m \mathbb{E}((\bm{x}_i-\bm{\mu}) (\bm{x}_i-\bm{\mu})^\top)+ m^2 \bm{\mu}\bm{\mu}^\top \right)
 	= \frac{\bm{\Sigma}}{m} + \bm{\mu}\bm{\mu}^\top \\
 	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) &=  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right)
-	= \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + \bm{\mu}\sum_{j=1}^m (\bm{x}_j-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu} (\bm{x}_i-\bm{\mu})^\top  + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) \\
-	&= \frac{\bm{\Sigma}}{m} + \bm{\mu} \bm{\mu}^\top
+	= \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + 2\bm{\mu}\sum_{j=1}^m (\bm{x}_j-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) = \frac{\bm{\Sigma}}{m} + \bm{\mu} \bm{\mu}^\top
 	\end{split}
 	\end{equation*}
 Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
@@ -217,14 +209,9 @@ Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which 
 	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution. The log likelihood function is given by
 	
 	\begin{equation*}
-	\sum_{i=1}^m \log h(\bm{x}_i) + \eta^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
+	\sum_{i=1}^m \log h(\bm{x}_i) + \bm{\eta}^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
 	\end{equation*}
-Take derivative with regard to $\bm{\eta}$ leas to
-	
-	\begin{equation}
-	\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \frac{1}{m} \sum_{i=1}^m \bm{x}_i
-	\end{equation}
-which can in principle be solved to obtain $\bm{\eta}_\mathrm{ML}$.
+Take derivative with regard to $\bm{\eta}$ leas to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m \bm{x}_i/m$, which can in principle be solved to obtain $\bm{\eta}_\mathrm{ML}$.
 	
 	Note that $\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} = 1$. Take derivatives of both sides with regard to $\bm{\eta}$, we have,
 	\begin{equation*}
@@ -238,16 +225,6 @@ which leads to
 	Therefore, $\sum_i u(\bm{x}_i)$ is called the sufficient statistic. Also note that the covariance of $u(\bm{x})$ can be expressed in terms of the second derivatives $A(\bm{\eta})$, and similarly for higher order moments. Thus, provided we can normalize a distribution from the exponential family, we can always find its moments by simple differentiation.
 	\end{itemize}
 	
-	\subsection{Expectation maximization: maximum likelihood for partial observed data}
-	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
-	\begin{equation*}
-	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
-	\end{equation*}
-	The maximum-likelihood estimator is therefore the solution of the maximization problem:
-	\begin{equation}
-	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
-	\end{equation}
-	GMM (Gaussian mixture models) is a typical example.
 	\subsection{Non-parametric methods}
 
 \section{Bayesian Reasoning}
@@ -262,6 +239,17 @@ prior and the likelihood function, will have the same functional form as the pri
 	\item [\textbf{3}] Gaussian distribution
 	\item [\textbf{4}] Exponential distribution
 	\end{itemize}
+	
+\section{EM algorithm: MLE for partial observed data}
+	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
+	\begin{equation*}
+	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
+	\end{equation*}
+	The maximum-likelihood estimator is therefore the solution of the maximization problem:
+	\begin{equation}
+	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
+	\end{equation}
+	GMM (Gaussian mixture models) is a typical example.
 
 \section{\textit{v.s.} discriminant models}
 	\label{sec:final}
