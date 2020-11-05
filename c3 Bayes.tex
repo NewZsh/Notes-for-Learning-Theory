@@ -243,14 +243,46 @@ prior and the likelihood function, will have the same functional form as the pri
 \section{EM algorithm: MLE for partial observed data}
 	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
 	\begin{equation*}
-	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
+	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(\bm{x}_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
 	\end{equation*}
 	The maximum-likelihood estimator is therefore the solution of the maximization problem:
 	\begin{equation}
-	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(x_i|y_j)p_\theta(y_j)
+	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
 	\end{equation}
-	GMM (Gaussian mixture models) is a typical example.
+	
+	In the E-step, we use the current parameter values $\theta^{\mathrm{old}}$ to find the posterior distribution of the latent variables given by $p(\bm{Y}|\bm{X}, \theta^{\mathrm{old}})$. We then use this posterior distribution to find the expectation of the complete-data log likelihood evaluated for some general parameter value $\theta$. This expectation, denoted , is given by
+	
+	\subsection{EM for GMM}
+	
+	GMM (Gaussian mixture models) is a typical example, with parameters comprising the means and covariances of the components and the mixing coefficients. Its log-likelihood function (plus a Lagrange multiplier) is given by
+	\begin{equation*}
+	\sum_{i=1}^m \log \sum_{j=1}^k \pi_j \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) + \lambda \left(\sum_{j=1}^k \pi_j - 1\right)
+	\end{equation*}
+	Take derivatives with regard to $\bm{\mu}_k$, we have
+	
+	\begin{equation*}
+	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{\gamma(z_{ij})} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j)
+	\end{equation*}
+in which $\gamma(z_{ij})=p(y_j=1|\bm{x}_i)$ is the posterior probability. Setting it to be zero leads to
+	\begin{equation}
+	\bm{\mu}_j=\frac{\sum_{i=1}^m \gamma(z_{ij}) \bm{x}_i}{\sum_{i=1}^m \gamma(z_{ij})}
+	\end{equation}
+Similarly,
+	\begin{equation}
+	\bm{\Sigma}_j=\frac{\sum_{i=1}^m \gamma(z_{ij}) (\bm{x}_i-\bm{\mu}_j)(\bm{x}_i-\bm{\mu}_j)^\top}{\sum_{i=1}^m \gamma(z_{ij})}
+	\end{equation}
+	Then, take derivatives with regard to each $\pi_j$,
+	\begin{equation*}
+	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda
+	\end{equation*}
+which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -N/\lambda=1$, then $\lambda=-N$, and hence
 
+	\begin{equation}
+	\pi_j=\frac{\sum_{i=1}^m z_{ij}}{N}
+	\end{equation}
+	
+	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points.
+	
 \section{\textit{v.s.} discriminant models}
 	\label{sec:final}
 	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
