@@ -3,6 +3,14 @@
 \usepackage{amssymb}
 \usepackage{ntheorem}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=cyan,      
+	urlcolor=red,
+	citecolor=green,
+}
 \usepackage{bbm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
@@ -261,27 +269,39 @@ prior and the likelihood function, will have the same functional form as the pri
 	Take derivatives with regard to $\bm{\mu}_k$, we have
 	
 	\begin{equation*}
-	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{\gamma(z_{ij})} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j)
+	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{z_{ij}} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j)
 	\end{equation*}
-in which $\gamma(z_{ij})=p(y_j=1|\bm{x}_i)$ is the posterior probability. Setting it to be zero leads to
+in which $z_{ij}=p(y_j=1|\bm{x}_i)$ is the posterior probability. Setting it to be zero leads to
 	\begin{equation}
-	\bm{\mu}_j=\frac{\sum_{i=1}^m \gamma(z_{ij}) \bm{x}_i}{\sum_{i=1}^m \gamma(z_{ij})}
+	\label{eq:GMM_mu}
+	\bm{\mu}_j=\frac{\sum_{i=1}^m z_{ij} \bm{x}_i}{\sum_{i=1}^m z_{ij}}
 	\end{equation}
 Similarly,
 	\begin{equation}
-	\bm{\Sigma}_j=\frac{\sum_{i=1}^m \gamma(z_{ij}) (\bm{x}_i-\bm{\mu}_j)(\bm{x}_i-\bm{\mu}_j)^\top}{\sum_{i=1}^m \gamma(z_{ij})}
+	\label{eq:GMM_sigma}
+	\bm{\Sigma}_j=\frac{\sum_{i=1}^m z_{ij} (\bm{x}_i-\bm{\mu}_j)(\bm{x}_i-\bm{\mu}_j)^\top}{\sum_{i=1}^m z_{ij}}
 	\end{equation}
 	Then, take derivatives with regard to each $\pi_j$,
 	\begin{equation*}
 	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda
 	\end{equation*}
-which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -N/\lambda=1$, then $\lambda=-N$, and hence
+which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -m/\lambda=1$, then $\lambda=-m$, and hence
 
 	\begin{equation}
-	\pi_j=\frac{\sum_{i=1}^m z_{ij}}{N}
+	\label{eq:GMM_pi}
+	\pi_j=\frac{\sum_{i=1}^m z_{ij}}{m}
 	\end{equation}
 	
-	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points.
+	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$, hence we must do it in an iterative way, which is the EM algorithm for GMM:
+	
+	\begin{itemize}
+	\item fix $k$, the number of Gaussian components;
+	\item assign each sample to each components with equal probability, \textit{i.e.}, $z_{ij}=\frac{1}{k},j=1,\cdots,k$ and $\pi_j=\frac{1}{k},j=1,\cdots,k$ also;
+	\item M-step, solve $\bm{\mu}, \bm{\Sigma}$ according to \textit{Eq.}\ref{eq:GMM_mu} and \textit{Eq.}\ref{eq:GMM_sigma};
+	\item E-step, solve $z_{ij},\pi_i$ according to \textit{Eq.}\ref{eq:GMM_pi}.
+	\end{itemize}
+	
+	In \textit{Ex3.1}, we will see the relationship between GMM and K-means clustering algorithm.
 	
 \section{\textit{v.s.} discriminant models}
 	\label{sec:final}
@@ -314,11 +334,12 @@ which is a quadratic discriminant function.
 
 	Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
 	
-	
-	
-	
 \section{Exercises and solutions}
+\begin{itemize}
+\item[Ex3.1] K-means (see \textit{UML?, PRML?}), is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_ij=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data.
+\item[Ex3.2]
 
+\end{itemize}
 \textit{
 	Chapter 4. Linear models for classification and regression, penalization \\
 	  Chapter 5. Decision stumps, ensemble learning, Bayes PAC \\
