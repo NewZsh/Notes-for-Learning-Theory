@@ -244,16 +244,21 @@ which leads to
 	
 	Recall that the likelihood of Bernoulli distribution is proportional to $\mu^x (1-\mu)^{1-x}$,	we choose a prior to be proportional to powers of $\mu$ and $1-\mu$, then the posterior distribution, which is proportional to the product of the prior and the likelihood function, will have the same functional form as the prior.
 	
-	The Beta distribution $\mu\sim \mathrm{Beta}(a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}$, in which $\Gamma(x)=\int^\infty_0 t^{x-1} e^{-t} \mathrm{d} t$, meets the requirement. Indeed, given the observed sequence $S$, 
+	The Beta distribution $\mu\sim \mathrm{Beta}(\mu;a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}$ meets the requirement. Note that the gamma functions $\Gamma(x)=\int^\infty_0 t^{x-1} e^{-t} \mathrm{d} t$ are used to ensure the Beta distribution is normalized, so that $\int_0^1 \mathrm{Beta}(\mu;a,b)\mathrm{d}\mu = 1$.
+	
+	Indeed, given the observed sequence $S$, 
 	\begin{equation*}
-	\begin{split}
-	p(\mu|S) &= \frac{p(S|\mu)}{p(S)}=\frac{p(S|\mu)}{\int p(S|\mu)p(\mu) \mathrm{d} \mu}
-	= \frac{\prod_{i=1}^m p(x_i;\mu)}{\int \prod_{i=1}^m p(x_i;\mu)\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1} \mathrm{d} \mu} \\
-	&= \frac{\prod_{i=1}^m \mu^{x_i} (1-\mu)^{1-x_i}}{\int \prod_{i=1}^m p(x_i;\mu)\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1} \mathrm{d} \mu} \\
-	&= \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)} \frac{\mu^{\sum_{i=1}^m x_i} (1-\mu)^{m-\sum_{i=1}^m x_i}}{\int \prod_{i=1}^m \mu^{\sum_{i=1}^m+a-1} (1-\mu)^{m-\sum_{i=1}^m x_i +b-1} \mathrm{d} \mu} \\
-	&= \mathrm{Beta}(a+\sum_{i=1}^m x_i, b+m-\sum_{i=1}^m x_i)
-	\end{split}
+	p(\mu|S) \propto p(S|\mu) \mathrm{Beta}(\mu;a,b) = \left( \prod_{i=1}^m \mu^x_i (1-\mu)^{1-x_i} \right) \mu^{a-1}(1-\mu)^{b-1} = \mu^{a+\sum_{i=1}^m x_i-1}(1-\mu)^{m-\sum_{i=1}^m x_i + b-1}
 	\end{equation*}
+To ensure that it is normalized, the posterior must be $\mathrm{Beta}(a+\sum_{i=1}^m x_i, b+m-\sum_{i=1}^m x_i)$.
+
+	Using the mean of the Beta distribution $\mathbb{E}(\mu)=\frac{a}{a+b}$, the estimated probability of a new event $x_i=1$ is given by the mean of posterior, which
+	
+	\begin{equation*}
+	p(x=1|S)=\int^1_0 p(x=1|\mu)p(\mu|S) \mathrm{d}\mu = \int^1_0 \mu p(\mu|S) \mathrm{d}\mu = \mathbb{E}(\mu|S) = \frac{a+\sum_{i=1}^m x_i}{b+m}
+	\end{equation*}
+Note that as the training sequence $S$ become infinitely large, $m\rightarrow\infty$, the result convergences to $\frac{\sum_{i=1}^m x_i}{m}$, which is the same as MLE. This indicates: \textbf{if the dataset is of small size, prior probability tends to make an important effect.}
+	
 	
 	\item [\textbf{2}] Dirichlet distribution for multinomial distribution
 	\item [\textbf{3}] Gaussian distribution
