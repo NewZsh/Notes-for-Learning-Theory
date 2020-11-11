@@ -11,6 +11,9 @@
 	urlcolor=red,
 	citecolor=green,
 }
+\usepackage{framed}
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.92,0.92,0.92}
 \usepackage{bbm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
@@ -259,8 +262,10 @@ To ensure that it is normalized, the posterior must be $\mathrm{Beta}(a+\sum_{i=
 	\end{equation*}
 Note that as the training sequence $S$ become infinitely large, $m\rightarrow\infty$, the result convergences to $\frac{\sum_{i=1}^m x_i}{m}$, which is the same as MLE. This indicates: \textbf{if the dataset is of small size, prior probability tends to make an important effect.}
 	
-	
 	\item [\textbf{2}] Dirichlet distribution for multinomial distribution
+
+		
+	
 	\item [\textbf{3}] Gaussian distribution
 	\item [\textbf{4}] Exponential distribution
 	\end{itemize}
@@ -310,13 +315,15 @@ which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint
 	\end{equation}
 	
 	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$, hence we must do it in an iterative way, which is the EM algorithm for GMM:
-	
-	\begin{itemize}
+	\begin{shaded}
+    \begin{itemize}
 	\item fix $k$, the number of Gaussian components;
 	\item assign each sample to each components with equal probability, \textit{i.e.}, $z_{ij}=\frac{1}{k},j=1,\cdots,k$ and $\pi_j=\frac{1}{k},j=1,\cdots,k$ also;
 	\item M-step, solve $\bm{\mu}, \bm{\Sigma}$ according to \textit{Eq.}\ref{eq:GMM_mu} and \textit{Eq.}\ref{eq:GMM_sigma};
 	\item E-step, solve $z_{ij},\pi_i$ according to \textit{Eq.}\ref{eq:GMM_pi}.
 	\end{itemize}
+  	\end{shaded}
+
 	
 	In \textit{Ex3.1}, we will see the relationship between GMM and K-means clustering algorithm.
 	
@@ -353,8 +360,24 @@ which is a quadratic discriminant function.
 	
 \section{Exercises and solutions}
 \begin{itemize}
-\item[Ex3.1] K-means (see \textit{UML?, PRML?}), is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_ij=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data.
-\item[Ex3.2]
+\item[Ex3.1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_ij=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
+
+	\begin{shaded}
+    \begin{itemize}
+	\item fix $k$, the number of clusters;
+	\item randomly choose initial clustering centers $\bm{\mu}_1,\cdots,\bm{\mu}_k$
+	\item repeat until convergence:
+	\item 1. $\forall i\in \{1,\cdots,m\}$, determine $j=\arg\min_{j} d(\bm{x}_i-\bm{\mu}_j)$ and set $z_{ij}=1$;
+	\item 2. $\forall j\in \{1,\cdots,k\}$, update $\bm{\mu}_j = \frac{1}{\sum_{i=1}^m z_{ij}} \sum_{i=1,z_{ij}=1}^m \bm{x}_i$
+	\end{itemize}
+  	\end{shaded}
+in which $d(\cdot,\cdot)$ can be arbitrary distance function. Note that the step 1. corresponds to M-step of GMM, and step 2 corresponds to E-step. For GMM, the objective is to maximize likelihood, and for k-means, the objective can be viewed as minimizing the sum of in-cluster distance (if we choose the distance to be Euclidean distance, the loss is also called Sum of in-cluster Square Error, \textit{a.k.a.}, SSE):
+	\begin{equation*}
+	\min_{\bm{\mu}_1,\cdots,\bm{\mu}_k} \sum_{j=1}^k \sum_{i=1, z_{ij}=1}^m d(\bm{x}_i, \bm{\mu}_j)
+	\end{equation*}
+Now, prove that: each iteration of the k-means algorithm does not increase the objective.
+
+\item[Ex3.2] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
 
 \end{itemize}
 \textit{
