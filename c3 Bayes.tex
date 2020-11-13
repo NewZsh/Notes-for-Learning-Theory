@@ -232,11 +232,15 @@ which leads to
 	
 	Recall that the likelihood of Bernoulli distribution is proportional to $\mu^x (1-\mu)^{1-x}$,	we choose a prior to be proportional to powers of $\mu$ and $1-\mu$, then the posterior distribution, which is proportional to the product of the prior and the likelihood function, will have the same functional form as the prior.
 	
-	The Beta distribution $\mu\sim \mathrm{Beta}(\mu;a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}$ meets the requirement. Note that the gamma functions $\Gamma(x)=\int^\infty_0 t^{x-1} e^{-t} \mathrm{d} t$ are used to ensure the Beta distribution is normalized, so that $\int_0^1 \mathrm{Beta}(\mu;a,b)\mathrm{d}\mu = 1$.
+	The Beta distribution 
+	\begin{equation}
+	\mathrm{Beta}(\mu|a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}
+	\end{equation}
+meets the requirement. Note that the gamma functions $\Gamma(x)=\int^\infty_0 t^{x-1} e^{-t} \mathrm{d} t$ are used to ensure the Beta distribution is normalized, so that $\int_0^1 \mathrm{Beta}(\mu;a,b)\mathrm{d}\mu = 1$.
 	
-	Indeed, given the observed sequence $S$, 
+	Given the observed sequence $S$, 
 	\begin{equation*}
-	p(\mu|S) \propto p(S|\mu) \mathrm{Beta}(\mu;a,b) = \left( \prod_{i=1}^m \mu^x_i (1-\mu)^{1-x_i} \right) \mu^{a-1}(1-\mu)^{b-1} = \mu^{a+\sum_{i=1}^m x_i-1}(1-\mu)^{m-\sum_{i=1}^m x_i + b-1}
+	p(\mu|S) \propto p(S|\mu) \mathrm{Beta}(\mu|a,b) = \left( \prod_{i=1}^m \mu^x_i (1-\mu)^{1-x_i} \right) \mu^{a-1}(1-\mu)^{b-1} = \mu^{a+\sum_{i=1}^m x_i-1}(1-\mu)^{m-\sum_{i=1}^m x_i + b-1}
 	\end{equation*}
 To ensure that it is normalized, the posterior must be $\mathrm{Beta}(a+\sum_{i=1}^m x_i, b+m-\sum_{i=1}^m x_i)$.
 
@@ -249,7 +253,17 @@ Note that as the training sequence $S$ become infinitely large, $m\rightarrow\in
 	
 	\item [\textbf{2}] Dirichlet distribution for multinomial distribution
 
-		
+	By inspection of the form of the multinomial distribution, the conjugate prior is given by $p(\bm{\mu}|\bm{\alpha})\propto \prod_{j=1}^d \mu_j^{\alpha_j-1}$, where $0\leq\mu_k\leq 1$. Its normalized form is (in which $\alpha_0=\sum_{j=1}^d \alpha_j$):
+	
+	\begin{equation*}
+	\mathrm{Dir} (\bm{\mu}|\bm{\alpha}) = \frac{\Gamma(\alpha_0)}{\Gamma(\alpha_1)\cdots\Gamma(\alpha_d)}  \prod_{j=1}^d \mu_j^{\alpha_j-1}
+	\end{equation*}
+	
+	Given the observed sequence $S$, 
+	\begin{equation*}
+	p(\bm{\mu}|S) \propto p(S|\bm{\mu}) \mathrm{Dir} (\bm{\mu}|\bm{\alpha}) =\prod_{i=1}^m \prod_{j=1}^d \mu_j^{x_{ij}} \prod_{j=1}^d \mu_j^{\alpha_j-1} = \prod_{j=1}^d \mu_j^{\sum_{i=1}^m x_{ij}} \prod_{j=1}^d \mu_j^{\alpha_j-1} =  \prod_{j=1}^d \mu_j^{m_j+\alpha_j-1}
+	\end{equation*}
+in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posterior is then given by $\mathrm{Dir}(\bm{\mu}|\bm{\alpha}+\bm{m})$.
 	
 	\item [\textbf{3}] Gaussian distribution
 
@@ -257,9 +271,20 @@ Note that as the training sequence $S$ become infinitely large, $m\rightarrow\in
 	
 	\begin{itemize}
 	\item [\textbf{a}]. Known covariance, unknown mean.
-	The conjugate prior is Gaussian distribution $p(\bm{\mu})=\mathcal{N}(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)$
+	The conjugate prior is another Gaussian distribution $p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)=\mathcal{N}(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)$. The posterior is given by
+	\begin{equation*}
+	\begin{split}
+	p(\bm{\mu}|S) &\propto p(S|\bm{\mu})p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0) =  \exp \left( -\frac{1}{2} (\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma_0}^{-1} (\bm{\mu}-\bm{\mu}_0)\right) \prod_{i=1}^m \exp \left( -\frac{1}{2} (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) \right) \\
+	&= \exp \left( -\frac{1}{2} \sum_{i=1}^m  (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) -\frac{1}{2}(\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1} (\bm{\mu}-\bm{\mu}_0) \right) \\
+	&= \exp \left[ -\frac{1}{2} \left( \bm{\mu}^\top (m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}) \bm{\mu} - 2 \bm{\mu}^\top \left(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0\right) + \bm{\mu}_0^\top \bm{\Sigma}_0^{-1} \bm{\mu}_0 + \sum_{i=1}^m \bm{x}_i^\top \bm{\Sigma}^{-1} \bm{x}_i\right) \right]
+	\end{split}
+	\end{equation*}
+	
+	Its normalized form is $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$, in which $\bm{\Sigma}_1^{-1}=m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}$ and $\bm{\mu}_1=\bm{\Sigma}_1(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0)$.
 	\end{itemize}		
 	
+	\item [\textbf{b}]. Known mean, unknown covariance.
+	\item [\textbf{c}]. Unknown mean and covariance.
 	\item [\textbf{4}] Exponential distribution
 	\end{itemize}
 	
@@ -370,7 +395,12 @@ in which $d(\cdot,\cdot)$ can be arbitrary distance function. Note that the step
 	\end{equation*}
 Now, prove that: each iteration of the k-means algorithm does not increase the objective.
 
-\item[Ex3.2] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
+\item[Ex3.2] \textbf{Simplex of Dirichlet distribution} Because of the summation constraint, the distribution over the space of the $\{\mu_j\}$ is confined to a simplex of dimensionality $d-1$.
+
+\item[Ex3.3] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
+
+\item[Ex3.4] \textbf{Sequential estimation under the perspective of Bayesian reasoning} (see \textit{PRML Chapter 2.3.5}).
+
 
 \end{itemize}
 \textit{
