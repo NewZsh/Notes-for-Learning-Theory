@@ -63,20 +63,14 @@ Now the number of parameters we need to estimate is only $2d + 1$. When we also 
 
 \section{Density estimation}
 
-	To apply the Bayesian decision principle, we should know the probability distribution. In fact, machine learning can be treated as '\textbf{\textit{fitting the underlying distribution}}' (see \ref{sec:final}). There are two classes of methods for estimation, parametric and non-parametric methods.
+	To apply the Bayesian decision principle, we should estimate the probability density (see \ref{sec:final}).
 	
 	\subsection{Parametric method: maximum likelihood}
-	Assume that the form of distribution is known, the problem is to estimate the parameters. Specifically, given an i.i.d. training set $S = (\bm{x}_1,\cdots,\bm{x}_m)$ sampled according to a density distribution, the likelihood of $S$ given $\theta$ is:
-	\begin{equation*}
-	L(S;\theta) = \prod_{i=1}^m  p(\bm{x}_i;\theta)
-	\end{equation*}
-Usually, we turn to optimize its logarithm, that is
+	Assume that the form of distribution is known, the problem is to estimate the parameters. Specifically, given an i.i.d. training set $S = (\bm{x}_1,\cdots,\bm{x}_m)$ sampled according to a density distribution, the likelihood of $S$ given $\theta$ is $L(S;\theta) = \prod_{i=1}^m  p(\bm{x}_i;\theta)$.	Usually, we turn to optimize its logarithm,
 	\begin{equation}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta)
 	\end{equation}
-	
-	Following is the examples:
-	
+		
 	\begin{itemize}
 	\item [\textbf{1}] Bernoulli distribution, $\theta={\mu}$
 	
@@ -84,22 +78,16 @@ Usually, we turn to optimize its logarithm, that is
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(x_i;\theta) = \sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu)
 	\end{equation*}
-The derivative of the log likelihood with respect to $\mu$ is given by
+Set the derivative of the log likelihood with respect to $\mu$ to zero,
 	\begin{equation*}
-	\frac{\partial \log L(S;\theta)}{\partial \mu} = \sum_{i=1}^m \frac{x_i}{\mu} - \frac{1-x_i}{1-\mu} = \sum_{i=1}^m \frac{x_i-\mu}{\mu(1-\mu)}
+	\frac{\partial \log L(S;\theta)}{\partial \mu} = \sum_{i=1}^m \frac{x_i}{\mu} - \frac{1-x_i}{1-\mu} = \sum_{i=1}^m \frac{x_i-\mu}{\mu(1-\mu)} = 0 \Longrightarrow	 \mu_{\mathrm{ML}}=\frac{1}{m}\sum_{i=1}^m x_i	
 	\end{equation*}
-which leads to $\mu_{\mathrm{ML}}=\frac{1}{m}\sum_{i=1}^m x_i$.
 	\begin{footnotesize}
-		
-	
-	
-	\textit{\underline{remark1}}: $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence we can calculate its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In this example,
+	\textit{\underline{remark1}}: $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence has its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In this example,
 	\begin{equation*} 
 	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
 	\end{equation*}
 	\end{footnotesize}
-		
-	
 	
 	\item [\textbf{2}] Multinomial distribution, $\theta=\bm{\mu}$
 	
@@ -119,28 +107,25 @@ To maximize it with respect to $\mu_j$ must take account of the constraint that 
 	\begin{equation*}
 	L' = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right)
 	\end{equation*}
-Take derivative with regard to  $\mu_j$
+Set the derivative with regard to  $\mu_j$ to be zero
 	\begin{equation*}
-	\frac{\partial L'}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda
+	\frac{\partial L'}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda = 0  \Longrightarrow	 \mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda
 	\end{equation*}
-which leads to $\mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda$. Besides, $\sum_{j=1}^d \mu_j=-\sum_{j=1}^d \sum_{i=1}^m  x_{ij}/\lambda = -m/\lambda=1$, thereby leading to $\lambda=-m$. Hence, $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, which is also unbiased.
+Besides, $\sum_{j=1}^d \mu_j=-m/\lambda=1$, thereby leading to $\lambda=-m$, and $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, which is also unbiased.
 	
 	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
-	The Gaussian distribution is 
-	\begin{equation}
-	p(\bm{x}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right)
-	\end{equation}
+	
+	The Gaussian distribution is  $p(\bm{x}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right)$.
+	
 	The log likelihood function is given by
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) 
 	= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
-	The derivative of the log likelihood with respect to $\bm{\mu}$ is given by
+	Set the derivative of the log likelihood with respect to $\bm{\mu}$ to be zero
 	\begin{equation*}
-	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
-	\end{equation*}
-and setting it to zero leads to: $\bm{\mu}_{\mathrm{ML}}= \sum_{i=1}^m \bm{x}_i / m$.
-	
+	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu}) \Longrightarrow	 \bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i
+	\end{equation*}	
 	
 	
 	\begin{footnotesize}
