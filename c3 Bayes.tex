@@ -270,7 +270,7 @@ in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posteri
 	There are two parameters to be estimated in Gaussian distribution, the mean vector and the covariance matrix. So there are three cases
 	
 	\begin{itemize}
-	\item [\textbf{a}]. Known covariance, unknown mean.
+	\item [\textbf{a}] Known covariance, unknown mean.
 	The conjugate prior is another Gaussian distribution $p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)=\mathcal{N}(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)$. The posterior is given by
 	\begin{equation*}
 	\begin{split}
@@ -282,8 +282,22 @@ in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posteri
 	
 	Its normalized form is $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$, in which $\bm{\Sigma}_1^{-1}=m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}$ and $\bm{\mu}_1=\bm{\Sigma}_1(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0)$.
 
-	\item [\textbf{b}]. Known mean, unknown covariance.
-	\item [\textbf{c}]. Unknown mean and covariance.	
+	\item [\textbf{b}] Known mean, unknown covariance. \textbf{For 1d case}, denote $\lambda=1/\sigma^2$, the corresponding conjugate prior should therefore be proportional to the product of a power of $\lambda$ and the exponential of a linear function of $\lambda$. This corresponds to the gamma distribution which is defined by
+	\begin{equation*}
+	\mathrm{Gam}(\lambda|a,b) = \frac{1}{\Gamma(a)} b^a \lambda^{a-1} \exp(-b\lambda)
+	\end{equation*}
+	The posterior is given by
+	\begin{equation*}
+	p(\lambda|S)\propto \lambda^{a_0-1} \lambda^{N/2} \exp \{-b_0 \lambda - \frac{\lambda}{2}\sum^{i=1}_m (x_i-\mu)^2\}
+	\end{equation*}
+	
+	\textbf{For multi-variate} case, the corresponding prior is Wishart distribution, which is not that important in this notes.
+	
+	\begin{equation*}
+	\mathrm{Wishart}(\bm{\Sigma}|\bm{W},v)=B|\bm{\Sigma}|^{(v-d-1)/2} \exp \left(-\frac{1}{2} \mathrm{Tr} (\bm{W}^{-1}\bm{\Sigma})\right)
+	\end{equation*}
+	
+	\item [\textbf{c}] Unknown mean and covariance. The corresponding prior is Gaussian-Gamma distribution or Gaussian-Wishart distribution. We do not expand them here.
 	
 	\end{itemize}		
 	
