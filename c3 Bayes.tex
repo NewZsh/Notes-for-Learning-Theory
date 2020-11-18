@@ -61,12 +61,9 @@ This part corresponds to \textbf{Chapter 24, 31 in UML, Chapter 1, 2 in PRML}, a
 	\end{equation}
 Now the number of parameters we need to estimate is only $2d + 1$. When we also estimate the parameters using the maximum likelihood principle (see below), the resulting classifier is called the \textit{Naive Bayes} classifier.
 
-\section{Density estimation}
+\section{Parametric density estimation}
 
-	To apply the Bayesian decision principle, we should estimate the probability density (see \ref{sec:final}).
-	
-	\subsection{Parametric method: maximum likelihood}
-	Assume that the form of distribution is known, the problem is to estimate the parameters. Specifically, given an i.i.d. training set $S = (\bm{x}_1,\cdots,\bm{x}_m)$ sampled according to a density distribution, the likelihood of $S$ given $\theta$ is $L(S;\theta) = \prod_{i=1}^m  p(\bm{x}_i;\theta)$.	Usually, we turn to optimize its logarithm,
+	To apply the Bayesian decision principle, assume that the form of distribution is known, the problem is to estimate the parameters. Specifically, given an i.i.d. training set $S = (\bm{x}_1,\cdots,\bm{x}_m)$ sampled according to a density distribution, the likelihood of $S$ given $\theta$ is $L(S;\theta) = \prod_{i=1}^m  p(\bm{x}_i;\theta)$.	Usually, we turn to optimize its logarithm,
 	\begin{equation}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta)
 	\end{equation}
@@ -82,36 +79,24 @@ Set the derivative of the log likelihood with respect to $\mu$ to zero,
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \mu} = \sum_{i=1}^m \frac{x_i}{\mu} - \frac{1-x_i}{1-\mu} = \sum_{i=1}^m \frac{x_i-\mu}{\mu(1-\mu)} = 0 \Longrightarrow	 \mu_{\mathrm{ML}}=\frac{1}{m}\sum_{i=1}^m x_i	
 	\end{equation*}
-	\begin{footnotesize}
-	\textit{\underline{remark1}}: $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence has its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In this example,
-	\begin{equation*} 
-	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
-	\end{equation*}
-	\end{footnotesize}
 	
 	\item [\textbf{2}] Multinomial distribution, $\theta=\bm{\mu}$
 	
 	Multinomial distribution extends the binary variable to one of $d$ possible value. The random variable can be represented by a $d$-dimensional vector $\bm{x}$, in which only one element equals 1 and others equal 0. Denote the probability of $x_j=1$ by $\mu_j$, then the distribution is given by
 	
 	\begin{equation*}
-	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j}
+	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j}\ \ \ \ \mathit{s.t.}\ \ \sum_{j=1}^d \mu_j=1,\ \forall j,\ \ \mu_j\geq 0
 	\end{equation*}
-in which $\sum_{j=1}^d \mu_j=1, \mu_j\geq 0$.
-		
+
 	The corresponding log likelihood function is given by
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j
 	\end{equation*}
-To maximize it with respect to $\mu_j$ must take account of the constraint that $\sum_{j=1}^d \mu_j=1$. Using Lagrange multiplier $\lambda$, it is equivalent to maximize 
-	
-	\begin{equation*}
-	L' = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right)
-	\end{equation*}
-Set the derivative with regard to  $\mu_j$ to be zero
+Using Lagrange multiplier $\lambda$, it is equivalent to maximize  $L' = \log L(S;\theta) + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right) $. Set the derivative with regard to  $\mu_j$ to be zero
 	\begin{equation*}
 	\frac{\partial L'}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda = 0  \Longrightarrow	 \mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda
 	\end{equation*}
-Besides, $\sum_{j=1}^d \mu_j=-m/\lambda=1$, thereby leading to $\lambda=-m$, and $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, which is also unbiased.
+Besides, $\sum_{j=1}^d \mu_j=-m/\lambda=1$, thereby leading to $\lambda=-m$, and $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$.
 	
 	\item [\textbf{3}] Gaussian distribution, $\theta=(\bm{\mu},\bm{\Sigma})$
 	
@@ -122,71 +107,37 @@ Besides, $\sum_{j=1}^d \mu_j=-m/\lambda=1$, thereby leading to $\lambda=-m$, and
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) 
 	= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
-	Set the derivative of the log likelihood with respect to $\bm{\mu}$ to be zero
-	\begin{equation*}
-	\frac{\partial \log L(S;\theta)}{\partial \bm{\mu}} = \sum_{i=1}^m \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu}) \Longrightarrow	 \bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i
-	\end{equation*}	
-	
+	Set the derivative of the log likelihood with respect to $\bm{\mu}$ to be zero leading to $\bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i$.
 	
 	\begin{footnotesize}
-	\textit{\underline{remark2}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
+	\textit{\underline{remark1}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
 	\begin{itemize}
 	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
 	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
-	\item $\frac{\partial tr[\bm{A} \bm{B}]}{\partial \bm{A}} = \bm{B}^\top$;
-	\item $\frac{\partial \log |\bm{A}|}{\partial \bm{A}} = (\bm{A}^{-1})^\top$;
-	\item $\frac{\partial tr(\bm{A}\bm{X}^{-1}\bm{B})}{\partial \bm{X}} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
+	\item $\partial tr[\bm{A} \bm{B}]/\partial \bm{A} = \bm{B}^\top$; $\partial \log |\bm{A}|/\partial \bm{A} = (\bm{A}^{-1})^\top$; $\partial tr(\bm{A}\bm{X}^{-1}\bm{B})/\partial \bm{X} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
 	\end{itemize}
 	\end{footnotesize}
-	
-	
-	
+
 	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
 	\end{equation*}
-Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top/m $
-		
-	\begin{footnotesize}
-	\textit{\underline{remark3}}: Again, the estimation of $\bm{\mu}$ is unbiased. However, the estimation of $\bm{\Sigma}$ is biased,
-	\begin{equation*}
-	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
-	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
-	\end{equation*}
-	Consider each term in the numerator, note that each pair of samples is independent,
-	\begin{equation*}
-	\begin{split}
-	\mathbb{E}(\bm{x}_i \bm{x}_i^\top) &= \bm{\Sigma} + \bm{\mu}\bm{\mu}^\top  \\
-	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) &= 
-	\frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m \bm{x}_i \bm{x}_j^\top\right) 
-	= \frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m (\bm{x}_i-\bm{\mu}) (\bm{x}_j-\bm{\mu})^\top + 2\bm{\mu} \sum_{i=1}^m (\bm{x}_i-\bm{\mu})^\top + \sum_{i=1}^m\sum_{j=1}^m \bm{\mu}\bm{\mu}^\top \right) \\
-	&= \frac{1}{m^2} \left( \sum_{i=1}^m \mathbb{E}((\bm{x}_i-\bm{\mu}) (\bm{x}_i-\bm{\mu})^\top)+ m^2 \bm{\mu}\bm{\mu}^\top \right)
-	= \frac{\bm{\Sigma}}{m} + \bm{\mu}\bm{\mu}^\top \\
-	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) &=  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right)
-	= \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + 2\bm{\mu}\sum_{j=1}^m (\bm{x}_j-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) = \frac{\bm{\Sigma}}{m} + \bm{\mu} \bm{\mu}^\top
-	\end{split}
-	\end{equation*}
-Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
-	\end{footnotesize}
-	
-	
+Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top/m $.
 	
 	\item [\textbf{4}] Exponential family
 	The exponential family is defined to be the set of distributions of the form
 	\begin{equation}
 	p(\bm{x}|\bm{\eta}) = h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \}
 	\end{equation}
-	
-	
-	
+
 	\begin{footnotesize}
-	\textit{\underline{remark4}}: Bernoulli distribution is a member in this family,
+	\textit{\underline{remark1}}: Bernoulli distribution is a member in this family,
 	\begin{equation*}
 	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \log \mu + (1-x) \log (1-\mu) \} = \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
 	\end{equation*}
 	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\log \frac{\mu}{1-\mu} $, and $A(\eta)=\log (1+\exp(\eta))$.
 
-	\textit{\underline{remark5}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
+	\textit{\underline{remark2}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
 	\begin{equation*}
 	\begin{split}
 	p(\bm{x}|\bm{\mu}) &= \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
@@ -195,7 +146,7 @@ Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which 
 	\end{equation*}
 	Define $\eta_j =  \log \frac{\mu_j}{1-\sum_{k=1}^d \mu_k}$, then $\mu_j = \frac{\exp\eta_j}{1+\sum_{k=1}^d \exp \eta_k}$, and $1-\sum_{j=1}^{d-1} \mu_j = 1-\frac{\sum_{j=1}^{d-1} \exp \eta_j}{1+\sum_{k=1}^d \exp \eta_k}=\frac{\exp \eta_{d}}{1+\sum_{k=1}^d \exp \eta_k}$. Compare with the general form shows that $h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^d \exp \eta_k)-\eta_d$.
 	
-	\textit{\underline{remark6}}: Gaussian distribution is a member in this family.
+	\textit{\underline{remark3}}: Gaussian distribution is a member in this family.
 	\begin{equation*}
 	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
 	\end{equation*}
@@ -207,7 +158,7 @@ Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which 
 	\begin{equation*}
 	\sum_{i=1}^m \log h(\bm{x}_i) + \bm{\eta}^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
 	\end{equation*}
-Take derivative with regard to $\bm{\eta}$ leas to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m \bm{x}_i/m$, which can in principle be solved to obtain $\bm{\eta}_\mathrm{ML}$.
+Take derivative with regard to $\bm{\eta}$ leas to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m u(\bm{x}_i)/m$, which can in principle be solved to obtain $\bm{\eta}_\mathrm{ML}$.
 	
 	Note that $\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} = 1$. Take derivatives of both sides with regard to $\bm{\eta}$, we have,
 	\begin{equation*}
@@ -221,11 +172,42 @@ which leads to
 	Therefore, $\sum_i u(\bm{x}_i)$ is called the sufficient statistic. Also note that the covariance of $u(\bm{x})$ can be expressed in terms of the second derivatives $A(\bm{\eta})$, and similarly for higher order moments. Thus, provided we can normalize a distribution from the exponential family, we can always find its moments by simple differentiation.
 	\end{itemize}
 	
-	\subsection{Non-parametric methods}
+\section{Non-Parametric density estimation}
 
-\section{Bayesian Reasoning}
+	An important limitation of parametric approach is that the chosen density might be a poor model of the distribution that generates the data, which can result in poor predictive performance. This section  considers some non-parametric approaches to density estimation that make few assumptions about the form of the distribution.
+	
 
-	Maximum likelihood estimation can give severely over-fitted results for small data sets. To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. To determine the prior distribution, we expect that the posterior distribution will have the same functional form as the prior. This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
+\section{From MLE to Bayesian reasoning}
+
+\subsection{Theoretical analysis of MLE}
+	Intuitively, MLE can give severely over-fitted results for small data sets. Formally, given a parameter $\bm{\theta}$ and an observation $\bm{x}$, define the empirical loss of $\bm{\theta}$ on $\bm{x}$ as the negative logarithm of its probability
+	
+	\begin{equation*}
+	l(\bm{\theta},\bm{x}) = -\log \mathcal{P}_{\bm{\theta}}(\bm{x})
+	\end{equation*}
+Hence, MLE is equivalent to ERM, \textit{i.e.},
+	
+	\begin{equation*}
+	\arg\min_{\bm{\theta}} \sum_{i=1}^m -\log \mathcal{P}_{\bm{\theta}}(\bm{x}_i) = \arg\max_{\bm{\theta}} \sum_{i=1}^m \log \mathcal{P}_{\bm{\theta}}(\bm{x}_i)
+	\end{equation*}
+	
+	However, the true risk of $\bm{\theta}$ according to the underlying distribution $\mathcal{P}$ is
+	
+	\begin{equation*}
+	\mathbb{E}[l(\bm{\theta}, \bm{x})] =	-\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \mathcal{P}_{\bm{\theta}}(\bm{x}) = 
+	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \left( \frac{\mathcal{P}(\bm{x})}{\mathcal{P}_{\bm{\theta}}(\bm{x})} \right) +
+	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} \geq  \sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} 
+	\end{equation*}
+in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of unit variance. Recall that $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, then
+
+	\begin{equation*}
+	\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, 1)}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] = \frac{1}{2} (\bm{\mu}_{\mathrm{ML}}-\bm{\mu})^2
+	\end{equation*}
+
+	Also, we want to know the worst case that MLE may achieve. 
+	
+\subsection{Bayesian reasoning}
+	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. To determine the prior distribution, we expect that the posterior distribution will have the same functional form as the prior. This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
 	
 	\begin{itemize}
 	\item [\textbf{1}] Beta distribution for Bernoulli distribution
@@ -411,11 +393,39 @@ in which $d(\cdot,\cdot)$ can be arbitrary distance function. Note that the step
 	\end{equation*}
 Now, prove that: each iteration of the k-means algorithm does not increase the objective.
 
+\item[] \textbf{Solution}:
+
 \item[Ex3.2] \textbf{Simplex of Dirichlet distribution} Because of the summation constraint, the distribution over the space of the $\{\mu_j\}$ is confined to a simplex of dimensionality $d-1$.
 
 \item[Ex3.3] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
 
 \item[Ex3.4] \textbf{Sequential estimation under the perspective of Bayesian reasoning} (see \textit{PRML Chapter 2.3.5}).
+
+\item[Ex3.5] \textbf{Unbiased estimation} (UML Ex24.1) $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence has its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In the case of exponential family, 
+	\begin{equation*} 
+	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
+	\end{equation*}
+Hence, we say that the MLE for mean parameter is unbiased. Now, prove that the maximum likelihood estimator of the variance of a Gaussian variable is biased.
+
+\item[] \textbf{Solution}:
+	\begin{equation*}
+	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
+	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
+	\end{equation*}
+	Consider each term in the numerator, note that each pair of samples is independent,
+	\begin{equation*}
+	\begin{split}
+	\mathbb{E}(\bm{x}_i \bm{x}_i^\top) &= \bm{\Sigma} + \bm{\mu}\bm{\mu}^\top  \\
+	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) &= 
+	\frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m \bm{x}_i \bm{x}_j^\top\right) 
+	= \frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m (\bm{x}_i-\bm{\mu}) (\bm{x}_j-\bm{\mu})^\top + 2\bm{\mu} \sum_{i=1}^m (\bm{x}_i-\bm{\mu})^\top + \sum_{i=1}^m\sum_{j=1}^m \bm{\mu}\bm{\mu}^\top \right) \\
+	&= \frac{1}{m^2} \left( \sum_{i=1}^m \mathbb{E}((\bm{x}_i-\bm{\mu}) (\bm{x}_i-\bm{\mu})^\top)+ m^2 \bm{\mu}\bm{\mu}^\top \right)
+	= \frac{\bm{\Sigma}}{m} + \bm{\mu}\bm{\mu}^\top \\
+	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) &=  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right)
+	= \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + 2\bm{\mu}\sum_{j=1}^m (\bm{x}_j-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) = \frac{\bm{\Sigma}}{m} + \bm{\mu} \bm{\mu}^\top
+	\end{split}
+	\end{equation*}
+Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
 
 
 \end{itemize}
