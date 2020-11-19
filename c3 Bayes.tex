@@ -158,7 +158,7 @@ Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directl
 	\begin{equation*}
 	\sum_{i=1}^m \log h(\bm{x}_i) + \bm{\eta}^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
 	\end{equation*}
-Take derivative with regard to $\bm{\eta}$ leas to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m u(\bm{x}_i)/m$, which can in principle be solved to obtain $\bm{\eta}_\mathrm{ML}$.
+Take derivative with regard to $\bm{\eta}$ leads to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m u(\bm{x}_i)/m$, which can be solved to obtain $\bm{\eta}_\mathrm{ML}$.
 	
 	Note that $\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} = 1$. Take derivatives of both sides with regard to $\bm{\eta}$, we have,
 	\begin{equation*}
@@ -179,7 +179,6 @@ which leads to
 
 \section{From MLE to Bayesian reasoning}
 
-\subsection{Theoretical analysis of MLE}
 	Intuitively, MLE can give severely over-fitted results for small data sets. Formally, given a parameter $\bm{\theta}$ and an observation $\bm{x}$, define the empirical loss of $\bm{\theta}$ on $\bm{x}$ as the negative logarithm of its probability
 	
 	\begin{equation*}
@@ -198,21 +197,17 @@ Hence, MLE is equivalent to ERM, \textit{i.e.},
 	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \left( \frac{\mathcal{P}(\bm{x})}{\mathcal{P}_{\bm{\theta}}(\bm{x})} \right) +
 	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} \geq  \sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} 
 	\end{equation*}
-in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of known variance. Recall that $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, then
+in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of known variance, 
 
 	\begin{equation*}
-	\begin{split}
-&\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] =
-\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}  \log \left( \frac{\mathcal{P}_{\bm{\mu}}(\bm{x})}{\mathcal{P}_{\bm{\mu}_{\mathrm{ML}}}(\bm{x})}\right) \\ &= 
-	 - \frac{1}{2}(\bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\bm{\mu}_{\mathrm{ML}}^\top \bm{\Sigma}^{-1} \bm{\mu}_{\mathrm{ML}}) + \mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N} (\bm{\mu}, \bm{\Sigma})} (\bm{\mu}^\top-\bm{\mu}_{\mathrm{ML}}^\top) \bm{\Sigma}^{-1} \bm{x} 
+\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] =
+\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}  \log \left( \frac{\mathcal{P}_{\bm{\mu}}(\bm{x})}{\mathcal{P}_{\bm{\mu}_{\mathrm{ML}}}(\bm{x})}\right)
 	= \frac{1}{2} (\bm{\mu}_{\mathrm{ML}}-\bm{\mu})^\top \bm{\Sigma}^{-1}(\bm{\mu}_{\mathrm{ML}}-\bm{\mu})
-	\end{split}
 	\end{equation*}
-from which we can know that the difference of the true risk with the minimal loss is bounded with some parameters regarding with $\bm{\Sigma}$ and $m$.
+from which we can know that the difference of the true risk with the minimal loss is bounded.
 
-	Also, we want to know the worst case that MLE may achieve. Consider a Bernoulli random variable with parameter $\mu$, assume that it is nonzero but very small. Then, the probability that no element of a sample of size $m$ will be 1 is $(1-\mu)^m\geq e^{-2m\mu}$. And in that case, $\mu_{\mathrm{ML}}=0$. But the true risk is $\mathop{\mathbb{E}}\limits_{x}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\mu l(\bm{\mu}_{\mathrm{ML}}, 1) + (1-\mu) l(\bm{\mu}_{\mathrm{ML}}, 0) = \theta \log (1/\mu_{\mathrm{ML}}) = \infty$.
+	Also, we want to know the worst case that MLE may achieve. Consider a Bernoulli random variable with parameter $\mu$, assume that it is nonzero but very small. Then, the probability that no element of a sample of size $m$ will be 1 is $(1-\mu)^m\geq e^{-2m\mu}$. And in that case, $\mu_{\mathrm{ML}}=0$. But the true risk is $\mathbb{E}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\mu l(\bm{\mu}_{\mathrm{ML}}, 1) + (1-\mu) l(\bm{\mu}_{\mathrm{ML}}, 0) = \theta \log (1/\mu_{\mathrm{ML}}) = \infty$.
 	
-\subsection{Bayesian reasoning}
 	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. To determine the prior distribution, we expect that the posterior distribution will have the same functional form as the prior. This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
 	
 	\begin{itemize}
