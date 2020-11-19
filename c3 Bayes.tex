@@ -442,7 +442,16 @@ loss minimization for parameter estimation in the case of Bernoulli distribution
 	-\frac{1}{m}\sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu) - \frac{1}{m} (\log( \mu)+\log(1- \mu))
 	\end{equation*}
 Take derivatives with regard to $\mu$ and set it to zero leads to $\mu'=\frac{1+\sum_{i=1}^m x_i}{m+2}$. It's equivalent to adding two pseudo-examples $\{0,1\}$ into the training set, which is called 'add-1' smoothing.
-	\item[6.2]
+	\item[6.2] Using triangle inequality,
+	\begin{equation*}
+	|\mu'-\mu| = |\mu'-\mathbb{E}(\mu')+\mathbb{E}(\mu')-\mu| \leq |\mu'-\mathbb{E}(\mu')| + |\mathbb{E}(\mu')-\mu|
+	\end{equation*}
+
+	Since $\mathbb{E}(\mu')=\frac{1+m\mu}{m+2}$, we have that $|\mathbb{E}(\mu')-\mu|\leq \frac{1}{m+2}$, and $|\mu'-\mathbb{E}(\mu')|=\frac{m}{m+2}|\frac{1}{m}\sum_{i=1}^m x_i -\mu|$. Following Hoeffding's inequality, for any $\epsilon>0$, 
+	
+	\begin{equation*}
+	P\left(|\mu'-\mu|\geq \frac{1}{m+2} +\epsilon \right) \leq 2\exp\left( -2m\epsilon^2 \right)
+	\end{equation*}
 	
 	\end{itemize}
 
