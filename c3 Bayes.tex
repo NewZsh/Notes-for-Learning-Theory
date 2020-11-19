@@ -198,13 +198,19 @@ Hence, MLE is equivalent to ERM, \textit{i.e.},
 	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \left( \frac{\mathcal{P}(\bm{x})}{\mathcal{P}_{\bm{\theta}}(\bm{x})} \right) +
 	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} \geq  \sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} 
 	\end{equation*}
-in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of unit variance. Recall that $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, then
+in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of known variance. Recall that $\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i$, then
 
 	\begin{equation*}
-	\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, 1)}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] = \frac{1}{2} (\bm{\mu}_{\mathrm{ML}}-\bm{\mu})^2
+	\begin{split}
+&\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] =
+\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}  \log \left( \frac{\mathcal{P}_{\bm{\mu}}(\bm{x})}{\mathcal{P}_{\bm{\mu}_{\mathrm{ML}}}(\bm{x})}\right) \\ &= 
+	 - \frac{1}{2}(\bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\bm{\mu}_{\mathrm{ML}}^\top \bm{\Sigma}^{-1} \bm{\mu}_{\mathrm{ML}}) + \mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N} (\bm{\mu}, \bm{\Sigma})} (\bm{\mu}^\top-\bm{\mu}_{\mathrm{ML}}^\top) \bm{\Sigma}^{-1} \bm{x} 
+	= \frac{1}{2} (\bm{\mu}_{\mathrm{ML}}-\bm{\mu})^\top \bm{\Sigma}^{-1}(\bm{\mu}_{\mathrm{ML}}-\bm{\mu})
+	\end{split}
 	\end{equation*}
+from which we can know that the difference of the true risk with the minimal loss is bounded with some parameters regarding with $\bm{\Sigma}$ and $m$.
 
-	Also, we want to know the worst case that MLE may achieve. 
+	Also, we want to know the worst case that MLE may achieve. Consider a Bernoulli random variable with parameter $\mu$, assume that it is nonzero but very small. Then, the probability that no element of a sample of size $m$ will be 1 is $(1-\mu)^m\geq e^{-2m\mu}$. And in that case, $\mu_{\mathrm{ML}}=0$. But the true risk is $\mathop{\mathbb{E}}\limits_{x}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\mu l(\bm{\mu}_{\mathrm{ML}}, 1) + (1-\mu) l(\bm{\mu}_{\mathrm{ML}}, 0) = \theta \log (1/\mu_{\mathrm{ML}}) = \infty$.
 	
 \subsection{Bayesian reasoning}
 	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. To determine the prior distribution, we expect that the posterior distribution will have the same functional form as the prior. This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
@@ -231,7 +237,7 @@ To ensure that it is normalized, the posterior must be $\mathrm{Beta}(a+\sum_{i=
 	\begin{equation*}
 	p(x=1|S)=\int^1_0 p(x=1|\mu)p(\mu|S) \mathrm{d}\mu = \int^1_0 \mu p(\mu|S) \mathrm{d}\mu = \mathbb{E}(\mu|S) = \frac{a+\sum_{i=1}^m x_i}{b+m}
 	\end{equation*}
-Note that as the training sequence $S$ become infinitely large, $m\rightarrow\infty$, the result convergences to $\frac{\sum_{i=1}^m x_i}{m}$, which is the same as MLE. This indicates: \textbf{if the dataset is of small size, prior probability tends to make an important effect.}
+Note that as the training sequence $S$ become infinitely large, $m\rightarrow\infty$, the result convergences to $\frac{\sum_{i=1}^m x_i}{m}$, which is the same as MLE.
 	
 	\item [\textbf{2}] Dirichlet distribution for multinomial distribution
 
@@ -270,10 +276,10 @@ in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posteri
 	\end{equation*}
 	The posterior is given by
 	\begin{equation*}
-	p(\lambda|S)\propto \lambda^{a_0-1} \lambda^{N/2} \exp \{-b_0 \lambda - \frac{\lambda}{2}\sum^{i=1}_m (x_i-\mu)^2\}
+	p(\lambda|S)\propto \lambda^{a_0-1} \lambda^{N/2} \exp \left\{-b_0 \lambda - \frac{\lambda}{2}\sum^{i=1}_m (x_i-\mu)^2\right\}
 	\end{equation*}
 	
-	\textbf{For multi-variate} case, the corresponding prior is Wishart distribution, which is not that important in this notes.
+	\textbf{For multi-variate} case, the corresponding prior is Wishart distribution,
 	
 	\begin{equation*}
 	\mathrm{Wishart}(\bm{\Sigma}|\bm{W},v)=B|\bm{\Sigma}|^{(v-d-1)/2} \exp \left(-\frac{1}{2} \mathrm{Tr} (\bm{W}^{-1}\bm{\Sigma})\right)
@@ -304,26 +310,22 @@ in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posteri
 	\begin{equation*}
 	\sum_{i=1}^m \log \sum_{j=1}^k \pi_j \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) + \lambda \left(\sum_{j=1}^k \pi_j - 1\right)
 	\end{equation*}
-	Take derivatives with regard to $\bm{\mu}_k$, we have
+	Take derivatives with regard to $\bm{\mu}_k$ and set it to zero
 	
-	\begin{equation*}
-	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{z_{ij}} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j)
-	\end{equation*}
-in which $z_{ij}=p(y_j=1|\bm{x}_i)$ is the posterior probability. Setting it to be zero leads to
 	\begin{equation}
 	\label{eq:GMM_mu}
-	\bm{\mu}_j=\frac{\sum_{i=1}^m z_{ij} \bm{x}_i}{\sum_{i=1}^m z_{ij}}
+	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{z_{ij}} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j) \Longrightarrow \bm{\mu}_j=\frac{\sum_{i=1}^m z_{ij} \bm{x}_i}{\sum_{i=1}^m z_{ij}}
 	\end{equation}
-Similarly,
+in which $z_{ij}=p(y_j=1|\bm{x}_i)$ is the posterior probability. Similarly,
 	\begin{equation}
 	\label{eq:GMM_sigma}
 	\bm{\Sigma}_j=\frac{\sum_{i=1}^m z_{ij} (\bm{x}_i-\bm{\mu}_j)(\bm{x}_i-\bm{\mu}_j)^\top}{\sum_{i=1}^m z_{ij}}
 	\end{equation}
-	Then, take derivatives with regard to each $\pi_j$,
+	Then, take derivatives with regard to each $\pi_j$ and set it to zero
 	\begin{equation*}
-	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda
+	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda \Longrightarrow \pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}
 	\end{equation*}
-which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -m/\lambda=1$, then $\lambda=-m$, and hence
+With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -m/\lambda=1$, then $\lambda=-m$, and hence
 
 	\begin{equation}
 	\label{eq:GMM_pi}
@@ -340,9 +342,7 @@ which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint
 	\end{itemize}
   	\end{shaded}
 
-	
-	In \textit{Ex3.1}, we will see the relationship between GMM and K-means clustering algorithm.
-	
+		
 \section{\textit{v.s.} discriminant models}
 	\label{sec:final}
 	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
@@ -354,7 +354,7 @@ which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint
 
 	However, in some situations, it is reasonable to adopt the generative models. Sometimes it is easier (computationally) to estimate the parameters of the model than to learn a discriminative predictor. Additionally, in some cases we do not have a specific task at hand but rather would like to use the data at a later time.
 	
-	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in the real world. The intuition behind this approach follows a famous quote from Richard Feynman:	
+	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in reality. The intuition behind this approach follows a famous quote from Richard Feynman:	
 	\begin{center}
 	\textit{"What I cannot create, I do not understand."}
 	\end{center}
@@ -365,18 +365,15 @@ which leads to $\pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}$. With the constraint
 	\begin{equation*}
 	\begin{split}
 	&\frac{p(Y=0) p(X=\bm{x}|Y=0)}{p(Y=1) p(X=\bm{x}|Y=1)} > 1 \\
-	&\iff \log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\bm{x}|Y=0) - \log p(X=\bm{x}|Y=1) > 0 \\
-	&\iff -\frac{1}{2}(\bm{x}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1}(\bm{x}-\bm{\mu}_0) + \frac{1}{2}(\bm{x}-\bm{\mu}_1)^\top \bm{\Sigma}_1^{-1}(\bm{x}-\bm{\mu}_1) +  \frac{1}{2}\log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + \log \frac{p(Y=0)}{p(Y=1)} > 0 \\
-	&\iff \frac{1}{2} \bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 ) + \frac{1}{2}\log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + \log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
+	\iff &\log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\bm{x}|Y=0) - \log p(X=\bm{x}|Y=1) > 0 \\
+	\iff &\frac{1}{2} \bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 ) + \frac{1}{2}\log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + \log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
 	\end{split}
 	\end{equation*}
-which is a quadratic discriminant function.
-
-	Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
+which is a quadratic discriminant function. Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
 	
 \section{Exercises and solutions}
 \begin{itemize}
-\item[Ex3.1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_ij=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
+\item[Ex1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_ij=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
 
 	\begin{shaded}
     \begin{itemize}
@@ -395,13 +392,13 @@ Now, prove that: each iteration of the k-means algorithm does not increase the o
 
 \item[] \textbf{Solution}:
 
-\item[Ex3.2] \textbf{Simplex of Dirichlet distribution} Because of the summation constraint, the distribution over the space of the $\{\mu_j\}$ is confined to a simplex of dimensionality $d-1$.
+\item[Ex2] \textbf{Simplex of Dirichlet distribution} Because of the summation constraint, the distribution over the space of the $\{\mu_j\}$ is confined to a simplex of dimensionality $d-1$.
 
-\item[Ex3.3] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
+\item[Ex3] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
 
-\item[Ex3.4] \textbf{Sequential estimation under the perspective of Bayesian reasoning} (see \textit{PRML Chapter 2.3.5}).
+\item[Ex4] \textbf{Sequential estimation under the perspective of Bayesian reasoning} (see \textit{PRML Chapter 2.3.5}).
 
-\item[Ex3.5] \textbf{Unbiased estimation} (UML Ex24.1) $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence has its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In the case of exponential family, 
+\item[Ex5] \textbf{Unbiased estimation} (UML Ex24.1) $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence has its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In the case of exponential family, 
 	\begin{equation*} 
 	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
 	\end{equation*}
@@ -426,6 +423,28 @@ Hence, we say that the MLE for mean parameter is unbiased. Now, prove that the m
 	\end{split}
 	\end{equation*}
 Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
+
+\item[Ex6] \textbf{The connection between smoothing and regularized MLE} (UML Ex24.2)  Consider the following regularized
+loss minimization for parameter estimation in the case of Bernoulli distribution:
+	\begin{equation*}
+	\min \frac{1}{m}\sum_{i=1}^m -\log \mathcal{P}_{\bm{\mu}}(\bm{x}_i) + \frac{1}{m} (\log(1/\mu)+\log(1/(1-\mu)))
+	\end{equation*}
+	
+	\begin{itemize}
+	\item[6.1] Show that the preceding objective is equivalent to the usual empirical error had we added two pseudo-examples to the training set.
+	\item[6.2] Derive a high probability bound on $|\mu'-\mu|$, and use this to bound the true risk.  
+	\end{itemize}
+
+\item[] \textbf{Solution}:
+	\begin{itemize}
+	\item[6.1] The regularized loss can be written as 
+	\begin{equation*}
+	-\frac{1}{m}\sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu) - \frac{1}{m} (\log( \mu)+\log(1- \mu))
+	\end{equation*}
+Take derivatives with regard to $\mu$ and set it to zero leads to $\mu'=\frac{1+\sum_{i=1}^m x_i}{m+2}$. It's equivalent to adding two pseudo-examples $\{0,1\}$ into the training set, which is called 'add-1' smoothing.
+	\item[6.2]
+	
+	\end{itemize}
 
 
 \end{itemize}
