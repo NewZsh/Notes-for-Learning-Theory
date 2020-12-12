@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ntheorem}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=cyan,      
+	urlcolor=red,
+	citecolor=green,
+}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof}{Proof}
+\setlength{\parindent}{2em}
+\author{Siheng Zhang\\zhangsiheng@cvte.com}
+\title{Chapter \textbf{\textit{2}} Linear Model}
+\date{\today}      
+\usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
+
+\begin{document}
+\maketitle  
+
+This part corresponds to , and mainly answers the following questions:
+
+\begin{itemize}
+\item 
+\end{itemize}
+
+\tableofcontents
+\newpage
+
+\section{Linear classification}
+
+\section{Linear regression}
+
+	\begin{equation}
+	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 
+	\end{equation}
+
+\subsection{MLE}
+
+	Suppose that $y_i$ is the , Gaussian noise, $y_i-\mathbf{wx}_i \sim\mathcal{N}(0,\sigma^2)$, the log likelihood function is
+	
+	\begin{equation}
+	\log \mathcal{L} = -\frac{N}{2} \log 2\pi - \sum_{i=1}^N \frac{(y_i-\mathbf{wx}_i)^2}{2}
+	\end{equation}
+
+Obviously, MLE is equivalent to linear regression.
+
+\subsection{Ridge}
+
+	Prior $\mathbf{w}\sim\mathcal{N}(0,\mathbf{I})$, posterior
+	
+	\begin{equation}
+	p(\mathbf{w}|S) \propto p(\mathbf{w}) p(S|\mathbf{w}) = \frac{1}{(2\pi)^{d/2}} \exp \left( -\frac{1}{2} \mathbf{w}^\top \mathbf{w} \right) \prod_{i=1}^N \frac{1}{\sqrt{2\pi}\sigma} \exp \left( -\frac{(y_i-\mathbf{wx}_i)^2}{2} \right)
+	\end{equation}
+	
+Maximizing the log posterior function is equivalent to the ridge regression.
+	
+\subsubsection{Ridge in the MAP viewpoint}
+
+\subsection{Lasso}
+
+\subsubsection{Lasso in the MAP viewpoint}
+
+
+\end{document}

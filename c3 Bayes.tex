@@ -23,8 +23,9 @@
 \author{Siheng Zhang\\zhangsiheng@cvte.com}
 \title{Chapter \textbf{\textit{3}} Generative Models}
 \date{\today}      
-\usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
-
+\usepackage[a4paper,left=30mm,right=30mm,top=25mm,bottom=25mm]{geometry} 
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=2mm}
 \begin{document}
 \maketitle  
 
@@ -208,7 +209,7 @@ from which we can know that the difference of the true risk with the minimal los
 
 	Also, we want to know the worst case that MLE may achieve. Consider a Bernoulli random variable with parameter $\mu$, assume that it is nonzero but very small. Then, the probability that no element of a sample of size $m$ will be 1 is $(1-\mu)^m\geq e^{-2m\mu}$. And in that case, $\mu_{\mathrm{ML}}=0$. But the true risk is $\mathbb{E}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\mu l(\bm{\mu}_{\mathrm{ML}}, 1) + (1-\mu) l(\bm{\mu}_{\mathrm{ML}}, 0) = \theta \log (1/\mu_{\mathrm{ML}}) = \infty$.
 	
-	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. To determine the prior distribution, we expect that the posterior distribution will have the same functional form as the prior. This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
+	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. \textbf{We expect that the posterior distribution will have the same functional form as the prior.} This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
 	
 	\begin{itemize}
 	\item [\textbf{1}] Beta distribution for Bernoulli distribution
@@ -223,7 +224,7 @@ meets the requirement. Note that the gamma functions $\Gamma(x)=\int^\infty_0 t^
 	
 	Given the observed sequence $S$, 
 	\begin{equation*}
-	p(\mu|S) \propto p(S|\mu) \mathrm{Beta}(\mu|a,b) = \left( \prod_{i=1}^m \mu^x_i (1-\mu)^{1-x_i} \right) \mu^{a-1}(1-\mu)^{b-1} = \mu^{a+\sum_{i=1}^m x_i-1}(1-\mu)^{m-\sum_{i=1}^m x_i + b-1}
+	p(\mu|S) \propto p(S|\mu) \mathrm{Beta}(\mu|a,b) = \mu^{a+\sum_{i=1}^m x_i-1}(1-\mu)^{m-\sum_{i=1}^m x_i + b-1}
 	\end{equation*}
 To ensure that it is normalized, the posterior must be $\mathrm{Beta}(a+\sum_{i=1}^m x_i, b+m-\sum_{i=1}^m x_i)$.
 
@@ -244,7 +245,7 @@ Note that as the training sequence $S$ become infinitely large, $m\rightarrow\in
 	
 	Given the observed sequence $S$, 
 	\begin{equation*}
-	p(\bm{\mu}|S) \propto p(S|\bm{\mu}) \mathrm{Dir} (\bm{\mu}|\bm{\alpha}) =\prod_{i=1}^m \prod_{j=1}^d \mu_j^{x_{ij}} \prod_{j=1}^d \mu_j^{\alpha_j-1} = \prod_{j=1}^d \mu_j^{\sum_{i=1}^m x_{ij}} \prod_{j=1}^d \mu_j^{\alpha_j-1} =  \prod_{j=1}^d \mu_j^{m_j+\alpha_j-1}
+	p(\bm{\mu}|S) \propto p(S|\bm{\mu}) \mathrm{Dir} (\bm{\mu}|\bm{\alpha}) =\prod_{i=1}^m \prod_{j=1}^d \mu_j^{x_{ij}} \prod_{j=1}^d \mu_j^{\alpha_j-1} =  \prod_{j=1}^d \mu_j^{m_j+\alpha_j-1}
 	\end{equation*}
 in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posterior is then given by $\mathrm{Dir}(\bm{\mu}|\bm{\alpha}+\bm{m})$.
 	
@@ -257,9 +258,9 @@ in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posteri
 	The conjugate prior is another Gaussian distribution $p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)=\mathcal{N}(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)$. The posterior is given by
 	\begin{equation*}
 	\begin{split}
-	p(\bm{\mu}|S) &\propto p(S|\bm{\mu})p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0) =  \exp \left( -\frac{1}{2} (\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma_0}^{-1} (\bm{\mu}-\bm{\mu}_0)\right) \prod_{i=1}^m \exp \left( -\frac{1}{2} (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) \right) \\
-	&= \exp \left( -\frac{1}{2} \sum_{i=1}^m  (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) -\frac{1}{2}(\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1} (\bm{\mu}-\bm{\mu}_0) \right) \\
-	&= \exp \left[ -\frac{1}{2} \left( \bm{\mu}^\top (m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}) \bm{\mu} - 2 \bm{\mu}^\top \left(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0\right) + \bm{\mu}_0^\top \bm{\Sigma}_0^{-1} \bm{\mu}_0 + \sum_{i=1}^m \bm{x}_i^\top \bm{\Sigma}^{-1} \bm{x}_i\right) \right]
+	& \log p(\bm{\mu}|S) \propto \log p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0) + \log p(S|\bm{\mu}) \\
+	&= -\frac{1}{2} \sum_{i=1}^m  (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) -\frac{1}{2}(\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1} (\bm{\mu}-\bm{\mu}_0) \\
+	&= -\frac{1}{2} \left[ \bm{\mu}^\top (m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}) \bm{\mu} - 2 \bm{\mu}^\top \left(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0\right) + \bm{\mu}_0^\top \bm{\Sigma}_0^{-1} \bm{\mu}_0 + \sum_{i=1}^m \bm{x}_i^\top \bm{\Sigma}^{-1} \bm{x}_i\right]
 	\end{split}
 	\end{equation*}
 	
@@ -328,14 +329,19 @@ With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\la
 	\end{equation}
 	
 	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$, hence we must do it in an iterative way, which is the EM algorithm for GMM:
+	
+	
+	\begin{minipage}{.9\linewidth}
 	\begin{shaded}
     \begin{itemize}
 	\item fix $k$, the number of Gaussian components;
-	\item assign each sample to each components with equal probability, \textit{i.e.}, $z_{ij}=\frac{1}{k},j=1,\cdots,k$ and $\pi_j=\frac{1}{k},j=1,\cdots,k$ also;
+	\item initialize: $\forall j=1,\cdots,k, z_{ij}=\frac{1}{k},$ and $\pi_j=\frac{1}{k}$;
 	\item M-step, solve $\bm{\mu}, \bm{\Sigma}$ according to \textit{Eq.}\ref{eq:GMM_mu} and \textit{Eq.}\ref{eq:GMM_sigma};
 	\item E-step, solve $z_{ij},\pi_i$ according to \textit{Eq.}\ref{eq:GMM_pi}.
+	\item Repeat E-M step until convergence.
 	\end{itemize}
   	\end{shaded}
+  	\end{minipage}
 
 		
 \section{\textit{v.s.} discriminant models}
@@ -361,31 +367,38 @@ With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\la
 	\begin{split}
 	&\frac{p(Y=0) p(X=\bm{x}|Y=0)}{p(Y=1) p(X=\bm{x}|Y=1)} > 1 \\
 	\iff &\log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\bm{x}|Y=0) - \log p(X=\bm{x}|Y=1) > 0 \\
-	\iff &\frac{1}{2} \bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 ) + \frac{1}{2}\log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + \log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
+	\iff &\bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 + \log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + 2\log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
 	\end{split}
 	\end{equation*}
-which is a quadratic discriminant function. Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\frac{1}{2} (\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0 ) + \log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
+which is a quadratic discriminant function. Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0+ 2\log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
 	
 \section{Exercises and solutions}
 \begin{itemize}
-\item[Ex1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_ij=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
+\item[Ex1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_{ij}=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
 
+	\begin{minipage}{.9\linewidth}
 	\begin{shaded}
     \begin{itemize}
-	\item fix $k$, the number of clusters;
-	\item randomly choose initial clustering centers $\bm{\mu}_1,\cdots,\bm{\mu}_k$
-	\item repeat until convergence:
-	\item 1. $\forall i\in \{1,\cdots,m\}$, determine $j=\arg\min_{j} d(\bm{x}_i-\bm{\mu}_j)$ and set $z_{ij}=1$;
-	\item 2. $\forall j\in \{1,\cdots,k\}$, update $\bm{\mu}_j = \frac{1}{\sum_{i=1}^m z_{ij}} \sum_{i=1,z_{ij}=1}^m \bm{x}_i$
+	\item[•] fix $k$, the number of clusters;
+	\item[•] randomly choose initial clustering centers $\bm{\mu}^0_1,\cdots,\bm{\mu}^0_k$
+	\item[•] loop from $t=0$ to $max\_iter$
+	\item[•] 1. $\forall i\in \{1,\cdots,m\}$, determine $j=\arg\min_{j} d(\bm{x}_i, \bm{\mu}_j^t)$ and set $z_{ij}^t=1$;
+	\item[•] 2. $\forall j\in \{1,\cdots,k\}$, update $\bm{\mu}_j^{t+1} = \frac{\sum_{i=1}^m \bm{x}_i z^t_{ij}}{\sum_{i=1}^m z^t_{ij}} $;
 	\end{itemize}
   	\end{shaded}
+  	\end{minipage}
+
 in which $d(\cdot,\cdot)$ can be arbitrary distance function. Note that the step 1. corresponds to M-step of GMM, and step 2 corresponds to E-step. For GMM, the objective is to maximize likelihood, and for k-means, the objective can be viewed as minimizing the sum of in-cluster distance (if we choose the distance to be Euclidean distance, the loss is also called Sum of in-cluster Square Error, \textit{a.k.a.}, SSE):
 	\begin{equation*}
-	\min_{\bm{\mu}_1,\cdots,\bm{\mu}_k} \sum_{j=1}^k \sum_{i=1, z_{ij}=1}^m d(\bm{x}_i, \bm{\mu}_j)
+	C = \min_{\bm{\mu}_1,\cdots,\bm{\mu}_k} \sum_{j=1}^k \sum_{i=1, z_{ij}=1}^m d(\bm{x}_i, \bm{\mu}_j)
 	\end{equation*}
 Now, prove that: each iteration of the k-means algorithm does not increase the objective.
 
-\item[] \textbf{Solution}:
+\item[] \textbf{Solution}: According to the iteration, 
+	
+	\begin{equation*}
+	C^t = \sum_{j=1}^k \sum_{i=1, z^t_{ij}=1}^m d(\bm{x}_i, \bm{\mu}^{t+1}_j) \leq \sum_{j=1}^k \sum_{i=1, z^t_{ij}=1}^m d(\bm{x}_i, \bm{\mu}^t_j)  \leq \sum_{j=1}^k \sum_{i=1, z^{t-1}_{ij}=1}^m d(\bm{x}_i, \bm{\mu}^t_j) = C^{t-1}
+	\end{equation*}
 
 \item[Ex2] \textbf{Simplex of Dirichlet distribution} Because of the summation constraint, the distribution over the space of the $\{\mu_j\}$ is confined to a simplex of dimensionality $d-1$.
 
@@ -405,18 +418,19 @@ Hence, we say that the MLE for mean parameter is unbiased. Now, prove that the m
 	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
 	\end{equation*}
 	Consider each term in the numerator, note that each pair of samples is independent,
+	\begin{scriptsize}
 	\begin{equation*}
 	\begin{split}
-	\mathbb{E}(\bm{x}_i \bm{x}_i^\top) &= \bm{\Sigma} + \bm{\mu}\bm{\mu}^\top  \\
-	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) &= 
-	\frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m \bm{x}_i \bm{x}_j^\top\right) 
-	= \frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m (\bm{x}_i-\bm{\mu}) (\bm{x}_j-\bm{\mu})^\top + 2\bm{\mu} \sum_{i=1}^m (\bm{x}_i-\bm{\mu})^\top + \sum_{i=1}^m\sum_{j=1}^m \bm{\mu}\bm{\mu}^\top \right) \\
-	&= \frac{1}{m^2} \left( \sum_{i=1}^m \mathbb{E}((\bm{x}_i-\bm{\mu}) (\bm{x}_i-\bm{\mu})^\top)+ m^2 \bm{\mu}\bm{\mu}^\top \right)
+	&\mathbb{E}(\bm{x}_i \bm{x}_i^\top) = \bm{\Sigma} + \bm{\mu}\bm{\mu}^\top  \\
+	&\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) = 
+	\frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m \bm{x}_i \bm{x}_j^\top\right)
+	= \frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m (\bm{x}_i-\bm{\mu}) (\bm{x}_j-\bm{\mu})^\top + 2\bm{\mu} \sum_{i=1}^m (\bm{x}_i-\bm{\mu})^\top + \sum_{i=1}^m\sum_{j=1}^m \bm{\mu}\bm{\mu}^\top \right) 
 	= \frac{\bm{\Sigma}}{m} + \bm{\mu}\bm{\mu}^\top \\
-	\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) &=  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right)
+	&\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) =  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right)
 	= \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + 2\bm{\mu}\sum_{j=1}^m (\bm{x}_j-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) = \frac{\bm{\Sigma}}{m} + \bm{\mu} \bm{\mu}^\top
 	\end{split}
 	\end{equation*}
+	\end{scriptsize}
 Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
 
 \item[Ex6] \textbf{The connection between smoothing and regularized MLE} (UML Ex24.2)  Consider the following regularized
