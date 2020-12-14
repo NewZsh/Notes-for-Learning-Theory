@@ -18,14 +18,14 @@
 \newtheorem*{proof}{Proof}
 \setlength{\parindent}{2em}
 \author{Siheng Zhang\\zhangsiheng@cvte.com}
-\title{Chapter \textbf{\textit{2}} Linear Model}
+\title{Chapter \textbf{\textit{4}} Linear Model}
 \date{\today}      
 \usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
 
 \begin{document}
 \maketitle  
 
-This part corresponds to , and mainly answers the following questions:
+This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}, and mainly answers the following questions:
 
 \begin{itemize}
 \item 
@@ -36,37 +36,74 @@ This part corresponds to , and mainly answers the following questions:
 
 \section{Linear classification}
 
+	In the last chapter, we stops at the linear classification of binary classification task, i.e.,
+	
+	\begin{equation}
+	y=f(\mathbf{x})=\mathbf{w}^\top \mathbf{x} + w_0
+	\end{equation}
+in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is assigned to class $C_1$ iff. $f(\mathbf{x})\geq 0$ and to class $C_2$ otherwise.
+
+	Consider two points $\mathbf{x}_1,\mathbf{x}_2$ on the decision boundary, i.e., $\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2) = 0$, hence $\mathbf{w}$ is orthogonal to the decision boundary. And the distance from the origin to the decision boundary is
+	
+	\begin{equation}
+	\frac{\mathbf{w}^\top \mathbf{x}}{\|\mathbf{w}\|} = \frac{-w_0}{\|\mathbf{w}\|}
+	\end{equation}
+	
+	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x0, \mathbf{x})$ so that $y=f(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$.
+	
+	\subsection{Extend to multiple classes}
+	
+	\subsection{Fisher's linear discriminant}
+
 \section{Linear regression}
 
 	\begin{equation}
 	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 
 	\end{equation}
 
-\subsection{MLE}
-
-	Suppose that $y_i$ is the , Gaussian noise, $y_i-\mathbf{wx}_i \sim\mathcal{N}(0,\sigma^2)$, the log likelihood function is
+	Suppose the fitting error $\epsilon_i = y_i-\mathbf{wx}_i$ is Gaussian noise, i.e., $\epsilon_i \sim\mathcal{N}(0,\beta)$. Then the log likelihood function of the training sequence is:
 	
 	\begin{equation}
-	\log \mathcal{L} = -\frac{N}{2} \log 2\pi - \sum_{i=1}^N \frac{(y_i-\mathbf{wx}_i)^2}{2}
+	\log \mathcal{L} = -\frac{N}{2} \log 2\pi\beta - \sum_{i=1}^N \frac{(y_i-\mathbf{wx}_i)^2}{2\beta}
 	\end{equation}
 
 Obviously, MLE is equivalent to linear regression.
 
-\subsection{Ridge}
 
-	Prior $\mathbf{w}\sim\mathcal{N}(0,\mathbf{I})$, posterior
+	over-fitting
+
+\subsection{Ridge regression}
+
+	Ridge regression addresses on over-fitting by penalizing the $l_2$-norm of weight vector $\mathbf{w}$,
+	
+	\begin{equation*}
+	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 + \lambda\|\mathbf{w}\|^2_2
+	\end{equation*}
+
+	If we assume a Gaussian prior for the weight vector, $\mathbf{w}\sim\mathcal{N}(0,\alpha^{-1}\mathbf{I})$, then the posterior of the training sequence is:
 	
 	\begin{equation}
-	p(\mathbf{w}|S) \propto p(\mathbf{w}) p(S|\mathbf{w}) = \frac{1}{(2\pi)^{d/2}} \exp \left( -\frac{1}{2} \mathbf{w}^\top \mathbf{w} \right) \prod_{i=1}^N \frac{1}{\sqrt{2\pi}\sigma} \exp \left( -\frac{(y_i-\mathbf{wx}_i)^2}{2} \right)
+	p(\mathbf{w}|S) \propto p(\mathbf{w}) p(S|\mathbf{w}) \propto \exp \left( -\frac{\alpha}{2} \mathbf{w}^\top \mathbf{w} \right) \cdot \prod_{i=1}^N \exp \left( -\frac{(y_i-\mathbf{wx}_i)^2}{2\beta} \right)
 	\end{equation}
 	
 Maximizing the log posterior function is equivalent to the ridge regression.
 	
-\subsubsection{Ridge in the MAP viewpoint}
-
 \subsection{Lasso}
 
-\subsubsection{Lasso in the MAP viewpoint}
+	Lasso addresses on over-fitting by penalizing the $l_1$-norm of weight vector $\mathbf{w}$,
+		
+	\begin{equation*}
+	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 + \lambda\|\mathbf{w}\|_1
+	\end{equation*}
+	
+	If we assume a Laplace prior for the weight vector, $p(\mathbf{w})=\frac{1}{2\alpha} \exp \left( -\frac{\|\mathbf{w}\|_1}{\alpha} \right)$, then the posterior of the training sequence is:
+	
+	\begin{equation}
+	p(\mathbf{w}|S) \propto p(\mathbf{w}) p(S|\mathbf{w}) \propto \exp \left( -\frac{\|\mathbf{w}\|_1}{\alpha} \right) \cdot \prod_{i=1}^N \exp \left( -\frac{(y_i-\mathbf{wx}_i)^2}{2\beta} \right)
+	\end{equation}
 
+Maximizing the log posterior function is equivalent to the Lasso model.
+
+\section{Generalized linear model}
 
 \end{document}
