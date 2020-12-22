@@ -36,12 +36,12 @@ This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}, and mai
 
 \section{Linear classification}
 
-	In the last chapter, we stops at the linear classification of binary classification task, i.e.,
+	In the last chapter, we stops at the linear classification of binary classification task,
 	
 	\begin{equation}
-	y=f(\mathbf{x})=\mathbf{w}^\top \mathbf{x} + w_0
+	y=h(\mathbf{x})=\mathbf{w}^\top \mathbf{x} + w_0
 	\end{equation}
-in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is assigned to class $C_1$ iff. $f(\mathbf{x})\geq 0$ and to class $C_2$ otherwise.
+in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is assigned to class $C_1$ iff. $h(\mathbf{x})\geq 0$ and to class $C_2$ otherwise.
 
 	Consider two points $\mathbf{x}_1,\mathbf{x}_2$ on the decision boundary, i.e., $\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2) = 0$, hence $\mathbf{w}$ is orthogonal to the decision boundary. And the distance from the origin to the decision boundary is
 	
@@ -58,17 +58,18 @@ in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is a
 \section{Linear regression}
 
 	\begin{equation}
-	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 
+	\min_\mathbf{w} L_S(h) = \sum_{i=1}^m (h(\mathbf{x}_i) - y_i)^2 = \sum_{i=1}^m (\mathbf{wx}_i - y_i)^2 
 	\end{equation}
 
 	Suppose the fitting error $\epsilon_i = y_i-\mathbf{wx}_i$ is Gaussian noise, i.e., $\epsilon_i \sim\mathcal{N}(0,\beta)$. Then the log likelihood function of the training sequence is:
 	
 	\begin{equation}
-	\log \mathcal{L} = -\frac{N}{2} \log 2\pi\beta - \sum_{i=1}^N \frac{(y_i-\mathbf{wx}_i)^2}{2\beta}
+	\log \mathcal{L} = -\frac{m}{2} \log 2\pi\beta - \sum_{i=1}^m \frac{(y_i-\mathbf{wx}_i)^2}{2\beta}
 	\end{equation}
 
-Obviously, MLE is equivalent to linear regression.
+	Obviously, MLE is equivalent to linear regression.
 
+	\textit{\underline{remark1}: Since linear regression is not a binary prediction task, we cannot analyse its sample complexity using the VC-dimension. One possible analysis of the sample complexity of linear regression is by relying on the "discretization trick". However, to apply the sample complexity bounds from Chapter 2 we also need that the loss function will be bounded.}
 
 	over-fitting
 
