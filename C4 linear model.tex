@@ -49,11 +49,31 @@ in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is a
 	\frac{\mathbf{w}^\top \mathbf{x}}{\|\mathbf{w}\|} = \frac{-w_0}{\|\mathbf{w}\|}
 	\end{equation}
 	
-	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x0, \mathbf{x})$ so that $y=f(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$.
+	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w_0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x_0, \mathbf{x})$ so that $y=f(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$.
 	
 	\subsection{Extend to multiple classes}
 	
+	\begin{itemize}
+	\item \textit{one-versus-the-rest} For each class $k=1,2,...,K$, each classifier judge whether an example is $C_k$ or not. So there are $K$ classifiers needed.
+	\item \textit{one-versus-one} An alternative is to introduce $K(K-1)/2$ binary discriminant functions, one for every pair of classes (but will lead to ambiguous region).
+	\end{itemize}
+	
 	\subsection{Fisher's linear discriminant}
+	
+	One way to view a linear classification model is in terms of dimensionality reduction. By adjusting the components of the weight vector $\mathbf{w}$, we can select a projection that maximizes the class separation. To begin with, consider a two-class problem in which there are $N_1$ points of class $C_1$ and $N_2$ points of class $C_2$, so that the mean vectors of the two classes are given by
+
+	\begin{equation}
+	\mathbf{m}_1 = \frac{1}{N_1} \sum_{\mathbf{x}_n \in C_1} \mathbf{x}_n,\ \ \ \ \ \ \ \ 
+	\mathbf{m}_2 = \frac{1}{N_2} \sum_{\mathbf{x}_n \in C_2} \mathbf{x}_n
+	\end{equation}
+	
+	The simplest measure of the separation of the classes, when projected onto $\mathbf{w}$, is the separation of the projected class means. This suggests that we might choose $w$ so as to maximize 
+	\begin{equation}
+	m_2- m_1=\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1)
+	\end{equation}
+where $m_k=\mathbf{w}^\top \mathbf{m}_k$ is the mean of the projected data from class $C_k$. 
+
+	This expression can be made arbitrarily large simply by increasing the magnitude of $\mathbf{w}$. To solve this problem, we could constrain $\mathbf{w}$ to have unit length, i.e., $\|\mathbf{w}\|_2=1$. Using a Lagrange multiplier, it turns to maximize $\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1) + \lambda (1-\|\mathbf{w}\|_2)$, which leads to $\mathbf{w}\propto \mathbf{m}_2-\mathbf{m}_1$
 
 \section{Linear regression}
 
@@ -104,6 +124,13 @@ Maximizing the log posterior function is equivalent to the ridge regression.
 	\end{equation}
 
 Maximizing the log posterior function is equivalent to the Lasso model.
+
+	\textit{\underline{remark2}: }
+	\begin{figure}[!htbp]
+	\begin{center}
+	\includegraphics[scale=.4]{C4-1.png}	
+	\end{center}
+	\end{figure}
 
 \section{Generalized linear model}
 
