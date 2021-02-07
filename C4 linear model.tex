@@ -19,7 +19,7 @@
 \setlength{\parindent}{2em}
 \author{Siheng Zhang\\zhangsiheng@cvte.com}
 \title{Chapter \textbf{\textit{4}} Linear Model}
-\date{\today}      
+\date{\today}
 \usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
 
 \begin{document}
@@ -39,7 +39,7 @@ This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}, and mai
 	In the last chapter, we stops at the linear classification of binary classification task,
 	
 	\begin{equation}
-	y=h(\mathbf{x})=\mathbf{w}^\top \mathbf{x} + w_0
+	y=h(\mathbf{x})=\mathbf{w}^\top \mathbf{x} + w_0 = \sum_{j=1}^d w_j x_j + w_0
 	\end{equation}
 in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is assigned to class $C_1$ iff. $h(\mathbf{x})\geq 0$ and to class $C_2$ otherwise.
 
@@ -49,7 +49,7 @@ in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is a
 	\frac{\mathbf{w}^\top \mathbf{x}}{\|\mathbf{w}\|} = \frac{-w_0}{\|\mathbf{w}\|}
 	\end{equation}
 	
-	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w_0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x_0, \mathbf{x})$ so that $y=f(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$.
+	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w_0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x_0, \mathbf{x})$ so that $h(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$. For simplification, we neglect the `tilde' symbol below.
 	
 	\subsection{Extend to multiple classes}
 	
@@ -77,28 +77,65 @@ where $m_k=\mathbf{w}^\top \mathbf{m}_k$ is the mean of the projected data from 
 
 \section{Linear regression}
 
+	In linear regression model, the model is the same except that the learning target $y$ is continuous but not discrete. And the learning goal is the sum-of-square (SSE) loss
+
 	\begin{equation}
-	\min_\mathbf{w} L_S(h) = \sum_{i=1}^m (h(\mathbf{x}_i) - y_i)^2 = \sum_{i=1}^m (\mathbf{wx}_i - y_i)^2 
+	\min_\mathbf{w} L_S(h) = \sum_{i=1}^m (h(\mathbf{x}_i) - y_i)^2 = \sum_{i=1}^m (\mathbf{w}^\top\mathbf{x}_i - y_i)^2 
 	\end{equation}
 
-	Suppose the fitting error $\epsilon_i = y_i-\mathbf{wx}_i$ is Gaussian noise, i.e., $\epsilon_i \sim\mathcal{N}(0,\beta)$. Then the log likelihood function of the training sequence is:
+	Suppose the fitting error $\epsilon_i = y_i-\mathbf{wx}_i$ is Gaussian noise, i.e., $\epsilon_i \sim\mathcal{N}(0,\beta)$. Then the log likelihood function of the training sequence is
 	
 	\begin{equation}
-	\log \mathcal{L} = -\frac{m}{2} \log 2\pi\beta - \sum_{i=1}^m \frac{(y_i-\mathbf{wx}_i)^2}{2\beta}
+	\log \mathcal{L} = -\frac{m}{2} \log 2\pi\beta - \sum_{i=1}^m \frac{(y_i-\mathbf{w}^\top\mathbf{x}_i)^2}{2\beta}
 	\end{equation}
 
 	Obviously, MLE is equivalent to linear regression.
 
 	\textit{\underline{remark1}: Since linear regression is not a binary prediction task, we cannot analyse its sample complexity using the VC-dimension. One possible analysis of the sample complexity of linear regression is by relying on the "discretization trick". However, to apply the sample complexity bounds from Chapter 2 we also need that the loss function will be bounded.}
+	
+	\subsection{Generalized linear regression}
+	
+	The model is just a linear function of the input variables, and this imposes significant limitations on it. Therefore, extended model considers \textbf{linear} combination of fixed \textbf{non-linear} functions of the input variables, of the form
+	
+	\begin{equation}
+	h(\mathbf{x}) = w_0 + \sum_{j=1}^d w_j \phi_j(x)
+	\end{equation}
+where $\phi_j(x)$ are known as \textit{basis functions}. Again, denote $\phi_0(\mathbf{x})=1$ so that $h(\mathbf{x}) = \tilde{\mathbf{w}}^\top \phi(\mathbf{x})$. For Simplification, we also neglect the `tilde' symbol from now on.
 
-	over-fitting
+	Now, consider the closed-form solution for The gradient of the log likelihood. The gradient of the SSE loss takes the form
+	
+	\begin{equation*}
+	\nabla L_S(h) = \sum_{i=1}^m \left\{ y_i - \mathbf{w}^\top \mathbf{\phi} (\mathbf{x}_i)) \right\} \mathbf{\phi}^\top (\mathbf{x}_i)
+	\end{equation*}
+Setting it to zero gives 
 
-\subsection{Ridge regression}
+	\begin{equation}
+	\label{eqn:mp_solved}
+	\mathbf{w} = \mathbf{\Phi}^\dag \mathbf{y} = (\mathbf{\Phi}^\top \mathbf{\Phi})^{-1}\mathbf{\Phi}^\top \mathbf{y}
+	\end{equation}
+Here $\mathbf{\Phi}$ is an $n x d$ matrix, whose elements are given by $\mathbf{\Phi}_{nj} = \Phi_j(\mathbf{x}_n)$. And $\mathbf{\Phi}^\dag$ is \textit{Moore-Penrose pseudo-inverse}.
+
+	\textit{\underline{remark2, multiple-outputs}: A more general case is multiple outputs, i.e., $\mathbf{y}_i \in \mathcal{R}^k, k>1$. However, the solution to multiple-outputs regression problem decouples between the different target variables so we do not discuss it here.}
+	
+	\textit{\underline{remark3, on-line learning}:} Batch techniques involve processing the entire training set in one go, can be computationally costly for large data sets. For linear regression, stochastic gradient descent algorithm updates parameter using
+	
+	\begin{equation*}
+	\mathbf{w}^{t+1}=\mathbf{w}^{t} - lr*\nabla L_{(\mathbf{x}_t,y_t)}(h) = \mathbf{w}^{t} + lr* (y_i - (\mathbf{w}^t)^\top \mathbf{\phi} (\mathbf{x}_t)) \mathbf{\phi} (\mathbf{x}_t)
+	\end{equation*}
+in which $lr$ is the learning rate.
+
+	\textit{\underline{remark3, basis}: There are three popular basis function: 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.}
+	
+	\subsection{Regularization \textit{a.k.a} Bayesian linear regression}
+	
+	Recall the closed-form solution (Eq. \ref{eqn:mp_solved}) for linear regression problem, if $n\leq d$, the SSE loss can achieve zero. It means that the model capacity is enough for the training dataset. However, it may suffer from over-fitting problem. Consider the learning dataset generated from $y$.
+
+\subsubsection{Ridge regression}
 
 	Ridge regression addresses on over-fitting by penalizing the $l_2$-norm of weight vector $\mathbf{w}$,
 	
 	\begin{equation*}
-	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 + \lambda\|\mathbf{w}\|^2_2
+	\min_\mathbf{w} \sum_{i=1}^m (\mathbf{w\phi_i(x)} - y_i)^2 + \lambda\|\mathbf{w}\|^2_2
 	\end{equation*}
 
 	If we assume a Gaussian prior for the weight vector, $\mathbf{w}\sim\mathcal{N}(0,\alpha^{-1}\mathbf{I})$, then the posterior of the training sequence is:
@@ -109,12 +146,13 @@ where $m_k=\mathbf{w}^\top \mathbf{m}_k$ is the mean of the projected data from 
 	
 Maximizing the log posterior function is equivalent to the ridge regression.
 	
-\subsection{Lasso}
+	
+\subsubsection{Lasso}
 
 	Lasso addresses on over-fitting by penalizing the $l_1$-norm of weight vector $\mathbf{w}$,
 		
 	\begin{equation*}
-	\min_\mathbf{w} \sum_{i=1}^N (\mathbf{wx}_i - y_i)^2 + \lambda\|\mathbf{w}\|_1
+	\min_\mathbf{w} \sum_{i=1}^m (\mathbf{w\phi_i(x)} - y_i)^2 + \lambda\|\mathbf{w}\|_1
 	\end{equation*}
 	
 	If we assume a Laplace prior for the weight vector, $p(\mathbf{w})=\frac{1}{2\alpha} \exp \left( -\frac{\|\mathbf{w}\|_1}{\alpha} \right)$, then the posterior of the training sequence is:
@@ -131,7 +169,5 @@ Maximizing the log posterior function is equivalent to the Lasso model.
 	\includegraphics[scale=.4]{C4-1.png}	
 	\end{center}
 	\end{figure}
-
-\section{Generalized linear model}
 
 \end{document}
