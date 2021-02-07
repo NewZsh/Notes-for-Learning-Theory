@@ -73,14 +73,14 @@ in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is a
 	\end{equation}
 where $m_k=\mathbf{w}^\top \mathbf{m}_k$ is the mean of the projected data from class $C_k$. 
 
-	This expression can be made arbitrarily large simply by increasing the magnitude of $\mathbf{w}$. To solve this problem, we could constrain $\mathbf{w}$ to have unit length, i.e., $\|\mathbf{w}\|_2=1$. Using a Lagrange multiplier, it turns to maximize $\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1) + \lambda (1-\|\mathbf{w}\|_2)$, which leads to $\mathbf{w}\propto \mathbf{m}_2-\mathbf{m}_1$
+	This expression can be made arbitrarily large simply by increasing the magnitude of $\mathbf{w}$. To solve this problem, we could constrain $\mathbf{w}$ to have unit length, i.e., $\|\mathbf{w}\|_2=1$. Using a Lagrange multiplier, it turns to maximize $\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1) + \lambda (1-\|\mathbf{w}\|_2)$, which leads to $\mathbf{w}\propto \mathbf{m}_2-\mathbf{m}_1$.
 
 \section{Linear regression}
 
 	In linear regression model, the model is the same except that the learning target $y$ is continuous but not discrete. And the learning goal is the sum-of-square (SSE) loss
 
 	\begin{equation}
-	\min_\mathbf{w} L_S(h) = \sum_{i=1}^m (h(\mathbf{x}_i) - y_i)^2 = \sum_{i=1}^m (\mathbf{w}^\top\mathbf{x}_i - y_i)^2 
+	\min_\mathbf{w} L_S(h) =\sum_{i=1}^m  l(h(\mathbf{x}_i)) = \sum_{i=1}^m (h(\mathbf{x}_i) - y_i)^2 = \sum_{i=1}^m (\mathbf{w}^\top\mathbf{x}_i - y_i)^2 
 	\end{equation}
 
 	Suppose the fitting error $\epsilon_i = y_i-\mathbf{wx}_i$ is Gaussian noise, i.e., $\epsilon_i \sim\mathcal{N}(0,\beta)$. Then the log likelihood function of the training sequence is
@@ -124,11 +124,37 @@ Here $\mathbf{\Phi}$ is an $n x d$ matrix, whose elements are given by $\mathbf{
 	\end{equation*}
 in which $lr$ is the learning rate.
 
-	\textit{\underline{remark3, basis}: There are three popular basis function: 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.}
+	\textit{\underline{remark4, basis}: There are three popular basis function: 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.}
 	
 	\subsection{Regularization \textit{a.k.a} Bayesian linear regression}
 	
 	Recall the closed-form solution (Eq. \ref{eqn:mp_solved}) for linear regression problem, if $n\leq d$, the SSE loss can achieve zero. It means that the model capacity is enough for the training dataset. However, it may suffer from over-fitting problem. Consider the learning dataset generated from $y$.
+	
+	.....
+	
+	Further, consider the expected loss from the view of bias-variance trade-off. Using squared error, the expected loss is given by
+	
+	\begin{equation*}
+	\mathbb{E}(l) = \int \int l(h(\mathbf{x})) p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y
+	= \int \int (h(\mathbf{x})-y)^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y
+	\end{equation*}
+	
+Setting its derivatives to zero leads to $h(\mathbf{x}) = \int yp(\mathbf{x}, y) \text{d} y /p(\mathbf{x}) = \mathbb{E}(y|\mathbf{x})$. Take it back to the expected loss, we can expand it as 
+
+	\begin{equation}
+	\begin{split}
+	\mathbb{E}(l) &= \int \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) + \mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
+	&= \int \int \left\{ \left[ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right]^2 + \left[\mathbb{E} (y|\mathbf{x}) - y \right]^2 + 2 \left[ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right] \left[\mathbb{E} (y|\mathbf{x}) - y \right]  \right\} p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
+	&= \int \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right\}^2 p(\mathbf{x}) \text{d} \mathbf{x} + \int \int \left\{\mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}) \text{d} \mathbf{x}
+	\end{split}
+	\end{equation}
+	
+	The first term depends on our choice for the function $h(\mathbf{x})$. Because it is non-negative, the smallest that we can hope to make this term is zero. If we had an unlimited supply of data (and unlimited computational resources), we could in principle find the regression function $h(\mathbf{x})$ to any desired degree of accuracy. However, in practice we have only a finite number of data points. The second term, which is independent of $h(\mathbf{x})$, arises from the intrinsic
+noise on the data and represents the minimum achievable value of the expected loss.
+
+	......
+	
+	To address on this problem, Bayesian linear regression set a prior assumption of $\mathbf{w}$, and view the learning procedure to maximizing its posterior. Two of the most popular case is discussed below. 
 
 \subsubsection{Ridge regression}
 
@@ -141,7 +167,7 @@ in which $lr$ is the learning rate.
 	If we assume a Gaussian prior for the weight vector, $\mathbf{w}\sim\mathcal{N}(0,\alpha^{-1}\mathbf{I})$, then the posterior of the training sequence is:
 	
 	\begin{equation}
-	p(\mathbf{w}|S) \propto p(\mathbf{w}) p(S|\mathbf{w}) \propto \exp \left( -\frac{\alpha}{2} \mathbf{w}^\top \mathbf{w} \right) \cdot \prod_{i=1}^N \exp \left( -\frac{(y_i-\mathbf{wx}_i)^2}{2\beta} \right)
+	p(\mathbf{w}|S) \propto p(\mathbf{w}) p(S|\mathbf{w}) \propto \exp \left( -\frac{\alpha}{2} \mathbf{w}^\top \mathbf{w} \right) \cdot \prod_{i=1}^N \exp \left( -\frac{(y_i-\mathbf{wx}_i)^2}{2\beta} \right) 
 	\end{equation}
 	
 Maximizing the log posterior function is equivalent to the ridge regression.
