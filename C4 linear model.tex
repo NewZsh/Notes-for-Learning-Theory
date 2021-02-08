@@ -145,23 +145,40 @@ Setting its derivatives to zero leads to $h(\mathbf{x}) = \int yp(\mathbf{x}, y)
 	\begin{split}
 	\mathbb{E}(l) &= \int \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) + \mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
 	&= \int \int \left\{ \left[ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right]^2 + \left[\mathbb{E} (y|\mathbf{x}) - y \right]^2 + 2 \left[ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right] \left[\mathbb{E} (y|\mathbf{x}) - y \right]  \right\} p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
-	&= \int \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right\}^2 p(\mathbf{x}) \text{d} \mathbf{x} + \int \int \left\{\mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}) \text{d} \mathbf{x}
+	&= \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right\}^2 p(\mathbf{x}) \text{d} \mathbf{x} + \int \int \left\{\mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d} y
 	\end{split}
 	\end{equation}
 	
-	The first term depends on our choice for the function $h(\mathbf{x})$. Because it is non-negative, the smallest that we can hope to make this term is zero. If we had an unlimited supply of data (and unlimited computational resources), we could in principle find the regression function $h(\mathbf{x})$ to any desired degree of accuracy. However, in practice we have only a finite number of data points. The second term, which is independent of $h(\mathbf{x})$, arises from the intrinsic
-noise on the data and represents the minimum achievable value of the expected loss.
-
-	......
+	The second term, which is independent of $h(\mathbf{x})$, arises from the intrinsic noise on the data and represents the minimum achievable value of the expected loss. The first term depends on our choice for the function $h(\mathbf{x})$. Because it is non-negative, the smallest that we can hope to make this term is zero. If we had an unlimited supply of data (and unlimited computational resources), we could in principle find the regression function $h(\mathbf{x})$ to any desired degree of accuracy. However, in practice we have only a finite number of data points.
 	
-	To address on this problem, Bayesian linear regression set a prior assumption of $\mathbf{w}$, and view the learning procedure to maximizing its posterior. Two of the most popular case is discussed below. 
+	Consider the integrand of the first term. For a particular data set $\mathcal{D}$, the expectation is not depend on the data set, but the function $h(\cdot)$ does. So it takes the form
+	
+	\begin{equation*}
+	\begin{split}
+	  & \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}(y|\mathbf{x}) \right\}^2 \\
+	= & \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D})) + \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D})) - \mathbb{E}(y|\mathbf{x}) \right\}^2 \\
+	= & \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D}))\right\}^2 + \left\{ \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D})) - \mathbb{E}(y|\mathbf{x}) \right\}^2 + 2 \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D}))\right\} \left\{ \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D})) - \mathbb{E}(y|\mathbf{x}) \right\} \\
+	\end{split}
+	\end{equation*}
+Now take expectation of it with respect to $\mathcal{D}$, the third term will vanish, giving 
+
+	\begin{equation}
+	\begin{split}
+	\mathbb{E}_\mathcal{D} \left[ \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}(y|\mathbf{x}) \right\}^2 \right]
+	&= \mathbb{E}_\mathcal{D} \left[ \left\{ \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D})) - \mathbb{E}(y|\mathbf{x}) \right\}^2 \right] + \mathbb{E}_\mathcal{D} \left[ \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D}))\right\}^2 \right] \\
+	&= \underbrace{\left\{ \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D})) - \mathbb{E}(y|\mathbf{x}) \right\}^2}_{\text{bias}^2} + \underbrace{\mathbb{E}_\mathcal{D} \left[ \left\{ h(\mathbf{x};\mathcal{D})- \mathbb{E}_\mathcal{D}(h(\mathbf{x};\mathcal{D}))\right\}^2 \right]}_{\text{variance}}
+	\end{split}
+	\end{equation}
+The first term, called the squared bias, represents the extent to which the average prediction over all data sets differs from the desired regression function. The second term, called the variance, measures the extent to which the solutions for individual data sets vary around their average, and hence this measures the extent to which the regressor is sensitive to the particular choice of data set.
+
+	As discussed before, there is a trade-off between bias and variance, with very flexible models having low bias and high variance, and relatively rigid models having high bias and low variance. The model with the optimal predictive capability is the one that leads to the best balance between bias and variance. To address on this problem, Bayesian linear regression set a prior assumption of $\mathbf{w}$, and view the learning procedure to maximizing its posterior. Two of the most popular case is discussed below. 
 
 \subsubsection{Ridge regression}
 
 	Ridge regression addresses on over-fitting by penalizing the $l_2$-norm of weight vector $\mathbf{w}$,
 	
 	\begin{equation*}
-	\min_\mathbf{w} \sum_{i=1}^m (\mathbf{w\phi_i(x)} - y_i)^2 + \lambda\|\mathbf{w}\|^2_2
+	\min_\mathbf{w} \sum_{i=1}^m (\mathbf{w\phi}_i(\mathbf{x}) - y_i)^2 + \lambda\|\mathbf{w}\|^2_2
 	\end{equation*}
 
 	If we assume a Gaussian prior for the weight vector, $\mathbf{w}\sim\mathcal{N}(0,\alpha^{-1}\mathbf{I})$, then the posterior of the training sequence is:
@@ -178,7 +195,7 @@ Maximizing the log posterior function is equivalent to the ridge regression.
 	Lasso addresses on over-fitting by penalizing the $l_1$-norm of weight vector $\mathbf{w}$,
 		
 	\begin{equation*}
-	\min_\mathbf{w} \sum_{i=1}^m (\mathbf{w\phi_i(x)} - y_i)^2 + \lambda\|\mathbf{w}\|_1
+	\min_\mathbf{w} \sum_{i=1}^m (\mathbf{w\phi}_i(\mathbf{x}) - y_i)^2 + \lambda\|\mathbf{w}\|_1
 	\end{equation*}
 	
 	If we assume a Laplace prior for the weight vector, $p(\mathbf{w})=\frac{1}{2\alpha} \exp \left( -\frac{\|\mathbf{w}\|_1}{\alpha} \right)$, then the posterior of the training sequence is:
@@ -189,7 +206,7 @@ Maximizing the log posterior function is equivalent to the ridge regression.
 
 Maximizing the log posterior function is equivalent to the Lasso model.
 
-	\textit{\underline{remark2}: }
+	\textit{\underline{remark5}: Below is the comparison of Laplace distribution and Gaussian distribution with $\alpha=1$.}
 	\begin{figure}[!htbp]
 	\begin{center}
 	\includegraphics[scale=.4]{C4-1.png}	
