@@ -43,37 +43,56 @@ This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}, and mai
 	\end{equation}
 in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is assigned to class $C_1$ iff. $h(\mathbf{x})\geq 0$ and to class $C_2$ otherwise.
 
-	Consider two points $\mathbf{x}_1,\mathbf{x}_2$ on the decision boundary, i.e., $\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2) = 0$, hence $\mathbf{w}$ is orthogonal to the decision boundary. And the distance from the origin to the decision boundary is
-	
-	\begin{equation}
-	\frac{\mathbf{w}^\top \mathbf{x}}{\|\mathbf{w}\|} = \frac{-w_0}{\|\mathbf{w}\|}
-	\end{equation}
+	Consider two points $\mathbf{x}_1,\mathbf{x}_2$ on the decision boundary, i.e., $\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2) = 0$, hence $\mathbf{w}$ is orthogonal to the decision boundary. And the distance from the origin to the decision boundary is $\mathbf{w}^\top \mathbf{x} / \|\mathbf{w}\|=-w_0/\|\mathbf{w}\|$.
 	
 	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w_0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x_0, \mathbf{x})$ so that $h(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$. For simplification, we neglect the `tilde' symbol below.
-	
-	\subsection{Extend to multiple classes}
-	
-	\begin{itemize}
+
+	\textit{\underline{Extend to multiple classes:}} \begin{itemize}
 	\item \textit{one-versus-the-rest} For each class $k=1,2,...,K$, each classifier judge whether an example is $C_k$ or not. So there are $K$ classifiers needed.
 	\item \textit{one-versus-one} An alternative is to introduce $K(K-1)/2$ binary discriminant functions, one for every pair of classes (but will lead to ambiguous region).
-	\end{itemize}
+	\end{itemize}	
+	
+	\subsection{Half-spaces and its sample complexity}
+	
+	
 	
 	\subsection{Fisher's linear discriminant}
 	
-	One way to view a linear classification model is in terms of dimensionality reduction. By adjusting the components of the weight vector $\mathbf{w}$, we can select a projection that maximizes the class separation. To begin with, consider a two-class problem in which there are $N_1$ points of class $C_1$ and $N_2$ points of class $C_2$, so that the mean vectors of the two classes are given by
+	One way to view a linear classification model is in terms of \textit{dimensionality reduction}, \textit{i.e.}, projection from $\mathcal{R}^d$ to $\mathcal{R}$. By adjusting the components of the weight vector $\mathbf{w}$, we can select a projection that maximizes the class separation. To begin with, consider a two-class problem in which there are $N_1$ points of class $C_1$ and $N_2$ points of class $C_2$, so that the mean vectors of the two classes are given by
 
-	\begin{equation}
+	\begin{equation*}
 	\mathbf{m}_1 = \frac{1}{N_1} \sum_{\mathbf{x}_n \in C_1} \mathbf{x}_n,\ \ \ \ \ \ \ \ 
 	\mathbf{m}_2 = \frac{1}{N_2} \sum_{\mathbf{x}_n \in C_2} \mathbf{x}_n
-	\end{equation}
+	\end{equation*}
 	
-	The simplest measure of the separation of the classes, when projected onto $\mathbf{w}$, is the separation of the projected class means. This suggests that we might choose $w$ so as to maximize 
-	\begin{equation}
-	m_2- m_1=\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1)
-	\end{equation}
+	The simplest measure of the separation of the classes, when projected onto $\mathbf{w}$, is the separation of the projected class means. This suggests that we might choose $w$ so as to
+	\begin{equation*}
+	\max_\mathbf{w} m_2- m_1=\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1)
+	\end{equation*}
 where $m_k=\mathbf{w}^\top \mathbf{m}_k$ is the mean of the projected data from class $C_k$. 
 
 	This expression can be made arbitrarily large simply by increasing the magnitude of $\mathbf{w}$. To solve this problem, we could constrain $\mathbf{w}$ to have unit length, i.e., $\|\mathbf{w}\|_2=1$. Using a Lagrange multiplier, it turns to maximize $\mathbf{w}^\top (\mathbf{m}_2-\mathbf{m}_1) + \lambda (1-\|\mathbf{w}\|_2)$, which leads to $\mathbf{w}\propto \mathbf{m}_2-\mathbf{m}_1$.
+	
+	However, some outliers, which lays far from its class and close to the other class, may be mis-classified after projection, even though the dataset is linearly separable. This indicates that the objective above still needs to be improved. In fact, besides maximizing the separation margin, the projection is expected to reduce the inner-class variance. Denote the variance as $s_k^2=\sum_{\mathbf{x}_n\in C_k} (\mathbf{w}^\top\mathbf{x}_n-m_k)^2$, the objective is given by
+	
+	\begin{equation}
+	\max_\mathbf{w} J(\mathbf{w}) = \frac{(m_2-m_1)^2}{s_1^2+s_2^2} 
+	= \frac{\mathbf{w}^\top \mathbf{S}_B \mathbf{w}}{\mathbf{w}^\top \mathbf{S}_W \mathbf{w}}
+	\end{equation}
+in which $\mathbf{S}_B=(\mathbf{m}_2-\mathbf{m}_1)(\mathbf{m}_2-\mathbf{m}_1)^\top, \mathbf{S}_W=\sum_{\mathbf{x}_n\in C_1}(\mathbf{x}_n-\mathbf{m}_1)(\mathbf{x}_n-\mathbf{m}_1)^\top + \sum_{\mathbf{x}_n\in C_2}(\mathbf{x}_n-\mathbf{m}_2)(\mathbf{x}_n-\mathbf{m}_2)^\top$. The optimizer is (the solution is left as exercise):
+	\begin{equation*}
+	\mathbf{w}\propto \mathbf{S}_W^{-1} (\mathbf{m}_2-\mathbf{m}_1)
+	\end{equation*}
+	
+	\textit{\underline{remark1: Fisher's linear discriminant for the case of multi-class.}}
+	
+	\subsection{Least Squares for classification}
+	
+	\subsection{Probabilistic perspective}
+	
+	\subsubsection{Logistic regression}
+	
+	\subsubsection{Iterative re-weighted least squares(IRLS)}
 
 \section{Linear regression}
 
@@ -91,7 +110,7 @@ where $m_k=\mathbf{w}^\top \mathbf{m}_k$ is the mean of the projected data from 
 
 	Obviously, MLE is equivalent to linear regression.
 
-	\textit{\underline{remark1}: Since linear regression is not a binary prediction task, we cannot analyse its sample complexity using the VC-dimension. One possible analysis of the sample complexity of linear regression is by relying on the "discretization trick". However, to apply the sample complexity bounds from Chapter 2 we also need that the loss function will be bounded.}
+	\textit{\underline{remark2}: Since linear regression is not a binary prediction task, we cannot analyse its sample complexity using the VC-dimension. One possible analysis of the sample complexity of linear regression is by relying on the "discretization trick". However, to apply the sample complexity bounds from Chapter 2 we also need that the loss function will be bounded.}
 	
 	\subsection{Generalized linear regression}
 	
@@ -124,32 +143,25 @@ Here $\mathbf{\Phi}$ is an $n x d$ matrix, whose elements are given by $\mathbf{
 	\end{equation*}
 in which $lr$ is the learning rate.
 
-	\textit{\underline{remark4, basis}: There are three popular basis function: 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.}
+	\textit{\underline{remark4}: Basis function examples: 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.}
 	
 	\subsection{Regularization \textit{a.k.a} Bayesian linear regression}
 	
-	Recall the closed-form solution (Eq. \ref{eqn:mp_solved}) for linear regression problem, if $n\leq d$, the SSE loss can achieve zero. It means that the model capacity is enough for the training dataset. However, it may suffer from over-fitting problem. Consider the learning dataset generated from $y$.
+	In closed-form solution (Eq. \ref{eqn:mp_solved}), if $n\leq d$, the SSE loss can achieve zero. It means that the model capacity is enough to 'memorize' all training examples. But it may suffer from \textbf{over-fitting}.
 	
-	.....
-	
-	Further, consider the expected loss from the view of bias-variance trade-off. Using squared error, the expected loss is given by
-	
-	\begin{equation*}
-	\mathbb{E}(l) = \int \int l(h(\mathbf{x})) p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y
-	= \int \int (h(\mathbf{x})-y)^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y
-	\end{equation*}
-	
-Setting its derivatives to zero leads to $h(\mathbf{x}) = \int yp(\mathbf{x}, y) \text{d} y /p(\mathbf{x}) = \mathbb{E}(y|\mathbf{x})$. Take it back to the expected loss, we can expand it as 
-
+	Consider the expected loss with squared error,
 	\begin{equation}
 	\begin{split}
-	\mathbb{E}(l) &= \int \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) + \mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
+	\mathbb{E}(l) &= \int \int l(h(\mathbf{x})) p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
+	&= \int \int (h(\mathbf{x})-y)^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y
+	\ \ \ \ \footnotesize{\text{Note that, setting its derivatives to zero leads to $h(\mathbf{x}) = \int yp(\mathbf{x}, y) \text{d} y /p(\mathbf{x}) = \mathbb{E}(y|\mathbf{x})$}}\\
+	&= \int \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) + \mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
 	&= \int \int \left\{ \left[ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right]^2 + \left[\mathbb{E} (y|\mathbf{x}) - y \right]^2 + 2 \left[ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right] \left[\mathbb{E} (y|\mathbf{x}) - y \right]  \right\} p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d}y \\
 	&= \int \left\{ h(\mathbf{x}) - \mathbb{E} (y|\mathbf{x}) \right\}^2 p(\mathbf{x}) \text{d} \mathbf{x} + \int \int \left\{\mathbb{E} (y|\mathbf{x}) - y \right\}^2 p(\mathbf{x}, y) \text{d} \mathbf{x} \text{d} y
 	\end{split}
 	\end{equation}
 	
-	The second term, which is independent of $h(\mathbf{x})$, arises from the intrinsic noise on the data and represents the minimum achievable value of the expected loss. The first term depends on our choice for the function $h(\mathbf{x})$. Because it is non-negative, the smallest that we can hope to make this term is zero. If we had an unlimited supply of data (and unlimited computational resources), we could in principle find the regression function $h(\mathbf{x})$ to any desired degree of accuracy. However, in practice we have only a finite number of data points.
+	The second term, which is independent of $h(\mathbf{x})$, arises from the intrinsic noise on the data and represents the minimum achievable value of the expected loss. The first term depends on our choice for the function $h(\mathbf{x})$. Because it is non-negative, its optimal value is zero. If we had an unlimited supply of data (and unlimited computational resources), we could in principle find the regression function $h(\mathbf{x})$ to any desired degree of accuracy.
 	
 	Consider the integrand of the first term. For a particular data set $\mathcal{D}$, the expectation is not depend on the data set, but the function $h(\cdot)$ does. So it takes the form
 	
@@ -171,7 +183,7 @@ Now take expectation of it with respect to $\mathcal{D}$, the third term will va
 	\end{equation}
 The first term, called the squared bias, represents the extent to which the average prediction over all data sets differs from the desired regression function. The second term, called the variance, measures the extent to which the solutions for individual data sets vary around their average, and hence this measures the extent to which the regressor is sensitive to the particular choice of data set.
 
-	As discussed before, there is a trade-off between bias and variance, with very flexible models having low bias and high variance, and relatively rigid models having high bias and low variance. The model with the optimal predictive capability is the one that leads to the best balance between bias and variance. To address on this problem, Bayesian linear regression set a prior assumption of $\mathbf{w}$, and view the learning procedure to maximizing its posterior. Two of the most popular case is discussed below. 
+	As discussed before, there is a trade-off between bias and variance, with very flexible models having low bias and high variance, and relatively rigid models having high bias and low variance. Bayesian linear regression set a prior assumption of $\mathbf{w}$, and view the learning procedure to maximizing its posterior. Two of the most popular case is discussed below. 
 
 \subsubsection{Ridge regression}
 
@@ -212,5 +224,9 @@ Maximizing the log posterior function is equivalent to the Lasso model.
 	\includegraphics[scale=.4]{C4-1.png}	
 	\end{center}
 	\end{figure}
+	
+	\subsection{Predictive distribution}
+	
+	\subsection{Equivalent kernel}
 
 \end{document}
