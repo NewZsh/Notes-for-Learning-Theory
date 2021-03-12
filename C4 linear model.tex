@@ -1,4 +1,8 @@
 \documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Calibri Light}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{ntheorem}
@@ -40,21 +44,60 @@ This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}, and mai
 	
 	\begin{equation}
 	y=h(\mathbf{x})=\mathbf{w}^\top \mathbf{x} + w_0 = \sum_{j=1}^d w_j x_j + w_0
+	\label{eq:linear}
 	\end{equation}
 in which $\mathbf{w}$ is weight vector, and $w_0$ is bias. The input vector is assigned to class $C_1$ iff. $h(\mathbf{x})\geq 0$ and to class $C_2$ otherwise.
 
 	Consider two points $\mathbf{x}_1,\mathbf{x}_2$ on the decision boundary, i.e., $\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2) = 0$, hence $\mathbf{w}$ is orthogonal to the decision boundary. And the distance from the origin to the decision boundary is $\mathbf{w}^\top \mathbf{x} / \|\mathbf{w}\|=-w_0/\|\mathbf{w}\|$.
 	
-	It is usually convenient to use a more compact notation in which we introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w_0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x_0, \mathbf{x})$ so that $h(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$. For simplification, we neglect the `tilde' symbol below.
+	\vspace{2mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	\noindent\textit{\underline{remark1.} It is usually convenient to  introduce an additional input value $x_0 = 1$ and then define $\tilde{\mathbf{w}} = (w_0, \mathbf{w})$ and $\tilde{\mathbf{x}} = (x_0, \mathbf{x})$ so that $h(\mathbf{x}) = \tilde{\mathbf{w}}^\top \tilde{\mathbf{x}}$. For simplification, we neglect the `tilde' symbol below.}
+	
+	\noindent\textit{\underline{remark2: extend to multiple classes.}}  \textbf{one-versus-the-rest} For each class $k=1,2,...,K$, each classifier judge whether an example is $C_k$ or not. So there are $K$ classifiers needed;  \textbf{one-versus-one} An alternative is to introduce $K(K-1)/2$ binary discriminant functions, one for every pair of classes (but will lead to ambiguous region).}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}
+	
+	\subsection{The VC dimension of half-spaces}
+	
+	The class of linear function (Eq. \ref{eq:linear}) represents a hypothesis set  \textit{half-space}, usually denoted as $HS_d$. Its VC dimension is $VCdim(HS_d)=d+1$.  
 
-	\textit{\underline{Extend to multiple classes:}} \begin{itemize}
-	\item \textit{one-versus-the-rest} For each class $k=1,2,...,K$, each classifier judge whether an example is $C_k$ or not. So there are $K$ classifiers needed.
-	\item \textit{one-versus-one} An alternative is to introduce $K(K-1)/2$ binary discriminant functions, one for every pair of classes (but will lead to ambiguous region).
-	\end{itemize}	
+	\vspace{2mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	\noindent\textit{\underline{remark3: proof.}} Firstly, we should show that any set of $d$ points in $\mathcal{R}^d$ can be shattered by half-space. 
 	
-	\subsection{Half-spaces and its sample complexity}
+	Secondly, we should show there exists a point set of $d+1$ points in $\mathcal{R}^{d}$ that cannot be shattered by half-space. Denote the points as $\mathbf{x}_1, \mathbf{x}_2, \cdots, \mathbf{x}_{d+1}$. There must be some $a_i, i=1,2,\cdots,d+1$ (not all of them are zero) which satisfy that $\sum_{i=1}^{d+1} a_i \mathbf{x}_i = \mathbf{0}$. Split the $a_i$ into two sets $I={i,a_i>0}$ and $J={i,a_i<0}$, then we have 
+	\begin{equation*}
+	\sum_{i\in I} a_i \mathbf{x}_i = \sum_{i \in J} |a_i| \mathbf{x}_i
+	\end{equation*}
+If the VC dimension is $d+1$, then there must be some $\mathbf{w}$ such that $\mathbf{w}^\top \mathbf{x}_i > 0, \forall i \in I$ and $\mathbf{w}^\top \mathbf{x}_i < 0, \forall i \in J$. It follows that
 	
+	\begin{equation*}
+	0 < \sum_{i \in I} a_i \mathbf{w}^\top \mathbf{x}_i = \mathbf{w}^\top  \sum_{i \in I} a_i \mathbf{x}_i = \mathbf{w}^\top  \sum_{i \in J} |a_i| \mathbf{x}_i =  \sum_{i \in J} |a_i| \mathbf{w}^\top \mathbf{x}_i  < 0
+	\end{equation*}
+which leads to a contradiction.}
+	\end{spacing}
+	\end{scriptsize}
 	
+	It follows that we can learn half-space using the ERM paradigm with a sample size of $\Omega(\frac{d+\log(1/\delta)}{\epsilon})$. Before discussing the implementation, we would like to show that the bound of sample size is too loose, and hence loss its guiding meaning in practice.  Suppose that we would like to be 'very sure' to the learned hypothesis, namely $\epsilon\rightarrow 0$ and $\delta\rightarrow 1$, then the sample size tends to be infinity. In agnostic case, since we cannot learn  a perfect half space, naturally  more training data is better, and the estimation of samples size is trivial. In realizable case, since 
+	
+	In the realizable (namely, separable) case, we can implement ERM paradigm as a linear programming problem. The normal form of a linear programming problem is:
+	
+	\begin{equation*}
+	\begin{split}
+	&\min_\mathbf{w} \mathbf{u}^\top \mathbf{w} \\
+	s.t. & \mathbf{Aw} \geq \mathbf{v}
+	\end{split}
+	\end{equation*}
+	
+Besides, we can also use a Perceptron algorithm, which is left in the next chapter.
+	
+	However, in the agnostic (namely, non-separable) case, the implementation is computational hard. And the most popular solution is to use \textit{surrogate loss} functions but not the 0-1 loss in realizable case. ......
 	
 	\subsection{Fisher's linear discriminant}
 	
@@ -84,7 +127,11 @@ in which $\mathbf{S}_B=(\mathbf{m}_2-\mathbf{m}_1)(\mathbf{m}_2-\mathbf{m}_1)^\t
 	\mathbf{w}\propto \mathbf{S}_W^{-1} (\mathbf{m}_2-\mathbf{m}_1)
 	\end{equation*}
 	
-	\textit{\underline{remark1: Fisher's linear discriminant for the case of multi-class.}}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily \textit{\underline{remark4: Fisher's linear discriminant for the case of multi-class.}}}
+	\end{spacing}
+	\end{scriptsize}
 	
 	\subsection{Least Squares for classification}
 	
@@ -110,7 +157,14 @@ in which $\mathbf{S}_B=(\mathbf{m}_2-\mathbf{m}_1)(\mathbf{m}_2-\mathbf{m}_1)^\t
 
 	Obviously, MLE is equivalent to linear regression.
 
-	\textit{\underline{remark2}: Since linear regression is not a binary prediction task, we cannot analyse its sample complexity using the VC-dimension. One possible analysis of the sample complexity of linear regression is by relying on the "discretization trick". However, to apply the sample complexity bounds from Chapter 2 we also need that the loss function will be bounded.}
+	\vspace{2mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	\noindent \textit{\underline{remark5.} Since linear regression is not a binary prediction task, we cannot analyse its sample complexity using the VC-dimension. One possible analysis of the sample complexity of linear regression is by relying on the "discretization trick". However, to apply the sample complexity bounds from Chapter 2 we also need that the loss function will be bounded.}}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}
 	
 	\subsection{Generalized linear regression}
 	
@@ -130,20 +184,28 @@ Setting it to zero gives
 
 	\begin{equation}
 	\label{eqn:mp_solved}
-	\mathbf{w} = \mathbf{\Phi}^\dag \mathbf{y} = (\mathbf{\Phi}^\top \mathbf{\Phi})^{-1}\mathbf{\Phi}^\top \mathbf{y}
+	\mathbf{w} = \Phi^\dag \mathbf{y} = (\Phi^\top \Phi)^{-1} \Phi^\top \mathbf{y}
 	\end{equation}
-Here $\mathbf{\Phi}$ is an $n x d$ matrix, whose elements are given by $\mathbf{\Phi}_{nj} = \Phi_j(\mathbf{x}_n)$. And $\mathbf{\Phi}^\dag$ is \textit{Moore-Penrose pseudo-inverse}.
+Here $\Phi$ is an $n*d$ matrix, whose elements are given by $\Phi_{nj} = \phi_j(\mathbf{x}_n)$. And $\Phi^\dag$ is \textit{Moore-Penrose pseudo-inverse}.
 
-	\textit{\underline{remark2, multiple-outputs}: A more general case is multiple outputs, i.e., $\mathbf{y}_i \in \mathcal{R}^k, k>1$. However, the solution to multiple-outputs regression problem decouples between the different target variables so we do not discuss it here.}
+	\vspace{2mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily 
+	\textit{\underline{remark6: multiple-outputs.}} A more general case is multiple outputs, i.e., $\mathbf{y}_i \in \mathcal{R}^k, k>1$. However, the solution to multiple-outputs regression problem decouples between the different target variables so we do not discuss it here.
 	
-	\textit{\underline{remark3, on-line learning}:} Batch techniques involve processing the entire training set in one go, can be computationally costly for large data sets. For linear regression, stochastic gradient descent algorithm updates parameter using
+	\textit{\underline{remark7: on-line learning.}} Batch techniques involve processing the entire training set in one go, can be computationally costly for large data sets. For linear regression, stochastic gradient descent algorithm updates parameter using
 	
 	\begin{equation*}
 	\mathbf{w}^{t+1}=\mathbf{w}^{t} - lr*\nabla L_{(\mathbf{x}_t,y_t)}(h) = \mathbf{w}^{t} + lr* (y_i - (\mathbf{w}^t)^\top \mathbf{\phi} (\mathbf{x}_t)) \mathbf{\phi} (\mathbf{x}_t)
 	\end{equation*}
 in which $lr$ is the learning rate.
 
-	\textit{\underline{remark4}: Basis function examples: 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.}
+	\textit{\underline{remark8: Basis function examples.}} 1. \textbf{Polynomial basis}, 2. \textbf{Radical basis}, 3. \textbf{Fourier basis}.
+	}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}
 	
 	\subsection{Regularization \textit{a.k.a} Bayesian linear regression}
 	
