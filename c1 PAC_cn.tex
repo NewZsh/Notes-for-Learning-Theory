@@ -52,13 +52,13 @@
 	\item 样本集合：一个有限的序列$S=((x_1,y_1),\cdots,(x_m,y_m))$。
 	\end{itemize}	 
 
-	\item \textbf{输出}：假设（有时候称为分类器、回归器） $h:\mathcal{X}\rightarrow\mathcal{Y}$.
+	\item \textbf{输出}：假设（hypothesis），有时候称为分类器（classifier）、回归器（regressor） $h:\mathcal{X}\rightarrow\mathcal{Y}$.
 
 	\item \textbf{数据生成模型}：假设实例依概率分布$\mathcal{D}$产生，并且有一个“绝对正确”的标签生成函数（至少目前我们假设如此）$f:\mathcal{X}\rightarrow\mathcal{Y}$。
 	
 	独立同分布（i.i.d）假设：训练样本的产生独立地来自于同一个分布。
 	
-	\item \textbf{泛化误差}: 也称为真实误差或者真实风险。以$\mathcal{D}(A)$记观测某样例$x \in A \subset \mathcal{X}$的概率，则泛化误差为：
+	\item \textbf{泛化误差}：也称为真实误差或者真实风险。以$\mathcal{D}(A)$记观测某样例$x \in A \subset \mathcal{X}$的概率，则泛化误差为：
 	
 	\begin{equation}
 	L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}}[h(x)\neq f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq f(x)\})
@@ -93,25 +93,23 @@
 	
 	\textbf{如果不对假设集加以限制，最小经验风险准则可能造成过拟合。}
 
-\subsection{受限假设集（归纳偏置）下的最小经验风险准则}
+\subsection{归纳偏置（inductive bias）下的最小经验风险准则}
 
-	Instead of $h_S\in \arg\min L_S(h)$, ERM with restricted hypothesis set return the following hypothesis:
-	
+	选取可行的假设集即反映了人对任务的先验知识，或言归纳偏置。记假设集为$\mathcal{H}$，最小经验风险准则形式化表述为：
 	\begin{equation}
 	h_S\in \arg\min \limits_{h\in\mathcal{H}}L_S(h)
 	\end{equation}
 
-	Start from an ideal case, in which the \textbf{realizability assumption} holds, i.e., there exists $h^*\in\mathcal{H}$, such that $L_{\mathcal{D},f}(h^*) = 0$. It implies that $L_S(h^*)=0$, $L_S(h_S)=0$. However, we are interested in $L_{\mathcal{D},f}(h_S)$.
+	“理想”的情况下，假设集中包含有泛化误差为0的假设，即存在$h^*\in\mathcal{H}$使得$L_{\mathcal{D},f}(h^*) = 0$，我们称之为\textbf{可实现假设}。该条件蕴含着$L_S(h^*)=0$, $L_S(h_S)=0$，而事实上，我们更感兴趣的是$L_{\mathcal{D},f}(h_S)$。
 
-\subsection{PAC (Probably Approximately Correct) learnability}
-
-	\textbf{Definition}: Training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm to be able to achieve \textbf{accuracy} at least $1-\epsilon$ with \textbf{confidence} at least $1-\delta$.
+\subsection{概率近似正确（Probably Approximately Correct，PAC）可学习性}
+	\textbf{定义}：称假设集是概率近似正确可学习的，当给定大小为$m\geq m_\mathcal{H}(\epsilon,\delta)$的样本集，假设集中存在一个假设以至少$1-\delta$的置信度达到不低于$1-\epsilon$的正确率，即$P(L_{\mathcal{D},f}(h_S) < \epsilon) > 1-\delta$。
 	
-	\begin{theorem} Finite hypothesis classes are PAC learnable, and the sample complexity is: $m_\mathcal{H}(\epsilon,\delta)=\frac{\log(|\mathcal{H}|/\delta)}{\epsilon}$.
+	\begin{theorem} 有限假设集是PAC可学习的，且样本复杂度为$m_\mathcal{H}(\epsilon,\delta)=\frac{\log(|\mathcal{H}|/\delta)}{\epsilon}$.
 	\end{theorem}
 	
 	\begin{proof}
-	Let $\mathcal{H}_B$ be the set of 'bad' hypothesis, that is, $\mathcal{H}_B\subset\mathcal{H}$, and $\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$. Let $M$ be the set of 'misleading' samples, that is $M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$. Note that, 
+	记“坏”假设集为$\mathcal{H}_B$，即$\mathcal{H}_B\subset\mathcal{H}$, and $\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$. Let $M$ be the set of 'misleading' samples, that is $M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$. Note that, 
 	
 	\begin{equation*}
 	M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}
@@ -132,7 +130,7 @@
 	Let $|\mathcal{H}|\exp(-\epsilon m)\leq\delta$, we can solve that $m\geq\log(|\mathcal{H}|/\delta)/\epsilon$.
 	\end{proof}
 
-\subsection{No-Free-Lunch}
+\subsection{“没有免费午餐”定理}
 
 	\begin{theorem}
 	Let $A$ be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain $\mathcal{X}$. Let $m$ be any number smaller than $\mathcal{X}/2$, representing a training set size. Then, there exists a distribution $\mathcal{D}$ over ${X}\times\{0,1\}$ such that:
@@ -199,8 +197,8 @@ which leads to $p(\theta\geq 1/8)\geq 1/7$.
 
 	\textbf{NFL theorem tells the necessity of inductive bias.} Philosophically, if someone can explain every phenomenon, his explanations are worthless.
 	
-\section{Agnostic PAC}
-	\subsection{Beyond realizability assumption}
+\section{不可知情况下的PAC（Agnostic PAC, A-PAC）可学习性}
+	\subsection{在可实现假设之外}
 	In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Then Agnostic PAC learnability is defined as: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm with \textbf{confidence} at least $1-\delta$ to achieve that:
 	
 	\begin{equation*}
@@ -208,16 +206,16 @@ which leads to $p(\theta\geq 1/8)\geq 1/7$.
 	\end{equation*}
 in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
 
-	\subsection{Beyond binary classification}
+	\subsection{在二分类之外}
 
-	Agnostic PAC learnability remains the same with:
+	仅需修改对单个样例损失的刻画，A-PAC可学习性仍表述为：
 	
 	\begin{equation}
 	\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,z)]
 	\end{equation}
 in which $l(\cdot)$ is 0-1 loss for multi-class classification and square loss for regression. 
 
-	\subsection{Sample complexity under A-PAC: via uniform convergence}
+	\subsection{A-PAC可学习假设集的样本复杂度}
 	
 	\textbf{Definition} ($\epsilon$-representative): A training set $S$ is called $\epsilon$-representative (w.r.t. domain $Z$, hypothesis set $\mathcal{H}$, loss function $l$, and distribution $\mathcal{D}$) if $\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$.
 	
@@ -285,7 +283,7 @@ the left side can be bounded by
 	\end{proof}	
 	\end{theorem}
 
-\section{Error decomposition}
+\section{误差分解}
 
 	\begin{equation}
 	\begin{split}
@@ -296,14 +294,23 @@ the left side can be bounded by
 	\end{equation}		
 
 	\begin{itemize}
-	\item \textbf{The Approximation Error} measures how much risk we have because we restrict ourselves to a specific class, namely, how much inductive bias we have. The approximation error does not depend on the sample size and is determined by the hypothesis class chosen. Enlarging the hypothesis class can decrease the approximation error.
-	\item \textbf{The Estimation Error} measures the empirical risk (i.e., training error), which is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
+	\item \textbf{逼近误差} measures how much risk we have because we restrict ourselves to a specific class, namely, how much inductive bias we have. The approximation error does not depend on the sample size and is determined by the hypothesis class chosen. Enlarging the hypothesis class can decrease the approximation error.
+	\item \textbf{拟合误差} measures the empirical risk (i.e., training error), which is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
 	\end{itemize}
 
-\section{Summary}
+\section{总结}
 
-Now that, we have come to some important conclusions under the PAC learning framework:
+	\vspace{2mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	\noindent\textit{\underline{注.} 在本系列笔记的整理过程中，这一小节的出现意味着，这章枯燥且乏味，但这章的偏理论的内容是不需要记住的，因为这些推导所指向的下述结论是非常浅显的。小结最后还会写到，这章的内容将如何与其它章节前后关联，以使读者明白其在整个机器学习理论中所处的地位。如果某些章没有这一小节，那么说明该章节的内容浅显易懂，不需要这一小节。）
+	}}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{2mm}
 
+	至此，在PAC学习理论框架下，我们有了如下重要结论：
 \begin{enumerate}
 \item No universal learner;
 \item Inductive bias is neccessary to avoid overfitting;
@@ -314,7 +321,7 @@ Now that, we have come to some important conclusions under the PAC learning fram
 	We have reached the fundamental question in learning theory: \textbf{Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?} Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
 
 
-\section{Exercises and solutions}
+\section{练习与答案}
 
 \begin{itemize}
 \item[Ex1] (UML Ex2.2) Let $\mathcal{H}$ be a class of binary classifiers over a domain $\mathcal{X}$. Let $\mathcal{D}$ be an unknown distribution over $\mathcal{X}$, and let $f$ be the target hypothesis in $\mathcal{H}$. Fix some $h\in\mathcal{H}$, show that the expected value of $L_S(h)$ over the choice of $S$ equals $L_{\mathcal{D},f}(h)$, namely,
