@@ -44,21 +44,15 @@
 
 \begin{itemize}
 
-	\item \textbf{输入}：
+	\item \textbf{输入}：即训练集，为一个有限的序列$S=((x_1,y_1),\cdots,(x_m,y_m))$。训练集为实例集和标签集的笛卡尔积，其中实例$x \in \mathcal{X}$，标签 $y \in \mathcal{Y}$。本章主要考虑二分类问题，即$\mathcal{Y}=\{0,1\}$。
 	
-	\begin{itemize}
-	\item 实例集：实例$x \in \mathcal{X}$。
-	\item 标签集：标签 $y \in \mathcal{Y}$。本章主要考虑二分类问题，即$\mathcal{Y}=\{0,1\}$。
-	\item 样本集合：一个有限的序列$S=((x_1,y_1),\cdots,(x_m,y_m))$。
-	\end{itemize}	 
-
-	\item \textbf{输出}：假设（hypothesis），有时候称为分类器（classifier）、回归器（regressor） $h:\mathcal{X}\rightarrow\mathcal{Y}$.
+	\item \textbf{输出}：假设（hypothesis），有时候称为分类器（classifier）、回归器（regressor） $h:\mathcal{X}\rightarrow\mathcal{Y}$。
 
 	\item \textbf{数据生成模型}：假设实例依概率分布$\mathcal{D}$产生，并且有一个“绝对正确”的标签生成函数（至少目前我们假设如此）$f:\mathcal{X}\rightarrow\mathcal{Y}$。
 	
 	独立同分布（i.i.d）假设：训练样本的产生独立地来自于同一个分布。
 	
-	\item \textbf{泛化误差}：也称为真实误差或者真实风险。以$\mathcal{D}(A)$记观测某样例$x \in A \subset \mathcal{X}$的概率，则泛化误差为：
+	\item \textbf{泛化误差}：也称为真实误差或者真实风险。以$\mathcal{D}(A)$表示样例$x \in A$的概率，则泛化误差为：
 	
 	\begin{equation}
 	L_{\mathcal{D},f}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{x\sim\mathcal{D}}[h(x)\neq f(x)]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq f(x)\})
@@ -66,7 +60,7 @@
 	
 \end{itemize}
 
-	\vspace{2mm}
+	\vspace{1mm}
 	\begin{scriptsize}
 	\begin{spacing}{1.2}
 	{\sffamily
@@ -77,7 +71,7 @@
     \noindent\textit{\underline{注3.} 严格来说，$\mathcal{D}$定义在$\mathcal{X}\times\mathcal{Y}$上，但通常不严格区分。}}
 	\end{spacing}
 	\end{scriptsize}
-	\vspace{-2mm}
+	\vspace{-3mm}
 	
 \section{从最小经验风险到概率近似正确}
 
@@ -89,13 +83,13 @@
 	L_S(h)\overset{def}{=}\frac{|\left\{(x_i,y_i)\in S:h(x_i)\neq y_i \right\}|}{m}
 	\end{equation}
 
-	考虑一个“懒惰”的学习器$h$，它记下了所有的样本，当且仅当$x=x_i$时候输出$y=y_i$，其它时候都输出0。显然，它的经验风险$L_S(h)=0$，但是对于未见样本，它有一半的概率预测失败，$L_{\mathcal{D},f}(h)=1/2$。这种在训练集上表现特别好，但是泛化性能很差的现象，称为“过拟合”。这个例子蕴含着一个很重要的基本事实：
+	考虑一个“懒惰”的学习器$h$，它记住了所有的样本，当且仅当$x=x_i$时候输出$y=y_i$，其它时候都输出0。显然，它的经验风险$L_S(h)=0$，但是对于未见样本，它有一半的概率预测失败，$L_{\mathcal{D},f}(h)=1/2$。这种在训练集上表现特别好，但是泛化性能很差的现象，称为“过拟合”。这个例子蕴含着一个很重要的基本事实：
 	
 	\textbf{如果不对假设集加以限制，最小经验风险准则可能造成过拟合。}
 
 \subsection{归纳偏置（inductive bias）下的最小经验风险准则}
 
-	选取可行的假设集即反映了人对任务的先验知识，或言归纳偏置。记假设集为$\mathcal{H}$，最小经验风险准则形式化表述为：
+	选取假设集即反映了人对任务的先验知识，即归纳偏置。记假设集为$\mathcal{H}$，最小经验风险准则表述为：
 	\begin{equation}
 	h_S\in \arg\min \limits_{h\in\mathcal{H}}L_S(h)
 	\end{equation}
@@ -108,40 +102,29 @@
 	\begin{theorem} 有限假设集是PAC可学习的，且样本复杂度为$m_\mathcal{H}(\epsilon,\delta)=\frac{\log(|\mathcal{H}|/\delta)}{\epsilon}$.
 	\end{theorem}
 	
-	\begin{proof} 在假设集中存在着一些糟糕的假设，它们的泛化误差高于一定阈值。形式化来说，记糟糕的假设集为$\mathcal{H}_B$，它是$\mathcal{H}$的子集，并且$\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$。而对于某些数据集，这样的假设仍然能有良好的训练性能，记为$M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$。注意到，
-	
-	\begin{equation*}
-	M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}
-	\end{equation*}
-	
-	我们的证明目标是事件$L_{\mathcal{D},f}(h_S)>\epsilon$的概率上界，即
+	\begin{proof} 在假设集中存在着一些糟糕的假设，它们的泛化误差高于一定阈值。形式化来说，记糟糕的假设集为$\mathcal{H}_B$，它是$\mathcal{H}$的子集，并且$\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$。而对于某些数据集，这样的假设仍然能有良好的训练性能，记为$M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$。注意到，$M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}$。而我们的证明目标是事件$L_{\mathcal{D},f}(h_S)>\epsilon$的概率上界，即
 	\begin{equation*}
 	\begin{split}
-	&\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)>\epsilon\})\leq\mathcal{D}^m(M) \\
-	&=\mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})         
-	=\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\{x_i:f(x_i)=h(x_i)\})  \\
-	&\overset{i.i.d.}{=}\sum_{h\in\mathcal{H}_B}(1-L_{\mathcal{D},f}(h))^m   
-	\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon m) \\
-	&\leq|\mathcal{H}|\exp(-\epsilon m)
+	&\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)>\epsilon\})\leq\mathcal{D}^m(M) 
+	=\mathcal{D}^m(\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\})        \\ 
+	&=\sum_{h\in\mathcal{H}_B}\prod_{i=1}^m\mathcal{D}(\{x_i:f(x_i)=h(x_i)\})
+	\overset{i.i.d.}{=}\sum_{h\in\mathcal{H}_B}(1-L_{\mathcal{D},f}(h))^m      \\
+	&\leq\sum_{h\in\mathcal{H}_B}(1-\epsilon)^m\leq\sum_{h\in\mathcal{H}_B}\exp(-\epsilon m)
+	\leq|\mathcal{H}|\exp(-\epsilon m)
 	\end{split}
 	\end{equation*}
 
-	令$|\mathcal{H}|\exp(-\epsilon m)\leq\delta$，可以得到$m\geq\log(|\mathcal{H}|/\delta)/\epsilon$.
+	令$|\mathcal{H}|\exp(-\epsilon m)\leq\delta$，可以得到$m\geq\log(|\mathcal{H}|/\delta)/\epsilon$。
 	\end{proof}
 
 \subsection{“没有免费午餐”（No-Free-Lunch，NFL）定理}
 
 	\begin{theorem}
-	令$A$表示0-1损失下二分类任务的任一学习算法，令训练集规模为$m<|\mathcal{X}|/2$。则存在一个分布$\mathcal{D}$（定义在${X}\times\{0,1\}$上），使得:
-	
-	\begin{itemize}
-	\item 存在函数$f:\mathcal{X}\rightarrow\{0,1\}$，满足$L_\mathcal{D}(f)=0$.
-	\item 随机采样训练集$S\sim\mathcal{D}^m$，$P(L_\mathcal{D}(A(S))\geq 1/8)\geq 1/7$.
-	\end{itemize} 
+	令$A$表示0-1损失下二分类任务的任一学习算法，假设训练集规模为$m<|\mathcal{X}|/2$。则存在一个定义在${X}\times\{0,1\}$上的分布$\mathcal{D}$使得：随机采样训练集$S\sim\mathcal{D}^m$，$P(L_\mathcal{D}(A(S))\geq 1/8)\geq 1/7$。
 	\end{theorem}
 	
 	\begin{proof}
-	令$C\subseteq\mathcal{X}$含有$2m$个样本，则标签函数存在$2^{2m}$种可能，记为$f_1,\cdots,f_T$。对任一标签函数，定义分布$\mathcal{D}_i$于$\mathcal{C}\times\{0,1\}$上:
+	令$C\subseteq\mathcal{X}$含有$2m$个样本，则标签函数存在$2^{2m}$种可能，记为$f_1,\cdots,f_T$。对任一标签函数，定义在$\mathcal{C}\times\{0,1\}$上的分布$\mathcal{D}_i$:
 	
 	\begin{equation*}
 	\mathcal{D}_i(\{(x,y)\})=\left\{
@@ -185,12 +168,11 @@
 	这说明了，存在某些标签函数和分布$f,\mathcal{D}$使得$L_\mathcal{D}(f)=0$，且$\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq 1/4$。而后者可以进一步推出违背PAC可学习性的结论。注意到，对一个随机变量$\theta\in[0,1]$，如果满足$\mathbb{E}(\theta)\geq 1/4$，则有：
 	
 	\begin{equation*}
-	p\left(\theta\geq\frac{1}{8}\right)=\int_\frac{1}{8}^1 p(\theta) \mathrm{d}\theta \geq\int_\frac{1}{8}^1 \theta p(\theta) \mathrm{d}\theta=\mathbb{E}(\theta)-\int_0^\frac{1}{8}\theta p(\theta)\mathrm{d}\theta \geq\mathbb{E}(\theta)-\frac{1}{8}\int_0^\frac{1}{8} p(\theta)\mathrm{d}\theta = \frac{1}{4} - \frac{1}{8}\left( 1-\int^1_\frac{1}{8}p(\theta) \mathrm{d}\theta \right)
+	p\left(\theta\geq\frac{1}{8}\right)=\int_\frac{1}{8}^1 p(\theta) \mathrm{d}\theta \geq\int_\frac{1}{8}^1 \theta p(\theta) \mathrm{d}\theta=\mathbb{E}(\theta)-\int_0^\frac{1}{8}\theta p(\theta)\mathrm{d}\theta \geq\frac{1}{4}-\frac{1}{8}\int_0^\frac{1}{8} p(\theta)\mathrm{d}\theta \Rightarrow p \left(\theta\geq\frac{1}{8}\right)\geq \frac{1}{7}
 	\end{equation*}
-可以推出，$p(\theta\geq 1/8)\geq 1/7$.
 	\end{proof}
 
-	\textbf{NFL定理从数学形式上确认了归纳偏置的必要性。}其背后的哲学思想是，放诸四海皆准其实放诸四海皆非。
+	\textbf{NFL定理从数学形式上确认了归纳偏置的必要性。}
 
 \section{不可知情况下的PAC（Agnostic PAC, A-PAC）可学习性}
 
@@ -201,7 +183,7 @@
 	\end{equation*}
 其中$L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
 
-	此外，损失函数也可以拓展到一般情况，仅需将二分类下单个样本的损失函数拓展到一般度量，$L_\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,y)]$。
+	此外，损失函数也可以拓展到一般情况，仅需将二分类下单个样本的损失函数拓展到一般度量，$L_\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l((x),y)]$。
 	
 \noindent\textbf{定义} ($\epsilon$-典型性)：在定义域$Z$，假设集$\mathcal{H}$，损失函数$l$和分布$\mathcal{D}$给定的前提下，称训练集$S$具有$\epsilon$-典型性，如果其满足，$\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$。
 	
@@ -236,38 +218,33 @@
 	\end{equation}
 	
 	\begin{proof}
-	固定$\epsilon,\delta$，目的是找到样本数量$m$来保证：对任一分布$\mathcal{D}$, with probability of at least $1-\delta$ of the choice of $S=(z_1,\cdots,z_m)$ sampled i.i.d. from $\mathcal{D}$, such that
+	固定$\epsilon,\delta$，目的是找到样本数量$m$来保证：对任一分布$\mathcal{D}$，样本集$S\overset{i.i.d.}{\sim}\mathcal{D}^m$，使得
 	\begin{equation*}
 	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) < \delta
 	\end{equation*}
-	Since
-	\begin{equation*}
-	\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\} = \cup_{h\in\mathcal{H}}\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\}
-	\end{equation*}
-the left side can be bounded by
+式子左侧可以放缩为：
 	\begin{equation*}
 	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq \sum_{h\in\mathcal{H}} \mathcal{D}^m(\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\})
 	\end{equation*}
-	Recall that $L_S(h)=\frac{1}{m}\sum_{i=1}^m l(h,z_i)$ and $L_\mathcal{D}(h)=\mathbb{E}_{z\sim\mathcal{D}}[l(h,z)]$. Since each $z_i$ is sampled i.i.d. from $\mathcal{D}$, by the linearity of expectation, $\mathbb{E}(L_S(h))=\frac{1}{m}\sum_{i=1}^m \mathbb{E}(l(h,z_i))=L_\mathcal{D}(h)$. Hence, the quantity $|L_\mathcal{D}(h)-L_S(h)|$ is the deviation of the random variable $L_S(h)$ from its expectation. We therefore need to show that the measure of $L_S(h)$ is concentrated around its expected value. Using the Hoeffding's Inequality directly leads to the following:
+
+	由于样本独立地采样自$\mathcal{D}$，由期望地线性性，$\mathbb{E}(L_S(h))=\frac{1}{m}\sum_{i=1}^m \mathbb{E}(l(h(x_i),y_i))=L_\mathcal{D}(h)$。因此，$|L_\mathcal{D}(h)-L_S(h)|$可以视为随机变量$L_S(h)$和其期望之间的距离。应用Hoeffding不等式可以得到，
 	\begin{equation*}
 	\mathcal{D}^m(\{S:|L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq 2 \exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right)
 	\end{equation*}
-	Combining the equations above,
+	
+	结合上述方程可以得到
 	\begin{equation*}
 	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) \leq \sum_{h\in\mathcal{H}} 2 \exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right) = 2|\mathcal{H}|\exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right)
 	\end{equation*}
-	Choose $m\geq\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}$, then the left-side is bounded by $\delta$.
+	选取$m\geq\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}$，则方程左侧的上界为$\delta$。
 	\end{proof}	
 	\end{theorem}
 
 \section{误差分解}
 
 	\begin{equation}
-	\begin{split}
-	L_\mathcal{D}(h_S) &= \epsilon_{\mathrm{app}}+\epsilon_{\mathrm{est}} \\
-	\epsilon_{\mathrm{app}} &= \min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h) \\
-	\epsilon_{\mathrm{est}} &= L_\mathcal{D}(h_S)-\epsilon_{\mathrm{app}}
-	\end{split}
+	L_\mathcal{D}(h_S) = \underbrace{\min\limits_{h\in\mathcal{H}}L_\mathcal{D}(h)}_{\epsilon_{\mathrm{app}}}
+									+ \underbrace{L_\mathcal{D}(h_S)-\epsilon_{\mathrm{app}}}_{\epsilon_{\mathrm{est}}}
 	\end{equation}		
 
 	\begin{itemize}
@@ -277,7 +254,7 @@ the left side can be bounded by
 
 \section{总结}
 
-	\vspace{2mm}
+	\vspace{1mm}
 	\begin{scriptsize}
 	\begin{spacing}{1.2}
 	{\sffamily
@@ -285,7 +262,7 @@ the left side can be bounded by
 	}}
 	\end{spacing}
 	\end{scriptsize}
-	\vspace{2mm}
+	\vspace{1mm}
 
 	至此，在PAC学习理论框架下，我们有了如下重要结论：
 \begin{enumerate}
