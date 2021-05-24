@@ -103,19 +103,18 @@
 	“理想”的情况下，假设集中包含有泛化误差为0的假设，即存在$h^*\in\mathcal{H}$使得$L_{\mathcal{D},f}(h^*) = 0$，我们称之为\textbf{可实现假设}。该条件蕴含着$L_S(h^*)=0$, $L_S(h_S)=0$，而事实上，我们更感兴趣的是$L_{\mathcal{D},f}(h_S)$。
 
 \subsection{概率近似正确（Probably Approximately Correct，PAC）可学习性}
-	\textbf{定义}：称假设集是概率近似正确可学习的，当给定大小为$m\geq m_\mathcal{H}(\epsilon,\delta)$的样本集，假设集中存在一个假设以至少$1-\delta$的置信度达到不低于$1-\epsilon$的正确率，即$P(L_{\mathcal{D},f}(h_S) < \epsilon) > 1-\delta$。
+\noindent\textbf{定义}：称假设集是概率近似正确可学习的，当给定大小为$m\geq m_\mathcal{H}(\epsilon,\delta)$的样本集，假设集中存在一个假设以至少$1-\delta$的置信度达到不低于$1-\epsilon$的正确率，即$P(L_{\mathcal{D},f}(h_S) < \epsilon) > 1-\delta$。
 	
 	\begin{theorem} 有限假设集是PAC可学习的，且样本复杂度为$m_\mathcal{H}(\epsilon,\delta)=\frac{\log(|\mathcal{H}|/\delta)}{\epsilon}$.
 	\end{theorem}
 	
-	\begin{proof}
-	记“坏”假设集为$\mathcal{H}_B$，即$\mathcal{H}_B\subset\mathcal{H}$, and $\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$. Let $M$ be the set of 'misleading' samples, that is $M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$. Note that, 
+	\begin{proof} 在假设集中存在着一些糟糕的假设，它们的泛化误差高于一定阈值。形式化来说，记糟糕的假设集为$\mathcal{H}_B$，它是$\mathcal{H}$的子集，并且$\forall h\in\mathcal{H}_B,L_{\mathcal{D},f}(h)>\epsilon$。而对于某些数据集，这样的假设仍然能有良好的训练性能，记为$M=\{S:\exists h\in \mathcal{H}_B, L_S(h)=0\}$。注意到，
 	
 	\begin{equation*}
 	M=\bigcup\limits_{h\in\mathcal{H}_B}\{S:L_S(h)=0\}
 	\end{equation*}
 	
-	The goal is to bound the probability of the event $L_{\mathcal{D},f}(h_S)>\epsilon$,
+	我们的证明目标是事件$L_{\mathcal{D},f}(h_S)>\epsilon$的概率上界，即
 	\begin{equation*}
 	\begin{split}
 	&\mathcal{D}^m(\{S:L_{\mathcal{D},f}(h_S)>\epsilon\})\leq\mathcal{D}^m(M) \\
@@ -127,22 +126,22 @@
 	\end{split}
 	\end{equation*}
 
-	Let $|\mathcal{H}|\exp(-\epsilon m)\leq\delta$, we can solve that $m\geq\log(|\mathcal{H}|/\delta)/\epsilon$.
+	令$|\mathcal{H}|\exp(-\epsilon m)\leq\delta$，可以得到$m\geq\log(|\mathcal{H}|/\delta)/\epsilon$.
 	\end{proof}
 
-\subsection{“没有免费午餐”定理}
+\subsection{“没有免费午餐”（No-Free-Lunch，NFL）定理}
 
 	\begin{theorem}
-	Let $A$ be any learning algorithm for the task of binary classification with respect to the 0-1 loss over a domain $\mathcal{X}$. Let $m$ be any number smaller than $\mathcal{X}/2$, representing a training set size. Then, there exists a distribution $\mathcal{D}$ over ${X}\times\{0,1\}$ such that:
+	令$A$表示0-1损失下二分类任务的任一学习算法，令训练集规模为$m<|\mathcal{X}|/2$。则存在一个分布$\mathcal{D}$（定义在${X}\times\{0,1\}$上），使得:
 	
 	\begin{itemize}
-	\item There exists a function $f:\mathcal{X}\rightarrow\{0,1\}$ with $L_\mathcal{D}(f)=0$.
-	\item With probability of at least $1/7$ over the choice of $S\sim\mathcal{D}^m$ we have that $L_\mathcal{D}(A(S))\geq 1/8$.
+	\item 存在函数$f:\mathcal{X}\rightarrow\{0,1\}$，满足$L_\mathcal{D}(f)=0$.
+	\item 随机采样训练集$S\sim\mathcal{D}^m$，$P(L_\mathcal{D}(A(S))\geq 1/8)\geq 1/7$.
 	\end{itemize} 
 	\end{theorem}
 	
 	\begin{proof}
-	Let $C\subseteq\mathcal{X}$ of size $2m$. There are $T=2^{2m}$ possible functions $f_1,\cdots,f_T$ defined on $C\rightarrow\{0,1\}$. For each such function, let $\mathcal{D}_i$ be a distribution over $\mathcal{C}\times\{0,1\}$ defined as follow:
+	令$C\subseteq\mathcal{X}$含有$2m$个样本，则标签函数存在$2^{2m}$种可能，记为$f_1,\cdots,f_T$。对任一标签函数，定义分布$\mathcal{D}_i$于$\mathcal{C}\times\{0,1\}$上:
 	
 	\begin{equation*}
 	\mathcal{D}_i(\{(x,y)\})=\left\{
@@ -150,116 +149,94 @@
 	\end{matrix}\right.
 	\end{equation*}
 	
-	There are $k=(2m)^m$ possible sequences $S_1,\cdots,S_k$, each of $m$ examples from $C$. Also, we denote the sequence $\mathcal{S}_j$ labelled by the function $f_i$ as $\mathcal{S}_j^i$. If the distribution is $\mathcal{D}_i$, then the possible training sets are $S_1^i,\cdots,S_k^i$, with equal probability. Therefore,
-
+	从$C$中获取$m$个样本构成数据集，共有$k=(2m)^m$个可能的数据集。记由函数$f_i$打标签的数据集为$\mathcal{S}_j^i, j=1,2,\cdots,k$，因此
 	\begin{equation*}
 	\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]=\frac{1}{k}\sum_{j=1}^kL_{\mathcal{D}_i}(A(S_j^i))
 	\end{equation*}
 	
-	Using the facts that 'maximum' is larger than 'average', and that 'average' is larger than 'minimum', we have
-	
+注意到	
 	\begin{equation*}
 	\max_{i\in\{1,\cdots,T\}} \frac{1}{k}\sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \frac{1}{T}\sum_{i=1}^T \frac{1}{k} \sum_{j=1}^k L_{\mathcal{D}_i}(A(S_j^i)) \geq \min_{j\in\{1,\cdots,k\}}\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))
 	\end{equation*}
 
-	Next, fix some $j\in\{1,\cdots,k\}$. Denote $S_j=(x_1,\cdots,x_m)$ and let $v_1,\cdots,v_p$ be the examples in $C$ that do not appear in $S_j$. Clearly, $p\geq m$. Therefore, for every $h:C\rightarrow\{0,1\}$,
+	记$S_j=(x_1,\cdots,x_m)$，同时记$v_1,\cdots,v_p$为$C$中未出现在$S_j$的样本。显然，$p\geq m$（当$S_j$中存在重复样本的时候，不等号严格成立）。因此，对任意$h:C\rightarrow\{0,1\}$，
 	
 	\begin{equation*}
 	L_{\mathcal{D}_i}(h)=\frac{1}{2m}\sum_{x\in C}\mathbbm{1}_{[h(x)\neq f_i(x)]}\geq\frac{1}{2p}\sum_{r=1}^p\mathbbm{1}_{[h(v_r)\neq f_i(v_r)]}
 	\end{equation*}
-and hence,
 
 	\begin{equation*}
 	\frac{1}{T}\sum_{i=1}^T L_{\mathcal{D}_i} (A(S_j^i))\geq\frac{1}{2}\min_{r\in\{1,\cdots,p\}}\frac{1}{T}\mathbbm{1}_{[A(S^i_j)(v_r)\neq f_i(v_r)]}
 	\end{equation*}
+其中$r\in[p]$。
 
-	Next, fix some $r\in[p]$, We can partition all the functions $f_1,\cdots,f_T$ into $T/2$ disjoint pairs, where for a pair $(f_i,f_{i'})$ we have that $\forall c\in C,f_i(c)\neq f_{i'}(c)$ iff. $c=v_r$. Since for such a pair we must have $S_j^i=S_j^{i'}$, it follows that $\mathbbm{1}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbbm{1}_{[A(S_j^{i'})(v_r)\neq f_{i'}(v_r)]}=1$, which yields:
+	将标签函数$f_1,\cdots,f_T$切分成$T/2$对不相交的函数对，对于其中的某对函数$(f_i,f_{i'})$，有$\forall c\in C,f_i(c)\neq f_{i'}(c)$当且仅当$c=v_r$。则它们对数据集$S_j$给出了同样的标签，因而$S_j^i=S_j^{i'}$。从而有， $\mathbbm{1}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}+\mathbbm{1}_{[A(S_j^{i'})(v_r)\neq f_{i'}(v_r)]}=1$。这意味着
 	
 	\begin{equation*}
 	\frac{1}{T}\sum_{i=1}^T\mathbbm{1}_{[A(S_j^i)(v_r)\neq f_i(v_r)]}=\frac{1}{2}
 	\end{equation*}
 
-	In conclusion, it holds that
+	至此，
 
 	\begin{equation*}
 	\max_{i\in\{1,\cdots,T\}}\mathop{\mathbb{E}}_{S\sim\mathcal{D}_i^m}[L_{\mathcal{D}_i}(A(S))]\geq 1/4
 	\end{equation*}
 
-	This means that for every algorithm, there exists $f,\mathcal{D}$, such that $L_\mathcal{D}(f)=0$ and $\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq 1/4$.
-
-	\textit{(following is part of UML Ex5.1)} For a random variable $\theta\in[0,1]$ such that $\mathbb{E}(\theta)\geq 1/4$, we have:
+	这说明了，存在某些标签函数和分布$f,\mathcal{D}$使得$L_\mathcal{D}(f)=0$，且$\mathop{\mathbb{E}}\limits_{S\sim\mathcal{D}^m}[L_\mathcal{D}(A(S))]\geq 1/4$。而后者可以进一步推出违背PAC可学习性的结论。注意到，对一个随机变量$\theta\in[0,1]$，如果满足$\mathbb{E}(\theta)\geq 1/4$，则有：
 	
 	\begin{equation*}
 	p\left(\theta\geq\frac{1}{8}\right)=\int_\frac{1}{8}^1 p(\theta) \mathrm{d}\theta \geq\int_\frac{1}{8}^1 \theta p(\theta) \mathrm{d}\theta=\mathbb{E}(\theta)-\int_0^\frac{1}{8}\theta p(\theta)\mathrm{d}\theta \geq\mathbb{E}(\theta)-\frac{1}{8}\int_0^\frac{1}{8} p(\theta)\mathrm{d}\theta = \frac{1}{4} - \frac{1}{8}\left( 1-\int^1_\frac{1}{8}p(\theta) \mathrm{d}\theta \right)
 	\end{equation*}
-which leads to $p(\theta\geq 1/8)\geq 1/7$.
+可以推出，$p(\theta\geq 1/8)\geq 1/7$.
 	\end{proof}
 
-	\textbf{NFL theorem tells the necessity of inductive bias.} Philosophically, if someone can explain every phenomenon, his explanations are worthless.
-	
+	\textbf{NFL定理从数学形式上确认了归纳偏置的必要性。}其背后的哲学思想是，放诸四海皆准其实放诸四海皆非。
+
 \section{不可知情况下的PAC（Agnostic PAC, A-PAC）可学习性}
-	\subsection{在可实现假设之外}
-	In practical, the 'true' labelling function may not exist, and the labels may not be fully determined by the features on hand. Then Agnostic PAC learnability is defined as: training on $m\geq m_\mathcal{H}(\epsilon,\delta)$ samples, there exists an algorithm with \textbf{confidence} at least $1-\delta$ to achieve that:
+
+	在实际情况中，也许不存在所谓正确的标签函数，标签也不一定可以由手头的特征决定。因此可实现假设是不成立的，称之为不可知情况。此时，PAC可学习性需要重新定义。称假设集是A-PAC可学习的，当在规模为$m\geq m_\mathcal{H}(\epsilon,\delta)$的训练集上训练时，存在一个算法，以至少$1-\delta$的置信度成立如下条件：
 	
 	\begin{equation*}
 	L_\mathcal{D}(h)\leq\min\limits_{h'\in\mathcal{H}}L_\mathcal{D}(h')+\epsilon
 	\end{equation*}
-in which $L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
+其中$L_\mathcal{D}(h)\overset{def}{=}\mathop{\mathbb{P}}\limits_{(x,y)\sim\mathcal{D}}[h(x)\neq y]\overset{def}{=}\mathcal{D}(\{x:h(x)\neq y\})$.
 
-	\subsection{在二分类之外}
-
-	仅需修改对单个样例损失的刻画，A-PAC可学习性仍表述为：
+	此外，损失函数也可以拓展到一般情况，仅需将二分类下单个样本的损失函数拓展到一般度量，$L_\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,y)]$。
 	
-	\begin{equation}
-	\mathcal{D}(h)=\mathop{\mathbb{E}}\limits_{x\sim\mathcal{D}}[l(h,z)]
-	\end{equation}
-in which $l(\cdot)$ is 0-1 loss for multi-class classification and square loss for regression. 
-
-	\subsection{A-PAC可学习假设集的样本复杂度}
-	
-	\textbf{Definition} ($\epsilon$-representative): A training set $S$ is called $\epsilon$-representative (w.r.t. domain $Z$, hypothesis set $\mathcal{H}$, loss function $l$, and distribution $\mathcal{D}$) if $\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$.
+\noindent\textbf{定义} ($\epsilon$-典型性)：在定义域$Z$，假设集$\mathcal{H}$，损失函数$l$和分布$\mathcal{D}$给定的前提下，称训练集$S$具有$\epsilon$-典型性，如果其满足，$\forall h\in\mathcal{H},|L_S(h)-L_\mathcal{D}(h)|\leq\epsilon$。
 	
 	\begin{lemma}
-	Assume that a training set $S$ is $\epsilon/2$-representative. Then, any $h_S\in\arg\min_{h\in\mathcal{H}}L_S(h)$ satisfies
-	\begin{equation}
-	L_\mathcal{D}(h_S) \leq L_S(h)+\epsilon
-	\end{equation}
+	假设训练集$S$具有$\epsilon/2$-典型性，则任一$h_S\in\arg\min_{h\in\mathcal{H}}L_S(h)$都满足$L_\mathcal{D}(h_S) \leq L_\mathcal{D}(h)+\epsilon$。
 	\end{lemma}
 	
 	\begin{proof}
-	for every $h\in\mathcal{H}$,
-	
-	\begin{equation*}
-	L_\mathcal{D}(h_S) \leq L_S(h_S)+\frac{\epsilon}{2}
-	\leq L_S(h)+\frac{\epsilon}{2} \leq L_\mathcal{D}(h)+\frac{\epsilon}{2}+\frac{\epsilon}{2}
-	\leq L_\mathcal{D}(h)+\epsilon
-	\end{equation*}	 
+	对任一$h\in\mathcal{H}$，$L_\mathcal{D}(h_S) \leq L_S(h_S)+\frac{\epsilon}{2} \leq L_S(h)+\frac{\epsilon}{2} \leq L_\mathcal{D}(h)+\frac{\epsilon}{2}+\frac{\epsilon}{2}\leq L_\mathcal{D}(h)+\epsilon$。
 	\end{proof}
 	
-	The lemma states that the ERM learning rule is guaranteed to return a good hypothesis for any $\epsilon/2$-representative sample set. It implies that to ensure that the ERM rule is an agnostic PAC learner, it suffices to show that with probability of at least $1-\delta$ over the random choice of a training set, it will be an $\epsilon$-representative training set. The following definition measures how many examples we need to ensure this condition.
+	该引理说明了，ERM规则在$\epsilon/2$-典型的数据集上能够成功返回好的假设。于是，要使得ERM规则是否适用于A-PAC，就只要保证随机选取一个训练集，其为$\epsilon$-典型的概率至少为$1-\delta$。可想而知，决定随机选取的数据集是否足够典型的一个先决条件是其大小。下面的定义对其所需的大小进行了刻画。
 	
-\noindent\textbf{Definition} (Uniform Convergence): We say that a hypothesis class $\mathcal{H}$ has the uniform convergence property if there exists a function $m^{UC}_\mathcal{H}:(0,1)^2\rightarrow \mathbb{N}$ such that for every $\epsilon,\delta \in (0, 1)$ and for every probability distribution $\mathcal{D}$ over $Z$, if $S$ is a sample set of size $m\geq m^{UC}_\mathcal{H}(\epsilon, \delta)$ examples drawn i.i.d. according to $\mathcal{D}$, then, with probability of at least $1-\delta$, $S$ is $\epsilon$-representative.
+\noindent\textbf{定义} (一致收敛性)：称假设集$\mathcal{H}$具有一致收敛性，如果存在函数$m^{UC}_\mathcal{H}:(0,1)^2\rightarrow \mathbb{N}$，使得对任意$\epsilon,\delta \in (0, 1)$和定义在$Z$上的分布$\mathcal{D}$，数据集$S$的样本独立同分布地采样自$\mathcal{D}$，$S$的大小满足$m\geq m^{UC}_\mathcal{H}(\epsilon, \delta)$，则$S$为$\epsilon$-典型的概率至少为$1-\delta$。
 
 	\begin{corollary}
-	If a class $\mathcal{H}$ has the uniform convergence property with a function $m^{UC}_\mathcal{H}$ then the class is agnostic PAC learnable with the sample complexity $m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)$, and the ERM$_\mathcal{H}$ paradigm is a successful agnostic PAC learner for $\mathcal{H}$.
+	如果一个假设集$\mathcal{H}$在函数$m^{UC}_\mathcal{H}$下具有一致收敛性，则其在训练集大小满足$m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)$条件下A-PAC可学习，且ERM$_\mathcal{H}$策略是$\mathcal{H}$成功的A-PAC学习器.
 	\end{corollary}
 	
 	\begin{lemma}
-	(Hoeffding's Inequality) Let $\theta_1,\cdots,\theta_m$ be a sequence of i.i.d. random variables and assume that $\forall i, \mathbb{E}[\theta_i]=\mu$ and $P[a\leq\theta_i\leq b]=1$. Then, for any $\epsilon>0$,
+	(Hoeffding不等式) 令$\theta_1,\cdots,\theta_m$为一序列独立同分布的随机变量，假设$\forall i, \mathbb{E}[\theta_i]=\mu$ 且$P[a\leq\theta_i\leq b]=1$，则对任一$\epsilon>0$，
 	\begin{equation*}
 	P\left[\left| \frac{1}{m}\sum_{i=1}^m\theta_i - \mu \right| >\epsilon \right] \leq 2 \exp \left( \frac{-2m\epsilon^2 }{(b-a)^2} \right)
 	\end{equation*}
 	\end{lemma}
 
 	\begin{theorem}
-	\textbf{Agnostic PAC sample complexity} Assume that the range of the loss function is $[a,b]$, then a finite hypothesis set $\mathcal{H}$ enjoys the agnostic PAC learnability with sample complexity 
+	\textbf{A-PAC样本复杂度} 假设损失函数的取值范围为$[a,b]$，则满足有限假设集$\mathcal{H}$是A-PAC可学习的样本复杂度为
 	
 	\begin{equation}
 	m_\mathcal{H}(\epsilon,\delta)\leq m^{UC}_\mathcal{H}(\epsilon/2,\delta)\leq\left\lceil\frac{2\log(2|\mathcal{H}|/\delta)(b-a)^2}{\epsilon^2}\right\rceil
 	\end{equation}
 	
 	\begin{proof}
-	Fix some $\epsilon,\delta$, we need to find a sample size $m$ that guarantees that: For any $\mathcal{D}$, with probability of at least $1-\delta$ of the choice of $S=(z_1,\cdots,z_m)$ sampled i.i.d. from $\mathcal{D}$, such that
+	固定$\epsilon,\delta$，目的是找到样本数量$m$来保证：对任一分布$\mathcal{D}$, with probability of at least $1-\delta$ of the choice of $S=(z_1,\cdots,z_m)$ sampled i.i.d. from $\mathcal{D}$, such that
 	\begin{equation*}
 	\mathcal{D}^m(\{S:\exists h\in\mathcal{H}, |L_S(h)-L_\mathcal{D}(h)|>\epsilon\}) < \delta
 	\end{equation*}
@@ -294,8 +271,8 @@ the left side can be bounded by
 	\end{equation}		
 
 	\begin{itemize}
-	\item \textbf{逼近误差} measures how much risk we have because we restrict ourselves to a specific class, namely, how much inductive bias we have. The approximation error does not depend on the sample size and is determined by the hypothesis class chosen. Enlarging the hypothesis class can decrease the approximation error.
-	\item \textbf{拟合误差} measures the empirical risk (i.e., training error), which is only an estimate of the true risk. The quality of this estimation depends on the training set size (decreases with it) and on the size, or complexity, of the hypothesis class (logarithmically increases with it).
+	\item \textbf{逼近误差}衡量了选取当前假设集（即归纳偏置）的风险，注意其与数据集规模无关。扩大假设集的规模可以减少逼近误差。
+	\item \textbf{拟合误差}衡量了经验风险（即训练误差），是真实风险的一个经验估计。拟合误差取决于训练集的大小（随其增大而减小）与假设集的规模（随其增大而对数上升）。
 	\end{itemize}
 
 \section{总结}
@@ -312,14 +289,13 @@ the left side can be bounded by
 
 	至此，在PAC学习理论框架下，我们有了如下重要结论：
 \begin{enumerate}
-\item No universal learner;
-\item Inductive bias is neccessary to avoid overfitting;
-\item Sample complexity is function about hypothesis set, confidence level and error, interestingly, it is nothing to do with the dimension of feature space;
-\item Inductive bias controls the balance of approximation error and estimation error.
+\item  不存在对一切问题通用的学习器；
+\item  归纳偏置对于防止过拟合是必要的;
+\item  样本复杂度函数跟假设集规模、置信度和误差水平有关，但有趣的是，它和样本空间并无关联;
+\item  归纳偏置控制着拟合误差和逼近误差的折衷。
 \end{enumerate}
 
-	We have reached the fundamental question in learning theory: \textbf{Over which hypothesis classes, ERM learning will not result in overfitting (or, PAC learnable)?} Currently, we just confirm the PAC learnability for finite classes. In the next chapter, the most important part in learning theory, VC-dimension, will gives a more precise answer.
-
+	现在，我们触及了学习理论的核心问题：\textbf{在什么样的假设集下，ERM规则不会过拟合（即PAC可学习）?} 当前，我们仅保证了在有限假设集上的性质。下一章谈及VC维时候，这个问题才会有一个更加精确的答案。
 
 \section{练习与答案}
 
