@@ -1,0 +1,479 @@
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+\setmainfont{Calibri Light}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage{amsmath,bm}
+\usepackage{amssymb}
+\usepackage{ntheorem}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=cyan,      
+	urlcolor=red,
+	citecolor=green,
+}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof}{Proof}
+\setlength{\parindent}{2em}
+\author{Siheng Zhang\\zhangsiheng@cvte.com}
+\title{Chapter \textbf{\textit{3}}\ \ \ \ 生成模型}
+\date{\today}      
+\usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
+\begin{document}
+\maketitle  
+
+本章对应于\textbf{UML第24、31章，PRML第1、2章}，主要讨论以下问题：
+
+\begin{itemize}
+\item 贝叶斯最优准则需要估计特征的联合分布，这对实际应用带来了不可计算的困难，解决这个问题的关键是特征独立假设。
+\item 进一步地，为了估计类条件概率，本章讨论了参数化方法，非参数化的方法相对独立，因此留到其它章节。
+\item 通过估计潜在分布进行判别的模型，我们称之为生成式模型，包括朴素贝叶斯、混合高斯模型等等。注意到，估计概率密度是机器学习中最为一般化也更难的问题。判别式模型则通过优化目标函数来避免这个问题。
+\item 但是，生成式模型和判别式模型之间也存在着紧密的关联。本章的最后将会从贝叶斯分类器推导出线性判别器。而再下一章，我们也会指出，为判别式模型添加约束项（通常是为了防止过拟合）本质上与某些先验假设下的生成模型等价。
+\end{itemize}
+
+\tableofcontents
+\newpage
+
+\section{朴素贝叶斯（Naive Bayes，NB）}
+
+	回顾贝叶斯最优准则（\textit{第1章，Ex6}）：
+	
+	\begin{equation*}
+	h_{\mathrm{Bayes}}(\bm{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y|X=\bm{x})
+	\end{equation*}
+	
+	为了刻画后验概率函数，我们需要$2^d$个参数，这意味着，所需样本的数量随着特征维数指数倍地增加。为了避免这个问题，需要假设给定标签时，各个特征相互独立，即：$p (X=\bm{x}|Y=y) = \prod_{i=1}^d p (X_i=x_i|Y=y)$。
+
+	结合贝叶斯公式，贝叶斯最优准则可以简化为：
+	
+	\begin{equation}
+	h_{\mathrm{Bayes}}(\bm{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y) \prod_{i=1}^d p (X_i=x_i|Y=y)
+	\end{equation}
+其中待估计的参数为$2d + 1$个。我们使用极大似然法估计这些参数，得到的分类器称为朴素贝叶斯分类器。
+
+\section{参数密度估计——极大似然法（Maximum Likelihood Estimation，MLE）}
+	
+	参数密度估计假设类条件概率的分布形式已知（当然，如果选取的分布与实际数据的真实分布相去甚远，则结果也是错的。因此，为了对数据分布做尽可能少的假设，非参数估计就大有用途。但是本章暂不讨论这部分），问题就在于估计分布的参数。给定一个独立同分布的训练集$S = (\bm{x}_1,\cdots,\bm{x}_m)$，$S$的似然可以由$\theta$表示，即$L(S;\theta) = \prod_{i=1}^m  p(\bm{x}_i;\theta)$。通常我们优化其对数形式，
+	\begin{equation}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta)
+	\end{equation}
+下面对于常见分布给出参数估计的例子。推导过程略显繁琐，结论却浅显且符合直觉。
+
+	\begin{itemize}
+	\item [\textbf{1}] 伯努利（Bernoulli）分布，最大似然估计结果等于样本均值，$\theta_{\mathrm{ML}}=\sum_{i=1}^m x_i/m$，
+	\vspace{1mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	伯努利分布刻画了0-1变量$x$的概率，$x=1$的概率记为$\theta$，$x=0$的概率为$1-\theta$，即$p(x;\theta)=\theta^x(1-\theta)^{(1-x)}$。对应的对数似然函数为
+	\begin{equation*}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(x_i;\theta) = \sum_{i=1}^m x_i\log \theta + (1-x_i)\log(1-\theta)
+	\end{equation*}
+对$\theta$求导并令导函数为0，可以得到：
+	\begin{equation*}
+	\frac{\partial \log L(S;\theta)}{\partial \theta} = \sum_{i=1}^m \frac{x_i}{\theta} - \frac{1-x_i}{1-\theta} = \sum_{i=1}^m \frac{x_i-\theta}{\theta(1-\theta)} = 0 \Longrightarrow	 \theta_{\mathrm{ML}}=\frac{1}{m}\sum_{i=1}^m x_i	
+	\end{equation*}
+	}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-4mm}
+	
+	\item [\textbf{2}] 多项式（Multinomial）分布，$\theta=\bm{\mu}$
+	
+	\vspace{1mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	多项式分布所刻画的随机变量有$d$个可能的值，用$d$维独热（one-hot，即有且仅有一个元素为1，其它为0）向量$\bm{x}$表示。记$x_j=1$的概率为$\mu_j$，则有
+	
+	\begin{equation*}
+	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j}\ \ \ \ \mathit{s.t.}\ \ \sum_{j=1}^d \mu_j=1,\ \forall j,\ \ \mu_j\geq 0
+	\end{equation*}
+
+	对应的对数似然函数为
+	\begin{equation*}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) = \sum_{i=1}^m \sum_{j=1}^d x_{ij} \log \mu_j
+	\end{equation*}
+使用拉格朗日乘子$\lambda$，最大化对数似然等价于最大化如下函数：$L' = \log L(S;\theta) + \lambda \left( \sum_{j=1}^d \mu_j - 1 \right) $。对$\mu_j$求导并令导函数为0，可以得到：
+	\begin{equation*}
+	\frac{\partial L'}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda = 0  \Longrightarrow	 \mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda
+	\end{equation*}
+注意到，$\sum_{j=1}^d \mu_j=-m/\lambda=1$，可以得到$\lambda=-m$。从而
+	\begin{equation*}
+	\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i
+	\end{equation*}
+	}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-4mm}
+	
+	\item [\textbf{3}] 高斯（Gaussian）分布，$\theta=(\bm{\mu},\bm{\Sigma})$
+	
+	高斯分布函数为$p(\bm{x}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right)$.
+	
+	The log likelihood function is given by
+	\begin{equation*}
+	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) 
+	= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
+	\end{equation*}
+	Set the derivative of the log likelihood with respect to $\bm{\mu}$ to be zero leading to $\bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i$.
+	
+	\begin{footnotesize}
+	\textit{\underline{remark1}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
+	\begin{itemize}
+	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
+	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
+	\item $\partial tr[\bm{A} \bm{B}]/\partial \bm{A} = \bm{B}^\top$; $\partial \log |\bm{A}|/\partial \bm{A} = (\bm{A}^{-1})^\top$; $\partial tr(\bm{A}\bm{X}^{-1}\bm{B})/\partial \bm{X} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
+	\end{itemize}
+	\end{footnotesize}
+
+	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
+	\begin{equation*}
+	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
+	\end{equation*}
+Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top/m $.
+	
+	\item [\textbf{4}] Exponential family
+	The exponential family is defined to be the set of distributions of the form
+	\begin{equation}
+	p(\bm{x}|\bm{\eta}) = h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \}
+	\end{equation}
+
+	\begin{footnotesize}
+	\textit{\underline{remark1}}: Bernoulli distribution is a member in this family,
+	\begin{equation*}
+	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \log \mu + (1-x) \log (1-\mu) \} = \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
+	\end{equation*}
+	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\log \frac{\mu}{1-\mu} $, and $A(\eta)=\log (1+\exp(\eta))$.
+
+	\textit{\underline{remark2}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
+	\begin{equation*}
+	\begin{split}
+	p(\bm{x}|\bm{\mu}) &= \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
+	&= \exp\left\{ \sum_{j=1}^{d-1} x_j \log \left( \frac{\mu_j}{1-\sum_{k=1}^{d-1} \mu_k} \right) +  \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\}
+	\end{split}
+	\end{equation*}
+	Define $\eta_j =  \log \frac{\mu_j}{1-\sum_{k=1}^d \mu_k}$, then $\mu_j = \frac{\exp\eta_j}{1+\sum_{k=1}^d \exp \eta_k}$, and $1-\sum_{j=1}^{d-1} \mu_j = 1-\frac{\sum_{j=1}^{d-1} \exp \eta_j}{1+\sum_{k=1}^d \exp \eta_k}=\frac{\exp \eta_{d}}{1+\sum_{k=1}^d \exp \eta_k}$. Compare with the general form shows that $h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^d \exp \eta_k)-\eta_d$.
+	
+	\textit{\underline{remark3}}: Gaussian distribution is a member in this family.
+	\begin{equation*}
+	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
+	\end{equation*}
+	Since $\bm{x}^\top \bm{\Sigma}^{-1} \bm{x} = tr [\bm{x}^\top \bm{\Sigma}^{-1} \bm{x}] = tr [\bm{\Sigma}^{-1} \bm{x} \bm{x}^\top ]$. Compare with the general form shows that $h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$.
+	\end{footnotesize}
+	
+	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution. The log likelihood function is given by
+	
+	\begin{equation*}
+	\sum_{i=1}^m \log h(\bm{x}_i) + \bm{\eta}^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
+	\end{equation*}
+Take derivative with regard to $\bm{\eta}$ leads to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m u(\bm{x}_i)/m$, which can be solved to obtain $\bm{\eta}_\mathrm{ML}$.
+	
+	Note that $\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} = 1$. Take derivatives of both sides with regard to $\bm{\eta}$, we have,
+	\begin{equation*}
+	\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} \left(\bm{u}(\bm{x}) - \frac{\partial A(\bm{\eta})}{\partial \eta} \right) = 0
+	\end{equation*}
+which leads to
+	\begin{equation}
+	\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \mathbb{E} [u(\bm{x})]
+	\end{equation}
+
+	Therefore, $\sum_i u(\bm{x}_i)$ is called the sufficient statistic. Also note that the covariance of $u(\bm{x})$ can be expressed in terms of the second derivatives $A(\bm{\eta})$, and similarly for higher order moments. Thus, provided we can normalize a distribution from the exponential family, we can always find its moments by simple differentiation.
+	\end{itemize}
+
+\section{从MLE到贝叶斯推理}
+
+	Intuitively, MLE can give severely over-fitted results for small data sets. Formally, given a parameter $\bm{\theta}$ and an observation $\bm{x}$, define the empirical loss of $\bm{\theta}$ on $\bm{x}$ as the negative logarithm of its probability
+	
+	\begin{equation*}
+	l(\bm{\theta},\bm{x}) = -\log \mathcal{P}_{\bm{\theta}}(\bm{x})
+	\end{equation*}
+Hence, MLE is equivalent to ERM, \textit{i.e.},
+	
+	\begin{equation*}
+	\arg\min_{\bm{\theta}} \sum_{i=1}^m -\log \mathcal{P}_{\bm{\theta}}(\bm{x}_i) = \arg\max_{\bm{\theta}} \sum_{i=1}^m \log \mathcal{P}_{\bm{\theta}}(\bm{x}_i)
+	\end{equation*}
+	
+	However, the true risk of $\bm{\theta}$ according to the underlying distribution $\mathcal{P}$ is
+	
+	\begin{equation*}
+	\mathbb{E}[l(\bm{\theta}, \bm{x})] =	-\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \mathcal{P}_{\bm{\theta}}(\bm{x}) = 
+	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \left( \frac{\mathcal{P}(\bm{x})}{\mathcal{P}_{\bm{\theta}}(\bm{x})} \right) +
+	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} \geq  \sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} 
+	\end{equation*}
+in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of known variance, 
+
+	\begin{equation*}
+\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] =
+\mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}  \log \left( \frac{\mathcal{P}_{\bm{\mu}}(\bm{x})}{\mathcal{P}_{\bm{\mu}_{\mathrm{ML}}}(\bm{x})}\right)
+	= \frac{1}{2} (\bm{\mu}_{\mathrm{ML}}-\bm{\mu})^\top \bm{\Sigma}^{-1}(\bm{\mu}_{\mathrm{ML}}-\bm{\mu})
+	\end{equation*}
+from which we can know that the difference of the true risk with the minimal loss is bounded.
+
+	Also, we want to know the worst case that MLE may achieve. Consider a Bernoulli random variable with parameter $\mu$, assume that it is nonzero but very small. Then, the probability that no element of a sample of size $m$ will be 1 is $(1-\mu)^m\geq e^{-2m\mu}$. And in that case, $\mu_{\mathrm{ML}}=0$. But the true risk is $\mathbb{E}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\mu l(\bm{\mu}_{\mathrm{ML}}, 1) + (1-\mu) l(\bm{\mu}_{\mathrm{ML}}, 0) = \theta \log (1/\mu_{\mathrm{ML}}) = \infty$.
+	
+	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. \textbf{We expect that the posterior distribution will have the same functional form as the prior.} This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
+	
+	\begin{itemize}
+	\item [\textbf{1}] Beta distribution for Bernoulli distribution
+	
+	Recall that the likelihood of Bernoulli distribution is proportional to $\mu^x (1-\mu)^{1-x}$,	we choose a prior to be proportional to powers of $\mu$ and $1-\mu$, then the posterior distribution, which is proportional to the product of the prior and the likelihood function, will have the same functional form as the prior.
+	
+	The Beta distribution 
+	\begin{equation}
+	\mathrm{Beta}(\mu|a,b)=\frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}\mu^{a-1}(1-\mu)^{b-1}
+	\end{equation}
+meets the requirement. Note that the gamma functions $\Gamma(x)=\int^\infty_0 t^{x-1} e^{-t} \mathrm{d} t$ are used to ensure the Beta distribution is normalized, so that $\int_0^1 \mathrm{Beta}(\mu;a,b)\mathrm{d}\mu = 1$.
+	
+	Given the observed sequence $S$, 
+	\begin{equation*}
+	p(\mu|S) \propto p(S|\mu) \mathrm{Beta}(\mu|a,b) = \mu^{a+\sum_{i=1}^m x_i-1}(1-\mu)^{m-\sum_{i=1}^m x_i + b-1}
+	\end{equation*}
+To ensure that it is normalized, the posterior must be $\mathrm{Beta}(a+\sum_{i=1}^m x_i, b+m-\sum_{i=1}^m x_i)$.
+
+	Using the mean of the Beta distribution $\mathbb{E}(\mu)=\frac{a}{a+b}$, the estimated probability of a new event $x_i=1$ is given by the mean of posterior, which
+	
+	\begin{equation*}
+	p(x=1|S)=\int^1_0 p(x=1|\mu)p(\mu|S) \mathrm{d}\mu = \int^1_0 \mu p(\mu|S) \mathrm{d}\mu = \mathbb{E}(\mu|S) = \frac{a+\sum_{i=1}^m x_i}{b+m}
+	\end{equation*}
+Note that as the training sequence $S$ become infinitely large, $m\rightarrow\infty$, the result convergences to $\frac{\sum_{i=1}^m x_i}{m}$, which is the same as MLE.
+	
+	\item [\textbf{2}] Dirichlet distribution for multinomial distribution
+
+	By inspection of the form of the multinomial distribution, the conjugate prior is given by $p(\bm{\mu}|\bm{\alpha})\propto \prod_{j=1}^d \mu_j^{\alpha_j-1}$, where $0\leq\mu_k\leq 1$. Its normalized form is (in which $\alpha_0=\sum_{j=1}^d \alpha_j$):
+	
+	\begin{equation*}
+	\mathrm{Dir} (\bm{\mu}|\bm{\alpha}) = \frac{\Gamma(\alpha_0)}{\Gamma(\alpha_1)\cdots\Gamma(\alpha_d)}  \prod_{j=1}^d \mu_j^{\alpha_j-1}
+	\end{equation*}
+	
+	Given the observed sequence $S$, 
+	\begin{equation*}
+	p(\bm{\mu}|S) \propto p(S|\bm{\mu}) \mathrm{Dir} (\bm{\mu}|\bm{\alpha}) =\prod_{i=1}^m \prod_{j=1}^d \mu_j^{x_{ij}} \prod_{j=1}^d \mu_j^{\alpha_j-1} =  \prod_{j=1}^d \mu_j^{m_j+\alpha_j-1}
+	\end{equation*}
+in which we denote $m_j=\sum_{i=1}^m x_{ij}$. The normalized form of the posterior is then given by $\mathrm{Dir}(\bm{\mu}|\bm{\alpha}+\bm{m})$.
+	
+	\item [\textbf{3}] Gaussian distribution
+
+	There are two parameters to be estimated in Gaussian distribution, the mean vector and the covariance matrix. So there are three cases
+	
+	\begin{itemize}
+	\item [\textbf{a}] Known covariance, unknown mean.
+	The conjugate prior is another Gaussian distribution $p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)=\mathcal{N}(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)$. The posterior is given by
+	\begin{equation*}
+	\begin{split}
+	& \log p(\bm{\mu}|S) \propto \log p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0) + \log p(S|\bm{\mu}) \\
+	&= -\frac{1}{2} \sum_{i=1}^m  (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) -\frac{1}{2}(\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1} (\bm{\mu}-\bm{\mu}_0) \\
+	&= -\frac{1}{2} \left[ \bm{\mu}^\top (m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}) \bm{\mu} - 2 \bm{\mu}^\top \left(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0\right) + \bm{\mu}_0^\top \bm{\Sigma}_0^{-1} \bm{\mu}_0 + \sum_{i=1}^m \bm{x}_i^\top \bm{\Sigma}^{-1} \bm{x}_i\right]
+	\end{split}
+	\end{equation*}
+	
+	Its normalized form is $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$, in which $\bm{\Sigma}_1^{-1}=m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}$ and $\bm{\mu}_1=\bm{\Sigma}_1(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0)$.
+
+	\item [\textbf{b}] Known mean, unknown covariance. \textbf{For 1d case}, denote $\lambda=1/\sigma^2$, the corresponding conjugate prior should therefore be proportional to the product of a power of $\lambda$ and the exponential of a linear function of $\lambda$. This corresponds to the gamma distribution which is defined by
+	\begin{equation*}
+	\mathrm{Gam}(\lambda|a,b) = \frac{1}{\Gamma(a)} b^a \lambda^{a-1} \exp(-b\lambda)
+	\end{equation*}
+	The posterior is given by
+	\begin{equation*}
+	p(\lambda|S)\propto \lambda^{a_0-1} \lambda^{N/2} \exp \left\{-b_0 \lambda - \frac{\lambda}{2}\sum^{i=1}_m (x_i-\mu)^2\right\}
+	\end{equation*}
+	
+	\textbf{For multi-variate} case, the corresponding prior is Wishart distribution,
+	
+	\begin{equation*}
+	\mathrm{Wishart}(\bm{\Sigma}|\bm{W},v)=B|\bm{\Sigma}|^{(v-d-1)/2} \exp \left(-\frac{1}{2} \mathrm{Tr} (\bm{W}^{-1}\bm{\Sigma})\right)
+	\end{equation*}
+	
+	\item [\textbf{c}] Unknown mean and covariance. The corresponding prior is Gaussian-Gamma distribution or Gaussian-Wishart distribution. We do not expand them here.
+	
+	\end{itemize}		
+	
+	\item [\textbf{4}] Exponential distribution
+	\end{itemize}
+	
+\section{局部观测数据的极大似然——最大化期望（Expectation Maximization，EM）}
+	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
+	\begin{equation*}
+	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(\bm{x}_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
+	\end{equation*}
+	The maximum-likelihood estimator is therefore the solution of the maximization problem:
+	\begin{equation}
+	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
+	\end{equation}
+	
+	In the E-step, we use the current parameter values $\theta^{\mathrm{old}}$ to find the posterior distribution of the latent variables given by $p(\bm{Y}|\bm{X}, \theta^{\mathrm{old}})$. We then use this posterior distribution to find the expectation of the complete-data log likelihood evaluated for some general parameter value $\theta$. This expectation, denoted , is given by
+	
+	\subsection{EM算法求解高斯混合模型（Gaussian Mixture Model，GMM）}
+	
+	GMM (Gaussian mixture models) is a typical example, with parameters comprising the means and covariances of the components and the mixing coefficients. Its log-likelihood function (plus a Lagrange multiplier) is given by
+	\begin{equation*}
+	\sum_{i=1}^m \log \sum_{j=1}^k \pi_j \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) + \lambda \left(\sum_{j=1}^k \pi_j - 1\right)
+	\end{equation*}
+	Take derivatives with regard to $\bm{\mu}_k$ and set it to zero
+	
+	\begin{equation}
+	\label{eq:GMM_mu}
+	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{z_{ij}} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j) \Longrightarrow \bm{\mu}_j=\frac{\sum_{i=1}^m z_{ij} \bm{x}_i}{\sum_{i=1}^m z_{ij}}
+	\end{equation}
+in which $z_{ij}=p(y_j=1|\bm{x}_i)$ is the posterior probability. Similarly,
+	\begin{equation}
+	\label{eq:GMM_sigma}
+	\bm{\Sigma}_j=\frac{\sum_{i=1}^m z_{ij} (\bm{x}_i-\bm{\mu}_j)(\bm{x}_i-\bm{\mu}_j)^\top}{\sum_{i=1}^m z_{ij}}
+	\end{equation}
+	Then, take derivatives with regard to each $\pi_j$ and set it to zero
+	\begin{equation*}
+	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda \Longrightarrow \pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}
+	\end{equation*}
+With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -m/\lambda=1$, then $\lambda=-m$, and hence
+
+	\begin{equation}
+	\label{eq:GMM_pi}
+	\pi_j=\frac{\sum_{i=1}^m z_{ij}}{m}
+	\end{equation}
+	
+	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$, hence we must do it in an iterative way, which is the EM algorithm for GMM:
+	
+	
+	\begin{minipage}{.9\linewidth}
+    \begin{itemize}
+	\item fix $k$, the number of Gaussian components;
+	\item initialize: $\forall j=1,\cdots,k, z_{ij}=\frac{1}{k},$ and $\pi_j=\frac{1}{k}$;
+	\item M-step, solve $\bm{\mu}, \bm{\Sigma}$ according to \textit{Eq.}\ref{eq:GMM_mu} and \textit{Eq.}\ref{eq:GMM_sigma};
+	\item E-step, solve $z_{ij},\pi_i$ according to \textit{Eq.}\ref{eq:GMM_pi}.
+	\item Repeat E-M step until convergence.
+	\end{itemize}
+  	\end{minipage}
+
+		
+\section{与判别式模型的比较}
+	\label{sec:final}
+	In generative approaches, it is assumed that the underlying distribution over the data has a specific parametric form and the goal is to estimate the parameters of the model. But in discriminative approaches, the goal is rather to learn an accurate predictor directly. 
+	
+	Of course, if we succeed in learning the underlying distribution accurately, prediction from the Bayes optimal classifier is reliable. The problem is that, it is usually more difficult to learn the underlying distribution than to learn an accurate predictor. This was phrased by Vladimir Vapnik:
+	\begin{center}
+	\textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
+	\end{center}
+
+	However, in some situations, it is reasonable to adopt the generative models. Sometimes it is easier (computationally) to estimate the parameters of the model than to learn a discriminative predictor. Additionally, in some cases we do not have a specific task at hand but rather would like to use the data at a later time.
+	
+	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in reality. The intuition behind this approach follows a famous quote from Richard Feynman:	
+	\begin{center}
+	\textit{"What I cannot create, I do not understand."}
+	\end{center}
+
+	\subsection{Naive Bayes to linear discriminant models}
+	The usual assumption in Naive Bayes classifier is that each conditional probability $p(X=\bm{x}|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the two conditional distribution as $\mathcal{N}(\bm{\mu}_0,\bm{\Sigma}_0)$, $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$, we will predict $h_{\mathrm{Bayes}}(\bm{x})=1$ iff.
+	
+	\begin{equation*}
+	\begin{split}
+	&\frac{p(Y=0) p(X=\bm{x}|Y=0)}{p(Y=1) p(X=\bm{x}|Y=1)} > 1 \\
+	\iff &\log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\bm{x}|Y=0) - \log p(X=\bm{x}|Y=1) > 0 \\
+	\iff &\bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + 2 (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 + \log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + 2\log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
+	\end{split}
+	\end{equation*}
+which is a quadratic discriminant function. Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=2(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0+ 2\log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
+	
+\section{Exercises and solutions}
+\begin{itemize}
+\item[Ex1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_{ij}=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
+
+	\begin{minipage}{.9\linewidth}
+    \begin{itemize}
+	\item[•] fix $k$, the number of clusters;
+	\item[•] randomly choose initial clustering centers $\bm{\mu}^0_1,\cdots,\bm{\mu}^0_k$
+	\item[•] loop from $t=0$ to $max\_iter$
+	\item[•] 1. $\forall i\in \{1,\cdots,m\}$, determine $j=\arg\min_{j} d(\bm{x}_i, \bm{\mu}_j^t)$ and set $z_{ij}^t=1$;
+	\item[•] 2. $\forall j\in \{1,\cdots,k\}$, update $\bm{\mu}_j^{t+1} = \frac{\sum_{i=1}^m \bm{x}_i z^t_{ij}}{\sum_{i=1}^m z^t_{ij}} $;
+	\end{itemize}
+  	\end{minipage}
+
+in which $d(\cdot,\cdot)$ can be arbitrary distance function. Note that the step 1. corresponds to M-step of GMM, and step 2 corresponds to E-step. For GMM, the objective is to maximize likelihood, and for k-means, the objective can be viewed as minimizing the sum of in-cluster distance (if we choose the distance to be Euclidean distance, the loss is also called Sum of in-cluster Square Error, \textit{a.k.a.}, SSE):
+	\begin{equation*}
+	C = \min_{\bm{\mu}_1,\cdots,\bm{\mu}_k} \sum_{j=1}^k \sum_{i=1, z_{ij}=1}^m d(\bm{x}_i, \bm{\mu}_j)
+	\end{equation*}
+Now, prove that: each iteration of the k-means algorithm does not increase the objective.
+
+\item[] \textbf{Solution}: According to the iteration, 
+	
+	\begin{equation*}
+	C^t = \sum_{j=1}^k \sum_{i=1, z^t_{ij}=1}^m d(\bm{x}_i, \bm{\mu}^{t+1}_j) \leq \sum_{j=1}^k \sum_{i=1, z^t_{ij}=1}^m d(\bm{x}_i, \bm{\mu}^t_j)  \leq \sum_{j=1}^k \sum_{i=1, z^{t-1}_{ij}=1}^m d(\bm{x}_i, \bm{\mu}^t_j) = C^{t-1}
+	\end{equation*}
+
+\item[Ex2] \textbf{Simplex of Dirichlet distribution} Because of the summation constraint, the distribution over the space of the $\{\mu_j\}$ is confined to a simplex of dimensionality $d-1$.
+
+\item[Ex3] \textbf{Sequential estimation} (see \textit{PRML Chapter 2.3.5}).
+
+\item[Ex4] \textbf{Sequential estimation under the perspective of Bayesian reasoning} (see \textit{PRML Chapter 2.3.5}).
+
+\item[Ex5] \textbf{Unbiased estimation} (UML Ex24.1) $\theta_{\mathrm{ML}}$, in intrinsic, is a function of observed random variables, and hence has its expectation. If the expectation of an estimation is exactly the parameter in theory, we say that the estimation is unbiased. In the case of exponential family, 
+	\begin{equation*} 
+	\mathbb{E} (\mu_\mathrm{ML}) = \mathbb{E} \left(\frac{\sum_{i=1}^m x_i}{m}\right) =  \sum_{i=1}^m  \frac{\mathbb{E}(x_i)}{m} = \mathbb{E}(x) = \mu
+	\end{equation*}
+Hence, we say that the MLE for mean parameter is unbiased. Now, prove that the maximum likelihood estimator of the variance of a Gaussian variable is biased.
+
+\item[] \textbf{Solution}:
+	\begin{equation*}
+	\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \sum_{i=1}^m  \frac{\mathbb{E}((\bm{x}_i - \bm{\mu}_\mathrm{ML})(\bm{x}_i - \bm{\mu}_\mathrm{ML})^\top)}{m}
+	= \sum_{i=1}^m  \frac{\mathbb{E}(\bm{x}_i \bm{x}_i^\top) + \mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) - 2\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top)}{m}
+	\end{equation*}
+	Consider each term in the numerator, note that each pair of samples is independent,
+	\begin{scriptsize}
+	\begin{equation*}
+	\begin{split}
+	&\mathbb{E}(\bm{x}_i \bm{x}_i^\top) = \bm{\Sigma} + \bm{\mu}\bm{\mu}^\top  \\
+	&\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{\mu}_\mathrm{ML}^\top) = 
+	\frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m \bm{x}_i \bm{x}_j^\top\right)
+	= \frac{1}{m^2} \mathbb{E}\left(\sum_{i=1}^m \sum_{j=1}^m (\bm{x}_i-\bm{\mu}) (\bm{x}_j-\bm{\mu})^\top + 2\bm{\mu} \sum_{i=1}^m (\bm{x}_i-\bm{\mu})^\top + \sum_{i=1}^m\sum_{j=1}^m \bm{\mu}\bm{\mu}^\top \right) 
+	= \frac{\bm{\Sigma}}{m} + \bm{\mu}\bm{\mu}^\top \\
+	&\mathbb{E}(\bm{\mu}_\mathrm{ML} \bm{x}_i^\top) =  \mathbb{E} \left(\frac{1}{m}\sum_{j=1}^m \bm{x}_j \bm{x}_i^\top \right)
+	= \frac{1}{m} \mathbb{E} \left(\sum_{j=1}^m (\bm{x}_j-\bm{\mu})(\bm{x}_i-\bm{\mu})^\top + 2\bm{\mu}\sum_{j=1}^m (\bm{x}_j-\bm{\mu})^\top + \sum_{j=1}^m \bm{\mu} \bm{\mu}^\top\right) = \frac{\bm{\Sigma}}{m} + \bm{\mu} \bm{\mu}^\top
+	\end{split}
+	\end{equation*}
+	\end{scriptsize}
+Hence, $\mathbb{E} (\bm{\Sigma}_\mathrm{ML}) = \frac{m-1}{m} \bm{\Sigma}$ which is biased.
+
+\item[Ex6] \textbf{The connection between smoothing and regularized MLE} (UML Ex24.2)  Consider the following regularized
+loss minimization for parameter estimation in the case of Bernoulli distribution:
+	\begin{equation*}
+	\min \frac{1}{m}\sum_{i=1}^m -\log \mathcal{P}_{\bm{\mu}}(\bm{x}_i) + \frac{1}{m} (\log(1/\mu)+\log(1/(1-\mu)))
+	\end{equation*}
+	
+	\begin{itemize}
+	\item[6.1] Show that the preceding objective is equivalent to the usual empirical error had we added two pseudo-examples to the training set.
+	\item[6.2] Derive a high probability bound on $|\mu'-\mu|$, and use this to bound the true risk.  
+	\end{itemize}
+
+\item[] \textbf{Solution}:
+	\begin{itemize}
+	\item[6.1] The regularized loss can be written as 
+	\begin{equation*}
+	-\frac{1}{m}\sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu) - \frac{1}{m} (\log( \mu)+\log(1- \mu))
+	\end{equation*}
+Take derivatives with regard to $\mu$ and set it to zero leads to $\mu'=\frac{1+\sum_{i=1}^m x_i}{m+2}$. It's equivalent to adding two pseudo-examples $\{0,1\}$ into the training set, which is called 'add-1' smoothing.
+	\item[6.2] Using triangle inequality,
+	\begin{equation*}
+	|\mu'-\mu| = |\mu'-\mathbb{E}(\mu')+\mathbb{E}(\mu')-\mu| \leq |\mu'-\mathbb{E}(\mu')| + |\mathbb{E}(\mu')-\mu|
+	\end{equation*}
+
+	Since $\mathbb{E}(\mu')=\frac{1+m\mu}{m+2}$, we have that $|\mathbb{E}(\mu')-\mu|\leq \frac{1}{m+2}$, and $|\mu'-\mathbb{E}(\mu')|=\frac{m}{m+2}|\frac{1}{m}\sum_{i=1}^m x_i -\mu|$. Following Hoeffding's inequality, for any $\epsilon>0$, 
+	
+	\begin{equation*}
+	P\left(|\mu'-\mu|\geq \frac{1}{m+2} +\epsilon \right) \leq 2\exp\left( -2m\epsilon^2 \right)
+	\end{equation*}
+	
+	\end{itemize}
+
+
+\end{itemize}
+\textit{
+	Chapter 4. Linear models for classification and regression, penalization \\
+	  Chapter 5. Decision stumps, ensemble learning, Bayes PAC \\
+      Chapter 6. Perceptron, MLP, deep learning, Generalization bounds on deep learning.}
+
+\end{document}
