@@ -84,7 +84,7 @@
 	\end{scriptsize}
 	\vspace{-4mm}
 	
-	\item [\textbf{2}] 多项式（Multinomial）分布，$\theta=\bm{\mu}$
+	\item [\textbf{2}] 多项式（Multinomial）分布，参数$\theta=\bm{\mu}$的最大似然估计结果等于样本均值，$\bm{\mu}_{\mathrm{ML}}=\sum_{i=1}^m \bm{x}_i/m$，
 	
 	\vspace{1mm}
 	\begin{scriptsize}
@@ -113,46 +113,61 @@
 	\end{scriptsize}
 	\vspace{-4mm}
 	
-	\item [\textbf{3}] 高斯（Gaussian）分布，$\theta=(\bm{\mu},\bm{\Sigma})$
+	\item [\textbf{3}] 高斯（Gaussian）分布，参数$\theta=(\bm{\mu},\bm{\Sigma})$，最大似然估计分别为样本均值与方差。
+	\vspace{1mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	高斯分布函数为
+	\begin{equation*}
+	p(\bm{x}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left\{ -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right\}
+	\end{equation*}
 	
-	高斯分布函数为$p(\bm{x}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} (\bm{x} - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x} - \bm{\mu})\right)$.
-	
-	The log likelihood function is given by
+	对应的对数似然函数为
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) 
 	= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
-	Set the derivative of the log likelihood with respect to $\bm{\mu}$ to be zero leading to $\bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i$.
+	对$\bm{\mu}$求导并令导函数为0，可以得到
+	\begin{equation*}
+	\bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i
+	\end{equation*}
 	
-	\begin{footnotesize}
-	\textit{\underline{remark1}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
+	对$\bm{\Sigma}$求导并令导函数为0，可以得到（此处不严格证明$\bm{\Sigma}$为对称阵）：
+	\begin{equation*}
+	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} \Rightarrow \bm{\Sigma}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top
+	\end{equation*}
+	\textit{\underline{注1}}：估计$\bm{\Sigma}$需要用到以下代数和分析的性质：	
 	\begin{itemize}
-	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
-	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
+	\item $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$；
+	\item $\bm{x}^\top \bm{A} \bm{x}$是标量，它的迹是它本身，因此$\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$；
 	\item $\partial tr[\bm{A} \bm{B}]/\partial \bm{A} = \bm{B}^\top$; $\partial \log |\bm{A}|/\partial \bm{A} = (\bm{A}^{-1})^\top$; $\partial tr(\bm{A}\bm{X}^{-1}\bm{B})/\partial \bm{X} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
 	\end{itemize}
-	\end{footnotesize}
-
-	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
-	\begin{equation*}
-	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
-	\end{equation*}
-Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top/m $.
+	}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}
 	
-	\item [\textbf{4}] Exponential family
-	The exponential family is defined to be the set of distributions of the form
+	\item [\textbf{4}] 指数分布族（Exponential family）
+	
+	上述例子都是指数分布族的特例。满足如下形式的分布均属于指数分布族：
 	\begin{equation}
 	p(\bm{x}|\bm{\eta}) = h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \}
 	\end{equation}
 
-	\begin{footnotesize}
-	\textit{\underline{remark1}}: Bernoulli distribution is a member in this family,
+	\vspace{1mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	\textit{\underline{注2}}：伯努利分布。
 	\begin{equation*}
-	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \log \mu + (1-x) \log (1-\mu) \} = \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
+	p(x|\mu) = \mu^x(1-\mu)^{1-x} 
+	= \exp \left\{ x \log \mu + (1-x) \log (1-\mu) \right\}
+	= \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
 	\end{equation*}
-	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\log \frac{\mu}{1-\mu} $, and $A(\eta)=\log (1+\exp(\eta))$.
+对比可得：$h(x)=1$，$u(x)=x$，$\eta=\log \frac{\mu}{1-\mu} $，$A(\eta)=\log (1+\exp(\eta))$。
 
-	\textit{\underline{remark2}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
+	\textit{\underline{注3}}：多项式分布。注意到，由于$\sum_{j=1}^d \mu_d = 1$，多项式分布事实上有$d-1$个参数，
 	\begin{equation*}
 	\begin{split}
 	p(\bm{x}|\bm{\mu}) &= \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
@@ -166,8 +181,10 @@ Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directl
 	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
 	\end{equation*}
 	Since $\bm{x}^\top \bm{\Sigma}^{-1} \bm{x} = tr [\bm{x}^\top \bm{\Sigma}^{-1} \bm{x}] = tr [\bm{\Sigma}^{-1} \bm{x} \bm{x}^\top ]$. Compare with the general form shows that $h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$.
-	\end{footnotesize}
-	
+	}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}	
 	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution. The log likelihood function is given by
 	
 	\begin{equation*}
