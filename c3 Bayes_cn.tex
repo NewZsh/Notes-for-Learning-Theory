@@ -137,7 +137,7 @@
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} \Rightarrow \bm{\Sigma}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top
 	\end{equation*}
-	\textit{\underline{注1}}：估计$\bm{\Sigma}$需要用到以下代数和分析的性质：	
+	\textit{\underline{注1}}：估计$\bm{\Sigma}$需要用到以下性质：	
 	\begin{itemize}
 	\item $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$；
 	\item $\bm{x}^\top \bm{A} \bm{x}$是标量，它的迹是它本身，因此$\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$；
@@ -148,97 +148,80 @@
 	\end{scriptsize}
 	\vspace{-2mm}
 	
-	\item [\textbf{4}] 指数分布族（Exponential family）
+	\item [\textbf{4}] 指数分布族（Exponential family）的极大似然估计结果由特征函数的均值给出。
 	
 	上述例子都是指数分布族的特例。满足如下形式的分布均属于指数分布族：
 	\begin{equation}
 	p(\bm{x}|\bm{\eta}) = h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \}
 	\end{equation}
 
-	\vspace{1mm}
 	\begin{scriptsize}
 	\begin{spacing}{1.2}
 	{\sffamily
-	\textit{\underline{注2}}：伯努利分布。
-	\begin{equation*}
-	p(x|\mu) = \mu^x(1-\mu)^{1-x} 
-	= \exp \left\{ x \log \mu + (1-x) \log (1-\mu) \right\}
-	= \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
-	\end{equation*}
-对比可得：$h(x)=1$，$u(x)=x$，$\eta=\log \frac{\mu}{1-\mu} $，$A(\eta)=\log (1+\exp(\eta))$。
 
-	\textit{\underline{注3}}：多项式分布。注意到，由于$\sum_{j=1}^d \mu_d = 1$，多项式分布事实上有$d-1$个参数，
+	对数似然函数为：
+	
+	\begin{equation*}
+	\log L(S;\theta) = \sum_{i=1}^m \log h(\bm{x}_i) + \bm{\eta}^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
+	\end{equation*}
+对$\bm{\eta}$求导并令导函数为0，得到$\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m u(\bm{x}_i)/m$。结合下面的注，在具体分布中，求得配分函数$A(\bm{\eta})$和特征函数$u(\bm{x})$，即可得到对应的$\bm{\eta}_\mathrm{ML}$。
+	
+	此外，利用分布函数积分为1的性质进行求导，可以得到：
+	\begin{equation*}
+	\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} \left(\bm{u}(\bm{x}) - \frac{\partial A(\bm{\eta})}{\partial \eta} \right) = 0  \Rightarrow \frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \mathbb{E} [u(\bm{x})]
+	\end{equation*}
+
+因此，$\sum_i u(\bm{x}_i)$称为充分统计量。此外，$u(\bm{x})$的方差可以通过$A(\bm{\eta})$二阶导表示，其它高阶统计矩亦然。事实上，对于指数分布族，只要我们找到配分函数对其归一化，就能通过微分计算其统计矩。
+	
+	\textit{\underline{注2}}：伯努利分布：$p(x|\theta) = \theta^x(1-\theta)^{1-x} 
+	= \exp\left\{ \log \left( \frac{\theta}{1-\theta}\right) x + \log(1-\theta)\right\}$，对比可得：
+	$h(x)=1$，$u(x)=x$，$\eta=\log \frac{\theta}{1-\theta} $，$A(\eta)=\log (1+\exp(\eta))$。
+
+	\textit{\underline{注3}}：多项式分布：注意到，由于$\sum_{j=1}^d \mu_d = 1$，多项式分布事实上有$d-1$个参数，
 	\begin{equation*}
 	\begin{split}
 	p(\bm{x}|\bm{\mu}) &= \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
 	&= \exp\left\{ \sum_{j=1}^{d-1} x_j \log \left( \frac{\mu_j}{1-\sum_{k=1}^{d-1} \mu_k} \right) +  \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\}
 	\end{split}
 	\end{equation*}
-	Define $\eta_j =  \log \frac{\mu_j}{1-\sum_{k=1}^d \mu_k}$, then $\mu_j = \frac{\exp\eta_j}{1+\sum_{k=1}^d \exp \eta_k}$, and $1-\sum_{j=1}^{d-1} \mu_j = 1-\frac{\sum_{j=1}^{d-1} \exp \eta_j}{1+\sum_{k=1}^d \exp \eta_k}=\frac{\exp \eta_{d}}{1+\sum_{k=1}^d \exp \eta_k}$. Compare with the general form shows that $h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^d \exp \eta_k)-\eta_d$.
+令$\eta_j =  \log \left(\mu_j/(1-\sum_{k=1}^{d-1} \mu_k)\right)$，则有$\mu_j = \left(\exp\eta_j / (1+\sum_{k=1}^{d-1} \exp \eta_k)\right)$，且$1-\sum_{j=1}^{d-1} \mu_j =\left(1 / (1+\sum_{k=1}^{d-1} \exp \eta_k)\right)$。对比可得：$h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^{d-1} \exp \eta_k)$.
 	
-	\textit{\underline{remark3}}: Gaussian distribution is a member in this family.
-	\begin{equation*}
-	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
-	\end{equation*}
-	Since $\bm{x}^\top \bm{\Sigma}^{-1} \bm{x} = tr [\bm{x}^\top \bm{\Sigma}^{-1} \bm{x}] = tr [\bm{\Sigma}^{-1} \bm{x} \bm{x}^\top ]$. Compare with the general form shows that $h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$.
+	\textit{\underline{注4}}：高斯分布：对比可得$h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$。
 	}
 	\end{spacing}
 	\end{scriptsize}
-	\vspace{-2mm}	
-	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution. The log likelihood function is given by
-	
-	\begin{equation*}
-	\sum_{i=1}^m \log h(\bm{x}_i) + \bm{\eta}^\top \sum_{i=1}^m u(\bm{x}_i) - \sum_{i=1}^m A(\bm{\eta})
-	\end{equation*}
-Take derivative with regard to $\bm{\eta}$ leads to $\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \sum_{i=1}^m u(\bm{x}_i)/m$, which can be solved to obtain $\bm{\eta}_\mathrm{ML}$.
-	
-	Note that $\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} = 1$. Take derivatives of both sides with regard to $\bm{\eta}$, we have,
-	\begin{equation*}
-	\int  h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \} \left(\bm{u}(\bm{x}) - \frac{\partial A(\bm{\eta})}{\partial \eta} \right) = 0
-	\end{equation*}
-which leads to
-	\begin{equation}
-	\frac{\partial A(\bm{\eta})}{\partial \bm{\eta}} = \mathbb{E} [u(\bm{x})]
-	\end{equation}
-
-	Therefore, $\sum_i u(\bm{x}_i)$ is called the sufficient statistic. Also note that the covariance of $u(\bm{x})$ can be expressed in terms of the second derivatives $A(\bm{\eta})$, and similarly for higher order moments. Thus, provided we can normalize a distribution from the exponential family, we can always find its moments by simple differentiation.
+	\vspace{-2mm}
 	\end{itemize}
 
 \section{从MLE到贝叶斯推理}
 
-	Intuitively, MLE can give severely over-fitted results for small data sets. Formally, given a parameter $\bm{\theta}$ and an observation $\bm{x}$, define the empirical loss of $\bm{\theta}$ on $\bm{x}$ as the negative logarithm of its probability
+	从上述结果直观来看，MLE对小数据集容易过拟合。定义参数$\theta$关于样本$\bm{x}$的经验损失为负对数似然
 	
 	\begin{equation*}
-	l(\bm{\theta},\bm{x}) = -\log \mathcal{P}_{\bm{\theta}}(\bm{x})
+	l(\theta,\bm{x}) = -\log \mathcal{P}_{\theta}(\bm{x})
 	\end{equation*}
-Hence, MLE is equivalent to ERM, \textit{i.e.},
+则MLE等价于ERM。然而，根据真实分布$\mathcal{P}$，参数$\theta$的真实风险为：
 	
 	\begin{equation*}
-	\arg\min_{\bm{\theta}} \sum_{i=1}^m -\log \mathcal{P}_{\bm{\theta}}(\bm{x}_i) = \arg\max_{\bm{\theta}} \sum_{i=1}^m \log \mathcal{P}_{\bm{\theta}}(\bm{x}_i)
-	\end{equation*}
-	
-	However, the true risk of $\bm{\theta}$ according to the underlying distribution $\mathcal{P}$ is
-	
-	\begin{equation*}
-	\mathbb{E}[l(\bm{\theta}, \bm{x})] =	-\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \mathcal{P}_{\bm{\theta}}(\bm{x}) = 
-	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \left( \frac{\mathcal{P}(\bm{x})}{\mathcal{P}_{\bm{\theta}}(\bm{x})} \right) +
+	\mathbb{E}[l(\theta, \bm{x})] =	-\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \mathcal{P}_{\theta}(\bm{x}) = 
+	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \left( \frac{\mathcal{P}(\bm{x})}{\mathcal{P}_{\theta}(\bm{x})} \right) +
 	\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} \geq  \sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \frac{1}{\mathcal{P}(\bm{x})} 
 	\end{equation*}
-in which the equality holds \textit{iff.} $\mathcal{P}=\mathcal{P}_{\bm{\theta}}$. In some situations, it is easy to prove that MLE guarantees low true risk. For example, consider the problem of estimating the mean of a Gaussian variable of known variance, 
+等号成立当且仅当$\mathcal{P}=\mathcal{P}_{\theta}$。某些情况下，容易证明MLE可以达到较低的真实误差，例如，在已知高斯分布的方差情况下估计其均值，有
 
 	\begin{equation*}
 \mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}[l(\bm{\mu}_{\mathrm{ML}}, \bm{x})- l(\bm{\mu}, \bm{x})] =
 \mathop{\mathbb{E}}\limits_{\bm{x}\sim\mathcal{N}(\bm{\mu}, \bm{\Sigma})}  \log \left( \frac{\mathcal{P}_{\bm{\mu}}(\bm{x})}{\mathcal{P}_{\bm{\mu}_{\mathrm{ML}}}(\bm{x})}\right)
 	= \frac{1}{2} (\bm{\mu}_{\mathrm{ML}}-\bm{\mu})^\top \bm{\Sigma}^{-1}(\bm{\mu}_{\mathrm{ML}}-\bm{\mu})
 	\end{equation*}
-from which we can know that the difference of the true risk with the minimal loss is bounded.
+可以看到，MLE估计得到的参数与真实分布的风险之间的差距是有界的。
 
-	Also, we want to know the worst case that MLE may achieve. Consider a Bernoulli random variable with parameter $\mu$, assume that it is nonzero but very small. Then, the probability that no element of a sample of size $m$ will be 1 is $(1-\mu)^m\geq e^{-2m\mu}$. And in that case, $\mu_{\mathrm{ML}}=0$. But the true risk is $\mathbb{E}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\mu l(\bm{\mu}_{\mathrm{ML}}, 1) + (1-\mu) l(\bm{\mu}_{\mathrm{ML}}, 0) = \theta \log (1/\mu_{\mathrm{ML}}) = \infty$.
+	但是，另一方面，我们也想知道最坏的情况下MLE估计得到的参数真实风险如何。考虑服从伯努利分布的随机变量，假设参数$\theta$是一个较小的非零值。连续采样$m$个样本，取值都是0的概率为is $(1-\theta)^m\geq e^{-2m\theta}$。在这种情况下，$\theta_{\mathrm{ML}}=0$，其真实风险为$\mathbb{E}[l(\bm{\mu}_{\mathrm{ML}}, x)]=\theta \log l(\bm{\theta}_{\mathrm{ML}}, 1) + (1-\theta)  \log l(\bm{\theta}_{\mathrm{ML}}, 0) = \theta \log (1/\theta_{\mathrm{ML}}) = \infty$。
 	
-	To address this problem, we develop a Bayesian treatment, which introduce a prior distribution $p(\bm{\mu})$. \textbf{We expect that the posterior distribution will have the same functional form as the prior.} This is called \textbf{conjugacy}, and the prior is called \textbf{conjugate prior}.
+	为了解决这个问题，贝叶斯推理引入关于参数的先验分布$p(\theta)$。为了计算的简便，\textbf{通常希望后验分布与先验分布的函数形式相同}，称为\textbf{共轭性}，其先验称为\textbf{共轭先验}。
 	
 	\begin{itemize}
-	\item [\textbf{1}] Beta distribution for Bernoulli distribution
+	\item [\textbf{1}] 伯努利分布的共轭先验是Beta分布
 	
 	Recall that the likelihood of Bernoulli distribution is proportional to $\mu^x (1-\mu)^{1-x}$,	we choose a prior to be proportional to powers of $\mu$ and $1-\mu$, then the posterior distribution, which is proportional to the product of the prior and the likelihood function, will have the same functional form as the prior.
 	
