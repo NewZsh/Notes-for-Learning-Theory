@@ -42,13 +42,7 @@
 
 \section{朴素贝叶斯（Naive Bayes，NB）}
 
-	回顾贝叶斯最优准则（\textit{第1章，Ex6}）：
-	
-	\begin{equation*}
-	h_{\mathrm{Bayes}}(\bm{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y|X=\bm{x})
-	\end{equation*}
-	
-	为了刻画后验概率函数，我们需要$2^d$个参数，这意味着，所需样本的数量随着特征维数指数倍地增加。为了避免这个问题，需要假设给定标签时，各个特征相互独立，即：$p (X=\bm{x}|Y=y) = \prod_{i=1}^d p (X_i=x_i|Y=y)$。
+	回顾贝叶斯最优准则（\textit{第1章，Ex6}）：$	h_{\mathrm{Bayes}}(\bm{x}) = \arg\max\limits_{y\in\{0,1\}} p (Y=y|X=\bm{x})$。为了刻画后验概率函数，我们需要$2^d$个参数，这意味着，所需样本的数量随着特征维数指数倍地增加。为了避免这个问题，需要假设给定标签时，各个特征相互独立，即：$p (X=\bm{x}|Y=y) = \prod_{i=1}^d p (X_i=x_i|Y=y)$。
 
 	结合贝叶斯公式，贝叶斯最优准则可以简化为：
 	
@@ -104,14 +98,11 @@
 	\begin{equation*}
 	\frac{\partial L'}{\partial \mu_j} = \sum_{i=1}^m\frac{x_{ij}}{\mu_j} + \lambda = 0  \Longrightarrow	 \mu_{j,\mathrm{ML}} = -\sum_{i=1}^m x_{ij}/\lambda
 	\end{equation*}
-注意到，$\sum_{j=1}^d \mu_j=-m/\lambda=1$，可以得到$\lambda=-m$。从而
-	\begin{equation*}
-	\bm{\mu}_{\mathrm{ML}} = \frac{1}{m}\sum_{i=1}^m \bm{x}_i
-	\end{equation*}
+注意到，$\sum_{j=1}^d \mu_j=-m/\lambda=1$，可以得到$\lambda=-m$，从而得到结果。
 	}
 	\end{spacing}
 	\end{scriptsize}
-	\vspace{-4mm}
+	\vspace{-1mm}
 	
 	\item [\textbf{3}] 高斯（Gaussian）分布，参数$\theta=(\bm{\mu},\bm{\Sigma})$，最大似然估计分别为样本均值与方差。
 	\vspace{1mm}
@@ -128,10 +119,7 @@
 	\log L(S;\theta) = \sum_{i=1}^m \log p(\bm{x}_i;\theta) 
 	= \frac{-md}{2} \log (2\pi) - \frac{m}{2}\log |\bm{\Sigma}| - \frac{1}{2} \sum_{i=1}^m (\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})
 	\end{equation*}
-	对$\bm{\mu}$求导并令导函数为0，可以得到
-	\begin{equation*}
-	\bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i
-	\end{equation*}
+	对$\bm{\mu}$求导并令导函数为0，可以得到$\bm{\mu}_{\mathrm{ML}}= \sum_{i=1}^m \bm{x}_i/m$。
 	
 	对$\bm{\Sigma}$求导并令导函数为0，可以得到（此处不严格证明$\bm{\Sigma}$为对称阵）：
 	\begin{equation*}
@@ -139,8 +127,7 @@
 	\end{equation*}
 	\textit{\underline{注1}}：估计$\bm{\Sigma}$需要用到以下性质：	
 	\begin{itemize}
-	\item $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$；
-	\item $\bm{x}^\top \bm{A} \bm{x}$是标量，它的迹是它本身，因此$\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$；
+	\item $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$，标量的迹是它本身，因此$\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$；
 	\item $\partial tr[\bm{A} \bm{B}]/\partial \bm{A} = \bm{B}^\top$; $\partial \log |\bm{A}|/\partial \bm{A} = (\bm{A}^{-1})^\top$; $\partial tr(\bm{A}\bm{X}^{-1}\bm{B})/\partial \bm{X} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
 	\end{itemize}
 	}
@@ -195,12 +182,7 @@
 
 \section{从MLE到贝叶斯推理}
 
-	从上述结果直观来看，MLE对小数据集容易过拟合。定义参数$\theta$关于样本$\bm{x}$的经验损失为负对数似然
-	
-	\begin{equation*}
-	l(\theta,\bm{x}) = -\log \mathcal{P}_{\theta}(\bm{x})
-	\end{equation*}
-则MLE等价于ERM。然而，根据真实分布$\mathcal{P}$，参数$\theta$的真实风险为：
+	从上述结果直观来看，MLE对小数据集容易过拟合。定义参数$\theta$关于样本$\bm{x}$的经验损失为负对数似然$l(\theta,\bm{x}) = -\log \mathcal{P}_{\theta}(\bm{x})$，则MLE等价于ERM。根据真实分布$\mathcal{P}$，参数$\theta$的真实风险为：
 	
 	\begin{equation*}
 	\mathbb{E}[l(\theta, \bm{x})] =	-\sum_{\bm{x}} \mathcal{P}(\bm{x}) \log \mathcal{P}_{\theta}(\bm{x}) = 
@@ -227,7 +209,6 @@
 	\begin{scriptsize}
 	\begin{spacing}{1.2}
 	{\sffamily
-	选择先验通常观察似然函数的形式就可以得到（剩余的配分函数是为了保证先验分布归一化而已），后验分布也是通过保证其归一化得到的。
 	
 	已知服从伯努利分布的数据集的似然函数与$\mu^x (1-\mu)^{1-x}$成比例，因此先验分布应该与$\mu$和$1-\mu$的幂次成比例，才能保证先验与似然函数相乘之后，后验分布也与$\mu$和$1-\mu$的幂次成比例。Beta分布正好满足这一点。
 	
@@ -271,25 +252,18 @@
 	\end{scriptsize}
 	\vspace{-2mm}
 	
-	\item [\textbf{3}] Gaussian distribution
+	\item [\textbf{3}] 高斯分布
 
 	\vspace{1mm}
 	\begin{scriptsize}
 	\begin{spacing}{1.2}
 	{\sffamily
-	对于高斯分布，仅讨论已知方差估计期望的情况，期望的共轭先验也是高斯分布，
+	对于高斯分布，仅讨论一维空间中已知方差估计期望的情况，期望的共轭先验也是高斯分布$\mathcal{N}(\mu|\mu_0, \Sigma_0)$。其后验分布可以从对数形式给出：
 	\begin{equation*}
-	p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)=\mathcal{N}(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0)
+	\log p(\mu|S) \propto \mu^2 (m \sigma^{-1} + \sigma_0^{-1}) - 2 \mu \left(\sigma^{-1} \sum_{i=1}^m x_i + \sigma_0^{-1} \mu_0\right) + \frac{\mu_0^2}{\sigma_0} + \frac{ \sum_{i=1}^mx_i^2}{\sigma} 
+	\Longrightarrow \mathcal{N}\left(\frac{\sigma^2}{m\sigma_0^2+\sigma^2}\mu_0 + \frac{\sigma_0^2}{m\sigma_0^2+\sigma^2}\sum_{i=1}^m x_i, \frac{1}{m \sigma^{-1} + \sigma_0^{-1}}\right)
 	\end{equation*}
-其后验分布具有如下形式：
-	\begin{equation*}
-	\begin{split}
-	& \log p(\bm{\mu}|S) \propto \log p(\bm{\mu}|\bm{\mu}_0, \bm{\Sigma}_0) + \log p(S|\bm{\mu}) \\
-	&= -\frac{1}{2} \sum_{i=1}^m  (\bm{x}_i-\bm{\mu})^\top \bm{\Sigma}^{-1}  (\bm{x}_i-\bm{\mu}) -\frac{1}{2}(\bm{\mu}-\bm{\mu}_0)^\top \bm{\Sigma}_0^{-1} (\bm{\mu}-\bm{\mu}_0) \\
-	&= -\frac{1}{2} \left[ \bm{\mu}^\top (m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}) \bm{\mu} - 2 \bm{\mu}^\top \left(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0\right) + \bm{\mu}_0^\top \bm{\Sigma}_0^{-1} \bm{\mu}_0 + \sum_{i=1}^m \bm{x}_i^\top \bm{\Sigma}^{-1} \bm{x}_i\right]
-	\end{split}
-	\end{equation*}
-归一化后可以给出后验分布$\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$，其中$\bm{\Sigma}_1^{-1}=m\bm{\Sigma}^{-1} + \bm{\Sigma}_0^{-1}$，$\bm{\mu}_1=\bm{\Sigma}_1(\bm{\Sigma}^{-1} \sum_{i=1}^m \bm{x}_i + \bm{\Sigma}_0^{-1} \bm{\mu}_0)$.
+
 	}
 	\end{spacing}
 	\end{scriptsize}
@@ -298,24 +272,26 @@
 	\end{itemize}
 	
 \section{局部观测数据的极大似然——最大化期望（Expectation Maximization，EM）}
-	Until now, a training sequence is $\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$, in which $y_i$ is the latent factor that depends whether $\rm{x}_i$ is sampled from. However, if the latent factors are not observed, the likelihood of the sequence $\{\bm{x}_1,\cdots,\bm{x}_m\}$ is:
-	\begin{equation*}
-	L(S;\theta) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(\bm{x}_i,y_j) = \prod_{i=1}^m \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
-	\end{equation*}
-	The maximum-likelihood estimator is therefore the solution of the maximization problem:
+	到现在为止，我们讨论的都是标签已知的情况，$S=\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$。标签$y_i$可以视为隐变量，它决定了$\rm{x}_i$从哪个分布采样得到，如果它不能被观测到，那么极大化样本序列$\{\bm{x}_1,\cdots,\bm{x}_m\}$的对数似然函数应为：
 	\begin{equation}
-	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
+	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i,y_j) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
 	\end{equation}
 	
-	In the E-step, we use the current parameter values $\theta^{\mathrm{old}}$ to find the posterior distribution of the latent variables given by $p(\bm{Y}|\bm{X}, \theta^{\mathrm{old}})$. We then use this posterior distribution to find the expectation of the complete-data log likelihood evaluated for some general parameter value $\theta$. This expectation, denoted , is given by
+	对于这类问题，采用最大化期望算法迭代求解。其中，在求期望的阶段（ E-step），使用现在的参数$\theta^{\mathrm{old}}$计算隐变量后验，即$p(\bm{Y}|\bm{X}, \theta^{\mathrm{old}})$，根据后验进一步计算样本对数似然的期望；在求最大值的阶段（M-step），
 	
 	\subsection{EM算法求解高斯混合模型（Gaussian Mixture Model，GMM）}
 	
-	GMM (Gaussian mixture models) is a typical example, with parameters comprising the means and covariances of the components and the mixing coefficients. Its log-likelihood function (plus a Lagrange multiplier) is given by
-	\begin{equation*}
+	GMM是一类典型问题，其待估计参数包括混合系数以及各个类的期望与方差。
+	
+	\vspace{1mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	结合拉格朗日乘子法，其优化目标为：
+	\begin{equation}
 	\sum_{i=1}^m \log \sum_{j=1}^k \pi_j \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) + \lambda \left(\sum_{j=1}^k \pi_j - 1\right)
-	\end{equation*}
-	Take derivatives with regard to $\bm{\mu}_k$ and set it to zero
+	\end{equation}
+	对$\bm{\mu}_k$求导并令导函数为0，可以得到
 	
 	\begin{equation}
 	\label{eq:GMM_mu}
@@ -337,8 +313,13 @@ With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\la
 	\pi_j=\frac{\sum_{i=1}^m z_{ij}}{m}
 	\end{equation}
 	
-	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$, hence we must do it in an iterative way, which is the EM algorithm for GMM:
+	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$
+	}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}
 	
+	下面是对GMM的EM算法伪代码：
 	
 	\begin{minipage}{.9\linewidth}
     \begin{itemize}
@@ -357,18 +338,20 @@ With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\la
 	
 	显然，如果参数估计成功，利用生成式模型直接获得贝叶斯分类器是可靠的。但问题是，逼近潜在分布往往比学习一个判别器难得多（因为逼近潜在分布更加靠近学习问题的本质）。Vladimir Vapnik因此说：
 	\begin{center}
-	\textbf{在解决问题的时候，不应该将一个更加一般化的问题作为其中间步骤。}\textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
+	\textbf{在解决问题的时候，不应该将一个更加一般化的问题作为其中间步骤。}
+	\\ \textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
 	\end{center}
 
-	However, in some situations, it is reasonable to adopt the generative models. Sometimes it is easier (computationally) to estimate the parameters of the model than to learn a discriminative predictor. Additionally, in some cases we do not have a specific task at hand but rather would like to use the data at a later time.
+	但是，生成式模型在某些情况下计算复杂度比判别器学习更低。生成式模型能够先从数据中估计参数，以供未来特定任务下使用，节省了实时的计算。
 	
-	Modern generative models have another big goal, that is to 'generate' (sample from the underlying distribution) data like that in reality. The intuition behind this approach follows a famous quote from Richard Feynman:	
+	此外，前沿的生成式模型研究有一个更宏伟的目标，就是从潜在分布中采样得到与真实世界无异的数据。这一路线背后的信念来自于Richard Feynman的著名格言：	
 	\begin{center}
-	\textit{"What I cannot create, I do not understand."}
+	\textbf{如果我不能创造某些事物，那么说明我并不真正理解它们。}
+	\\ \textit{"What I cannot create, I do not understand."}
 	\end{center}
 
-	\subsection{Naive Bayes to linear discriminant models}
-	The usual assumption in Naive Bayes classifier is that each conditional probability $p(X=\bm{x}|Y=y)$ is a Gaussian distribution. Consider the binary classification task, denote the two conditional distribution as $\mathcal{N}(\bm{\mu}_0,\bm{\Sigma}_0)$, $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$, we will predict $h_{\mathrm{Bayes}}(\bm{x})=1$ iff.
+	\subsection{从NB到线性分类器}
+	考虑二分类情况，假设类概率密度$p(X=\bm{x}|Y=y)$服从高斯分布，分别记为$\mathcal{N}(\bm{\mu}_0,\bm{\Sigma}_0)$, $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$。$h_{\mathrm{Bayes}}(\bm{x})=1$，当且仅当
 	
 	\begin{equation*}
 	\begin{split}
