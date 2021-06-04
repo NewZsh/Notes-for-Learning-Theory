@@ -272,22 +272,16 @@
 	\end{itemize}
 	
 \section{局部观测数据的极大似然——最大化期望（Expectation Maximization，EM）}
-	到现在为止，我们讨论的都是标签已知的情况，$S=\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$。标签$y_i$可以视为隐变量，它决定了$\rm{x}_i$从哪个分布采样得到，如果它不能被观测到，那么极大化样本序列$\{\bm{x}_1,\cdots,\bm{x}_m\}$的对数似然函数应为：
+	到现在为止，我们讨论的都是标签已知的情况，$S=\{(\bm{x}_1,y_1),\cdots,(\bm{x}_m,y_m)\}$。标签$y_i$可以视为隐变量，它决定了样本从哪个分布采样得到，如果它不能被观测到，那么样本序列$\{\bm{x}_1,\cdots,\bm{x}_m\}$的对数似然函数为：
 	\begin{equation}
 	\log L(S;\theta) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i,y_j) = \sum_{i=1}^m \log \sum_{j=1}^k p_\theta(\bm{x}_i|y_j)p_\theta(y_j)
 	\end{equation}
 	
-	对于这类问题，采用最大化期望算法迭代求解。其中，在求期望的阶段（ E-step），使用现在的参数$\theta^{\mathrm{old}}$计算隐变量后验，即$p(\bm{Y}|\bm{X}, \theta^{\mathrm{old}})$，根据后验进一步计算样本对数似然的期望；在求最大值的阶段（M-step），
+	根据Jensen不等式，构造分布函数$Q(y)$，可以得到$\log L(S;\theta)\geq \sum_{i=1}^m \sum_{j=1}^k Q_j(y_j) \log \frac{p_\theta(\bm{x}_i, y_j)}{Q_j(y_j)}$，等式成立的条件是随机变量为常数，即$\frac{p_\theta(\bm{x}_i, y_j)}{Q_j(y_j)}=C$。且根据$\sum_j Q(y_j) =1$，可以得到$Q(y_j)=p_\theta(z_j|\bm{x}_j)$。于是得到EM算法，在求期望的阶段（ E-step），使用现在的参数$\theta^{\mathrm{old}}$计算隐变量后验，即$p_{\theta^{\mathrm{old}}}(\bm{y}|\bm{x})$；在求最大值的阶段（M-step），根据后验进一步计算样本对数似然的期望，求最大化得到新的参数。
 	
 	\subsection{EM算法求解高斯混合模型（Gaussian Mixture Model，GMM）}
 	
-	GMM是一类典型问题，其待估计参数包括混合系数以及各个类的期望与方差。
-	
-	\vspace{1mm}
-	\begin{scriptsize}
-	\begin{spacing}{1.2}
-	{\sffamily
-	结合拉格朗日乘子法，其优化目标为：
+	GMM是一类典型问题，其待估计参数包括混合系数以及各个类的期望与方差。结合拉格朗日乘子法，其优化目标为：
 	\begin{equation}
 	\sum_{i=1}^m \log \sum_{j=1}^k \pi_j \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) + \lambda \left(\sum_{j=1}^k \pi_j - 1\right)
 	\end{equation}
@@ -297,70 +291,39 @@
 	\label{eq:GMM_mu}
 	\sum_{i=1}^m \underbrace{\frac{\pi_j  \mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j)}{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)}}_{z_{ij}} \bm{\Sigma}_k (\bm{x}_i - \bm{\mu}_j) \Longrightarrow \bm{\mu}_j=\frac{\sum_{i=1}^m z_{ij} \bm{x}_i}{\sum_{i=1}^m z_{ij}}
 	\end{equation}
-in which $z_{ij}=p(y_j=1|\bm{x}_i)$ is the posterior probability. Similarly,
+其中$z_{ij}=p(y_j=1|\bm{x}_i)$即为后验概率。相似地，
 	\begin{equation}
 	\label{eq:GMM_sigma}
 	\bm{\Sigma}_j=\frac{\sum_{i=1}^m z_{ij} (\bm{x}_i-\bm{\mu}_j)(\bm{x}_i-\bm{\mu}_j)^\top}{\sum_{i=1}^m z_{ij}}
 	\end{equation}
-	Then, take derivatives with regard to each $\pi_j$ and set it to zero
+	对$\pi_j$求导并令其导函数为0，可以得到
 	\begin{equation*}
-	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda \Longrightarrow \pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda}
-	\end{equation*}
-With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda = -m/\lambda=1$, then $\lambda=-m$, and hence
-
-	\begin{equation}
 	\label{eq:GMM_pi}
-	\pi_j=\frac{\sum_{i=1}^m z_{ij}}{m}
-	\end{equation}
-	
-	It means that the mixing coefficient for the $k$-th component is given by the average posterior which that component takes for explaining the data points. Notes that the calculation above drops into a circle form: $\bm{\mu}, \bm{\Sigma} \rightarrow z_{ij} \rightarrow \bm{\mu}, \bm{\Sigma}$
-	}
-	\end{spacing}
-	\end{scriptsize}
-	\vspace{-2mm}
-	
-	下面是对GMM的EM算法伪代码：
-	
-	\begin{minipage}{.9\linewidth}
-    \begin{itemize}
-	\item fix $k$, the number of Gaussian components;
-	\item initialize: $\forall j=1,\cdots,k, z_{ij}=\frac{1}{k},$ and $\pi_j=\frac{1}{k}$;
-	\item M-step, solve $\bm{\mu}, \bm{\Sigma}$ according to \textit{Eq.}\ref{eq:GMM_mu} and \textit{Eq.}\ref{eq:GMM_sigma};
-	\item E-step, solve $z_{ij},\pi_i$ according to \textit{Eq.}\ref{eq:GMM_pi}.
-	\item Repeat E-M step until convergence.
-	\end{itemize}
-  	\end{minipage}
-
+	\sum_{i=1}^m \frac{\mathcal{N} (\bm{x}_i|\bm{\mu}_j,\bm{\Sigma}_j) }{\sum_l \pi_l \mathcal{N} (\bm{x}_i|\bm{\mu}_l,\bm{\Sigma}_l)} + \lambda = \sum_{i=1}^m \frac{z_{ij}}{\pi_j} + \lambda \Longrightarrow \pi_j=-\frac{\sum_{i=1}^m z_{ij}}{\lambda} \Longrightarrow \frac{\sum_{i=1}^m z_{ij}}{m}
+	\end{equation*}
+上述使用了限制条件$\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\lambda=1$，可以解得$\lambda=-m$。上述结果意味着第$k$个分量的系数由样本点平均后验得到。于是，针对GMM的EM算法是一个优化$\bm{z}\rightarrow\bm{\mu},\bm{\Sigma}\rightarrow\bm{\pi}\rightarrow\bm{z}$的循环。
 		
 \section{与判别式模型的比较}
 	\label{sec:final}
-	生成式模型为数据的潜在分布假定一个参数形式，将学习问题转化为参数估计。但是，在判别式模型中，学习目标是直接估计判别函数的参数。
-	
-	显然，如果参数估计成功，利用生成式模型直接获得贝叶斯分类器是可靠的。但问题是，逼近潜在分布往往比学习一个判别器难得多（因为逼近潜在分布更加靠近学习问题的本质）。Vladimir Vapnik因此说：
+	生成式模型为数据的潜在分布假定一个参数形式，将学习问题转化为参数估计。但是，在判别式模型中，学习目标是直接估计判别函数的参数。显然，如果参数估计成功，利用生成式模型直接获得贝叶斯分类器是可靠的。但问题是，逼近潜在分布往往比学习一个判别器更难（也更加本质）。Vladimir Vapnik因此说：
 	\begin{center}
 	\textbf{在解决问题的时候，不应该将一个更加一般化的问题作为其中间步骤。}
-	\\ \textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
+	%\\ \textit{"When solving a given problem, try to avoid a more general problem as an intermediate step."}
 	\end{center}
 
-	但是，生成式模型在某些情况下计算复杂度比判别器学习更低。生成式模型能够先从数据中估计参数，以供未来特定任务下使用，节省了实时的计算。
-	
-	此外，前沿的生成式模型研究有一个更宏伟的目标，就是从潜在分布中采样得到与真实世界无异的数据。这一路线背后的信念来自于Richard Feynman的著名格言：	
+	但是，生成式模型在某些情况下计算复杂度比判别器学习更低。生成式模型能够先从数据中估计参数，以供未来特定任务下使用，节省了实时的计算。此外，前沿的生成式模型研究有一个更宏伟的目标，就是从潜在分布中采样得到与真实世界无异的数据。这一路线背后的信念来自于Richard Feynman的著名格言：	
 	\begin{center}
 	\textbf{如果我不能创造某些事物，那么说明我并不真正理解它们。}
-	\\ \textit{"What I cannot create, I do not understand."}
+	%\\ \textit{"What I cannot create, I do not understand."}
 	\end{center}
 
 	\subsection{从NB到线性分类器}
-	考虑二分类情况，假设类概率密度$p(X=\bm{x}|Y=y)$服从高斯分布，分别记为$\mathcal{N}(\bm{\mu}_0,\bm{\Sigma}_0)$, $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$。$h_{\mathrm{Bayes}}(\bm{x})=1$，当且仅当
+	考虑二分类情况，假设类概率密度$p(X=\bm{x}|Y=y)$服从高斯分布，分别记为$\mathcal{N}(\bm{\mu}_0,\bm{\Sigma}_0)$, $\mathcal{N}(\bm{\mu}_1,\bm{\Sigma}_1)$。$h_{\mathrm{Bayes}}(\bm{x})=1$，当且仅当$p(Y=0) p(X=\bm{x}|Y=0)>p(Y=1) p(X=\bm{x}|Y=1)$，取对数可以得到：
 	
 	\begin{equation*}
-	\begin{split}
-	&\frac{p(Y=0) p(X=\bm{x}|Y=0)}{p(Y=1) p(X=\bm{x}|Y=1)} > 1 \\
-	\iff &\log \frac{p(Y=0)}{p(Y=1)} + \log p(X=\bm{x}|Y=0) - \log p(X=\bm{x}|Y=1) > 0 \\
-	\iff &\bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + 2 (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 + \log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + 2\log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
-	\end{split}
+	\bm{x}^\top ( \bm{\Sigma}_1^{-1} - \bm{\Sigma}_0^{-1}) \bm{x} + 2 (\bm{\mu}_0^\top\bm{\Sigma}_0^{-1} - \bm{\mu}_1^\top\bm{\Sigma}_1^{-1}) \bm{x} + \underbrace{\bm{\mu}_1^\top\bm{\Sigma}_1^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}_0^{-1}\bm{\mu}_0 + \log\frac{|\bm{\Sigma}_1|}{|\bm{\Sigma}_0|} + 2\log \frac{p(Y=0)}{p(Y=1)}}_{\mathrm{b}} > 0
 	\end{equation*}
-which is a quadratic discriminant function. Further, if we assume that $\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$, the classifier can be simplified to be a linear discriminant function $\bm{w}\cdot\bm{x}+b$, with $\bm{w}=2(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$ and $b=\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0+ 2\log \frac{p(Y=0)}{p(Y=1)}$. If the prior probability is equal, namely $p(Y=0)=p(Y=1)$, the bias term can be further simplified.
+这实际上是一个二次函数判别器。进一步地，如果我们假设$\bm{\Sigma}_0=\bm{\Sigma}_1=\bm{\Sigma}$，判别器可以简化为线性形式$\bm{w}\cdot\bm{x}+b$（其中$\bm{w}=2(\bm{\mu}_0 - \bm{\mu}_1)^\top\bm{\Sigma}^{-1}$，$b=\bm{\mu}_1^\top\bm{\Sigma}^{-1}\bm{\mu}_1 - \bm{\mu}_0^\top\bm{\Sigma}^{-1}\bm{\mu}_0+ 2\log \frac{p(Y=0)}{p(Y=1)}$）。如果先验相等，$p(Y=0)=p(Y=1)$，偏置项甚至可以进一步简化。
 	
 \section{Exercises and solutions}
 \begin{itemize}
