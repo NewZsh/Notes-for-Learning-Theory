@@ -156,7 +156,7 @@ This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}. It main
 Note that it holds for all $\alpha\in[0,1]$, setting $\alpha=0$ leads to the conclusion.
 	\end{proof}
 
-	\textbf{Corollary 5.1} Following this theorem, if $f$ is $\lambda$-strongly convex and $\mathbf{v}$ is a minimizer of $f$, then for any $\mathbf{u}$, $f(\mathbf{v})\geq f(\mathbf{u}) +\frac{\lambda}{2}\|\mathbf{u}-\mathbf{v}\|^2_2$.
+	\textbf{Corollary 5.1} If $f$ is $\lambda$-strongly convex and $\mathbf{v}$ is a minimizer of $f$, then for any $\mathbf{u}$, $f(\mathbf{v})\geq f(\mathbf{u}) +\frac{\lambda}{2}\|\mathbf{u}-\mathbf{v}\|^2_2$.
 
 	\begin{itemize}
 	\item[Ex8] $f(\mathbf{x})=\|\mathbf{x}\|^2_2$ is 2-strongly convex, $f(\mathbf{x})=\lambda\|\mathbf{x}\|^2_2$ is $2\lambda$-strongly convex. Note that $f(\mathbf{x}')=\lambda\|\mathbf{x}'-\mathbf{x}+\mathbf{x}\|^2_2 = \lambda\|\mathbf{x}\|^2_2 + 2\lambda \mathbf{x}^\top (\mathbf{x}'-\mathbf{x}) + \lambda\|\mathbf{x}'-\mathbf{x}\|^2_2$, in which $2\lambda \mathbf{x}$ is the gradient of $f(\mathbf{x})$.
