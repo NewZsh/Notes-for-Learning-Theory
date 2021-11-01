@@ -169,22 +169,38 @@ Note that it holds for all $\alpha\in[0,1]$, setting $\alpha=0$ leads to the con
 
 \section{Lipschitzness}
 
-	\textbf{Definition 5.6 (Lipschitzness)} A function $f: \mathcal{R}^d\rightarrow \mathcal{R}^k$ is $\rho$-Lipschitz over set $C$ if for every $\mathbf{w}_1, \mathbf{w}_2 \in C$, $\|f(\mathbf{w}_1) - f(\mathbf{w}_2)\| \leq \rho \|\mathbf{w}_1 - \mathbf{w}_2\|$. (Note that it can be any norm, not only for Euclidean norm.)
+	\textbf{Definition 5.6 (dual norm)}
 	
-	With regard to $l_2$-norm, according to the mean value theorem, we have $f(\mathbf{w}_1)-f(\mathbf{w}_2)=g^\top (\mathbf{w}_1-\mathbf{w}_2)$, where $\mathbf{g}\in\partial f(\mathbf{u})$, $\mathbf{u}$ is some point between $\mathbf{w}_1$ and $\mathbf{w}_2$. So Lipschitzness is equivalent to bound the $l_2$ norm of sub-gradients by $\rho$ everywhere.
- 	
-	\textbf{Theorem 5.4} If $f$ is Lipschitz \textit{w.r.t} $l_2$-norm, then for all $\mathbf{g}\in\partial f(\mathbf{x})$, we have $\|\mathbf{g}\|_2\leq \rho$.
+	
+	One way to understand `dual norm` is that it is a way to measure how "big" are linear functionals. For example, consider the linear function $f$, we want to try to understand how big it is. So, we can measure $1$ that is we measure how big is the output of the linear functional compared to its input x, where x is measured with some norm. Now, you can show that the above is equivalent to the dual norm of $1$. The definition of dual norm immediately implies $\mathbf{w}^\top \mathbf{x}\leq \|\mathbf{w}\|_* \|\mathbf{x}\|$.
+	
 	\begin{itemize}
-	\item[Ex9] The function $f(x) = |x|$ is 1-Lipschitz over $\mathcal{R}$. Since $|x_1|-|x_2|=|x_1-x_2+x_2|-|x_2|\leq |x_1-x_2|+|x_2|-|x_2|=|x_1-x_2|$.
+	\item[Ex9] Dual norm of $l_2$-norm is itself.
 	\end{itemize}
-	\textbf{Claim 5.5 (Lipschitzness preserves on compound functions)}
+	
 
+	\textbf{Definition 5.7 (Lipschitzness)} A function $f: \mathcal{R}^d\rightarrow \mathcal{R}^k$ is $\rho$-Lipschitz over set $C$ if for every $\mathbf{w}_1, \mathbf{w}_2 \in C$, $\|f(\mathbf{w}_1) - f(\mathbf{w}_2)\|_* \leq \rho \|\mathbf{w}_1 - \mathbf{w}_2\|$. 
+	
+	In this chapter, we just focus on $l_2$-norm. According to the mean value theorem, we have $f(\mathbf{w}_1)-f(\mathbf{w}_2)=g^\top (\mathbf{w}_1-\mathbf{w}_2)$, where $\mathbf{g}\in\partial f(\mathbf{u})$, $\mathbf{u}$ is some point between $\mathbf{w}_1$ and $\mathbf{w}_2$. This leads to the following theorem.
+ 	
+	\textbf{Theorem 5.4} If $f$ is Lipschitz \textit{w.r.t} $l_2$-norm, \textit{iff.} for all $\mathbf{g}\in\partial f(\mathbf{x})$, we have $\|\mathbf{g}\|_2\leq \rho$.
+	\begin{itemize}
+	\item[Ex10] The function $f(x) = |x|$ is 1-Lipschitz over $\mathcal{R}$, since $|x_1|-|x_2|=|x_1-x_2+x_2|-|x_2|\leq |x_1-x_2|+|x_2|-|x_2|=|x_1-x_2|$.
+	\item[Ex11] The function $f(x)=\log(1+\exp(x))$ is 1-Lipschitz over $\mathcal{R}$, since $|f'(x)|=|\frac{1}{1+\exp(-x)}|\leq 1$.
+	\item[Ex12] The function $f(x)=x^2$ is not $\rho$-Lipschitz over $\mathcal{R}$ for any $\rho$. However, over the set $C=\{x:|x|\leq \frac{\rho}{2}\}$, this function is $\rho$-Lipschitz. Indeed, for any $x_1, x_2\in C$, $|x_1^2-x_2^2|=|x_1+x_2||x_1-x_2|\leq 2\cdot\frac{\rho}{2}\cdot|x_1-x_2|=\rho|x_1-x_2|$.
+	\item[Ex13] Linear function $f(\mathbf{x})=\mathbf{w}^\top \mathbf{x}+b$ is $\|\mathbf{w}\|$-Lipschitz following Cauchy-Schwartz inequality $|f(\mathbf{x}_1)-f(\mathbf{x}_2)|=|\mathbf{w}^\top (\mathbf{x}_1 - \mathbf{x}_2)| \leq \|\mathbf{w}\|_2\|\mathbf{x}_1 - \mathbf{x}_2\|_2$.
+	\end{itemize}
+	\textbf{Claim 5.5 (Lipschitzness preserves on compound functions)} Let $f( \mathbf{x}) = g_1(g_2(\mathbf{x}))$, where $g_1$ is $\rho_1$-Lipschitz and $g_2$ is $\rho_2$-Lipschitz. Then, $f$ is ($\rho_1 \rho_2$)-Lipschitz. In particular, if $g_2$ is the linear function, $g_2( \mathbf{x}) =  \mathbf{w}^\top  \mathbf{x} + b$, then $f$ is $(\rho_1 \| \mathbf{w}\|_2)$-Lipschitz.
+\begin{proof}
+$$|f(\mathbf{x}_1)-f(\mathbf{x}_2)|\leq \rho_1 \|g_2(\mathbf{x}_1)-g_2(\mathbf{x}_2)\|\leq \rho_1\rho_2 \|\mathbf{w}_1-\mathbf{w}_2\|_2$$
+\end{proof}
+
+	\begin{itemize}
+	\item[Ex14]  For binary classification $y\in\{-1, 1\}$, $f(\mathbf{w})=y(\mathbf{w}^\top \mathbf{x}+b)$ is $\|\mathbf{x}\|_2$-Lipschitz following $|f(\mathbf{x}_1)-f(\mathbf{x}_2)|=|y\mathbf{w}_1^\top \mathbf{x} -y \mathbf{w}_2^\top\mathbf{x}_2| \leq \|y\mathbf{x}\|_2\|\mathbf{w}_1 - \mathbf{w}_2\|_2$. Hence, log loss $f(\mathbf{w})=\log(1+\exp(-y\mathbf{w}^\top \mathbf{x}))$ is  $\|\mathbf{x}\|_2$-Lipschitz.
+	\end{itemize}
 	
 \section{Smoothness}
-
-	\noindent\textbf{Definition 5.7 (dual norm)}
-	
-	\noindent\textbf{Definition 5.8 (smooth function)}
+	\noindent\textbf{Definition 5.8 (smooth function)} A differentiable function $f$ is $\beta$-smooth if its gradient is $\beta$-Lipschitz
 
 	\begin{framed}
 	\begin{scriptsize}
