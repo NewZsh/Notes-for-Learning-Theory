@@ -1,8 +1,15 @@
 \documentclass{article}
+\usepackage[UTF8]{ctex}
+\setmainfont{Calibri Light}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
 \usepackage{amsmath,bm}
+\usepackage{framed} 
+\usepackage{wrapfig}
 \usepackage{amssymb}
 \usepackage{ntheorem}
 \usepackage{graphicx}
+\usepackage{bbm}
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true,
@@ -11,10 +18,6 @@
 	urlcolor=red,
 	citecolor=green,
 }
-\usepackage{framed}
-\usepackage{color}
-\definecolor{shadecolor}{rgb}{0.92,0.92,0.92}
-\usepackage{bbm}
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lemma}
@@ -72,7 +75,7 @@ Now the number of parameters we need to estimate is only $2d + 1$. When we also 
 	\begin{itemize}
 	\item [\textbf{1}] Bernoulli distribution, $\theta={\mu}$
 	
-	Bernoulli distribution describes the probability of a binary variable $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so, $p(x;\theta)=\mu^x(1-\mu)^{(1-x)}$. The log likelihood function is given by
+	Bernoulli distribution describes the probability of a binary variable $x$. The probability of $x=1$ is denoted by parameter $\mu$, and of $x=0$ is $1-\mu$, so, $p(x;\theta)=\mu^x(1-\mu)^{1-x}$. The log likelihood function is given by
 	\begin{equation*}
 	\log L(S;\theta) = \sum_{i=1}^m \log p(x_i;\theta) = \sum_{i=1}^m x_i\log \mu + (1-x_i)\log(1-\mu)
 	\end{equation*}
@@ -110,49 +113,57 @@ Besides, $\sum_{j=1}^d \mu_j=-m/\lambda=1$, thereby leading to $\lambda=-m$, and
 	\end{equation*}
 	Set the derivative of the log likelihood with respect to $\bm{\mu}$ to be zero leading to $\bm{\mu}_{\mathrm{ML}}= \frac{1}{m} \sum_{i=1}^m \bm{x}_i$.
 	
-	\begin{footnotesize}
-	\textit{\underline{remark1}}: Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:	
+	\begin{framed}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	\noindent\textit{\textbf{remark1.} Deriving $\bm{\Sigma}$ requires the use of the following linear algebra and calculus properties:}
 	\begin{itemize}
 	\item The trace is invariant under cyclic permutation of matrix products: $tr[\bm{A}\bm{B}\bm{C}]=tr[\bm{C}\bm{A}\bm{B}]=tr[\bm{B}\bm{C}\bm{A}]$;
 	\item Since $\bm{x}^\top \bm{A} \bm{x}$ is a scalar, its trace is itself, and hence $\bm{x}^\top \bm{A} \bm{x} = tr[\bm{x}^\top \bm{A} \bm{x}] = tr[\bm{x} \bm{x}^\top \bm{A}]$;
 	\item $\partial tr[\bm{A} \bm{B}]/\partial \bm{A} = \bm{B}^\top$; $\partial \log |\bm{A}|/\partial \bm{A} = (\bm{A}^{-1})^\top$; $\partial tr(\bm{A}\bm{X}^{-1}\bm{B})/\partial \bm{X} = -(\bm{X}^{-1} \bm{BA}\bm{X}^{-1})^\top$
 	\end{itemize}
-	\end{footnotesize}
+	\end{spacing}
+	\end{scriptsize}
+	\end{framed}
 
 	The derivative of the log likelihood with respect to $\bm{\Sigma}$ is given by
 	\begin{equation*}
 	\frac{\partial \log L(S;\theta)}{\partial \bm{\Sigma}} = -\frac{m}{2} (\bm{\Sigma}^{-1})^\top + \frac{1}{2} \sum_{i=1}^m  \bm{\Sigma}^{-1} (\bm{x}_i - \bm{\mu})(\bm{x}_i - \bm{\mu})^\top \bm{\Sigma}^{-1}
 	\end{equation*}
-Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top/m $.
+Here we does not give a formal proof that $\bm{\Sigma}$ is symmetric but directly using this conclusion, and setting the derivative to zero leads to $\bm{\Sigma}_{\mathrm{ML}} = \frac{1}{m} \sum_{i=1}^m (\bm{x}_i - \bm{\mu}_{\mathrm{ML}})(\bm{x}_i - \bm{\mu}_{\mathrm{ML}})^\top $.
 	
 	\item [\textbf{4}] Exponential family
+	
 	The exponential family is defined to be the set of distributions of the form
 	\begin{equation}
 	p(\bm{x}|\bm{\eta}) = h(\bm{x}) \exp\{ \bm{\eta}^\top \bm{u}(\bm{x}) - A(\bm{\eta}) \}
 	\end{equation}
 
-	\begin{footnotesize}
-	\textit{\underline{remark1}}: Bernoulli distribution is a member in this family,
+	\begin{framed}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	\noindent\textit{\textbf{remark2.} Bernoulli distribution is a member in this family,
 	\begin{equation*}
-	p(x|\mu) = \mu^x(1-\mu)^{1-x} = \exp \{ x \log \mu + (1-x) \log (1-\mu) \} = \exp\left\{ \log \left( \frac{\mu}{1-\mu}\right) x + \log(1-\mu)\right\}
+	p(x|\mu) = \mu^x(1-\mu)^{1-x}  = \exp\left\{ x\log  \frac{\mu}{1-\mu}+ \log(1-\mu)\right\}
 	\end{equation*}
-	Compare with the general form shows that $h(x)=1,u(x)=x, \eta=\log \frac{\mu}{1-\mu} $, and $A(\eta)=\log (1+\exp(\eta))$.
+in which $h(x)=1,u(x)=x, \eta=\log \frac{\mu}{1-\mu} $, and $A(\eta)=\log (1+\exp(\eta))$.}
 
-	\textit{\underline{remark2}}: Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_d = 1$, we have
+	\noindent\textit{\textbf{remark3.} Multinomial distribution is a member in this family. Recall that multinomial distribution indeed has $d-1$ parameters since $\sum_{j=1}^d \mu_j = 1$,
 	\begin{equation*}
-	\begin{split}
-	p(\bm{x}|\bm{\mu}) &= \prod_{j=1}^d \mu_j^{x_j} = \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
-	&= \exp\left\{ \sum_{j=1}^{d-1} x_j \log \left( \frac{\mu_j}{1-\sum_{k=1}^{d-1} \mu_k} \right) +  \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\}
-	\end{split}
+	p(\bm{x}|\bm{\mu}) = \prod_{j=1}^d \mu_j^{x_j} 
+	= \exp\left\{ \sum_{j=1}^{d-1} x_j \log \left( \frac{\mu_j}{1-\sum_{k=1}^{d-1} \mu_k} \right) +  \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\}
 	\end{equation*}
-	Define $\eta_j =  \log \frac{\mu_j}{1-\sum_{k=1}^d \mu_k}$, then $\mu_j = \frac{\exp\eta_j}{1+\sum_{k=1}^d \exp \eta_k}$, and $1-\sum_{j=1}^{d-1} \mu_j = 1-\frac{\sum_{j=1}^{d-1} \exp \eta_j}{1+\sum_{k=1}^d \exp \eta_k}=\frac{\exp \eta_{d}}{1+\sum_{k=1}^d \exp \eta_k}$. Compare with the general form shows that $h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^d \exp \eta_k)-\eta_d$.
+	%= \exp\left\{ \sum_{j=1}^d x_j \log \mu_j \right\} = \exp\left\{ \sum_{j=1}^{d-1} x_j \log \mu_j + \left(1-\sum_{j=1}^{d-1} x_j \right) \log \left(1-\sum_{j=1}^{d-1} \mu_j \right) \right\} \\
+	Define $\eta_j =  \log \frac{\mu_j}{1-\sum_{k=1}^{d-1} \mu_k}$, then $\mu_j = \frac{\exp\eta_j}{1+\sum_{k=1}^d \exp \eta_k}$, and $1-\sum_{j=1}^{d-1} \mu_j = 1-\frac{\sum_{j=1}^{d-1} \exp \eta_j}{1+\sum_{k=1}^d \exp \eta_k}=\frac{\exp \eta_{d}}{1+\sum_{k=1}^d \exp \eta_k}$. Compare with the general form shows that $h(\bm{x})=1, u(\bm{x})=\bm{x}, A(\bm{\eta})=\log (1+\sum_{k=1}^d \exp \eta_k)-\eta_d$.}
 	
-	\textit{\underline{remark3}}: Gaussian distribution is a member in this family.
+	\noindent\textit{\textbf{remark4.} Gaussian distribution is a member in this family.
 	\begin{equation*}
 	p(\bm{x}|\bm{\mu}) = \frac{1}{(2\pi)^{d/2} |\bm{\Sigma}|^{1/2}} \exp \left( -\frac{1}{2} \bm{x}^\top \bm{\Sigma}^{-1} \bm{x}  -\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu} + \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{x} \right)
 	\end{equation*}
-	Since $\bm{x}^\top \bm{\Sigma}^{-1} \bm{x} = tr [\bm{x}^\top \bm{\Sigma}^{-1} \bm{x}] = tr [\bm{\Sigma}^{-1} \bm{x} \bm{x}^\top ]$. Compare with the general form shows that $h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$.
-	\end{footnotesize}
+	Since $\bm{x}^\top \bm{\Sigma}^{-1} \bm{x} = tr [\bm{x}^\top \bm{\Sigma}^{-1} \bm{x}] = tr [\bm{\Sigma}^{-1} \bm{x} \bm{x}^\top ]$. Compare with the general form shows that $h(\bm{x})=(2\pi)^{-d/2}, u(\bm{x})=(1, \bm{x}, \bm{x}\bm{x}^\top)^\top, \bm{\eta}=(-\frac{1}{2} \bm{\mu}^\top \bm{\Sigma}^{-1} \bm{\mu}-\frac{1}{2}\log|\bm{\Sigma}|, \bm{\Sigma}^{-1}\bm{\mu}, -\frac{1}{2} \bm{\Sigma}^{-1})^\top$.}
+	\end{spacing}
+	\end{scriptsize}
+	\end{framed}
 	
 	Now consider the problem of estimating the parameter vector $\bm{\mu}$ in the general exponential family distribution. The log likelihood function is given by
 	
@@ -332,7 +343,6 @@ With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\la
 	
 	
 	\begin{minipage}{.9\linewidth}
-	\begin{shaded}
     \begin{itemize}
 	\item fix $k$, the number of Gaussian components;
 	\item initialize: $\forall j=1,\cdots,k, z_{ij}=\frac{1}{k},$ and $\pi_j=\frac{1}{k}$;
@@ -340,7 +350,6 @@ With the constraint that $\sum_{j=1}^k\pi_j=-\sum_{i=1}^m\sum_{j=1}^k z_{ij}/\la
 	\item E-step, solve $z_{ij},\pi_i$ according to \textit{Eq.}\ref{eq:GMM_pi}.
 	\item Repeat E-M step until convergence.
 	\end{itemize}
-  	\end{shaded}
   	\end{minipage}
 
 		
@@ -377,7 +386,6 @@ which is a quadratic discriminant function. Further, if we assume that $\bm{\Sig
 \item[Ex1] \textbf{K-means} (see \textit{UML Chapter 22.2, PRML Chapter 9.1}). K-means is a simple but important clustering algorithm. In fact, GMM is sometimes called \textit{soft} K-means. As a hard version, K-means assigns the most probable cluster label to an example (\textit{i.e.}, $z_{ij}=1$ for one of $j\in{1,\cdots,k}$ but 0 for others), and calculate the mean and covariance based on the in-cluster instead of global data. Formally, its procedure is as below,
 
 	\begin{minipage}{.9\linewidth}
-	\begin{shaded}
     \begin{itemize}
 	\item[•] fix $k$, the number of clusters;
 	\item[•] randomly choose initial clustering centers $\bm{\mu}^0_1,\cdots,\bm{\mu}^0_k$
@@ -385,7 +393,6 @@ which is a quadratic discriminant function. Further, if we assume that $\bm{\Sig
 	\item[•] 1. $\forall i\in \{1,\cdots,m\}$, determine $j=\arg\min_{j} d(\bm{x}_i, \bm{\mu}_j^t)$ and set $z_{ij}^t=1$;
 	\item[•] 2. $\forall j\in \{1,\cdots,k\}$, update $\bm{\mu}_j^{t+1} = \frac{\sum_{i=1}^m \bm{x}_i z^t_{ij}}{\sum_{i=1}^m z^t_{ij}} $;
 	\end{itemize}
-  	\end{shaded}
   	\end{minipage}
 
 in which $d(\cdot,\cdot)$ can be arbitrary distance function. Note that the step 1. corresponds to M-step of GMM, and step 2 corresponds to E-step. For GMM, the objective is to maximize likelihood, and for k-means, the objective can be viewed as minimizing the sum of in-cluster distance (if we choose the distance to be Euclidean distance, the loss is also called Sum of in-cluster Square Error, \textit{a.k.a.}, SSE):
@@ -470,5 +477,85 @@ Take derivatives with regard to $\mu$ and set it to zero leads to $\mu'=\frac{1+
 	Chapter 4. Linear models for classification and regression, penalization \\
 	  Chapter 5. Decision stumps, ensemble learning, Bayes PAC \\
       Chapter 6. Perceptron, MLP, deep learning, Generalization bounds on deep learning.}
+      
+\newpage
+\begin{itemize}
+\item[1] Answer: The marginal distribution of multivariate Gaussian is also Gaussian, so in $p(\mathbf{x}) = \Pi_{i=1}^D p(x_i)$, each $p(x_i)=\mathcal{N}(x_i|\mu_i, \sigma_i)$. The log-likelihood of the dataset $\mathcal{D}$ is (I omit some constant item below)
+	$$\log \mathcal{L} \propto \sum_{j=1}^{N} \sum_{i=1}^D -\log\sigma_i - \frac{(x_i^{j}-\mu_i)^2}{2\sigma_i^2}$$
+	
+	Take derivative with regard to $\mu_i$ and set to zero, we can obtain that
+	
+	$$\mu_i = \frac{1}{N} \sum_{j=1}^N x_i^{(j)}$$
+and hence $\mu = \frac{1}{N} \sum_{j=1}^N \mathbf{x}^{(j)}$.
+	
+	Take derivative with regard to $\sigma_i$ and set to zero,
+	
+	$$ \sum_{j=1}^{N}-\frac{1}{\sigma_i} + \frac{(x_i^{(j)}-\mu_i)^2}{\sigma_i^3} = 0$$
+which leads to 
+	$$\sigma_i^2 = \frac{1}{N} \sum_{j=1}^{N} (x_i^{(j)}-\mu_i)^2$$
+
+and hence $\Sigma$ is a diagonal matrix, with each entry $\Sigma_{i,i} = \frac{1}{N} \sum_{j=1}^{N} (x_i^{(j)}-\mu_i)^2$. It is because that all dimensions are independent, so the covariances of them are all zeros.
+
+\item[2] Answer: According to the standard forms, 
+	\begin{itemize}
+	\item[a)] $$\mu_N = \frac{1}{N}\sum_{i=1}^N \mathbf{x}^{(i)} = \frac{N-1}{N} \frac{1}{N-1}\sum_{i=1}^{N-1} \mathbf{x}^{(i)} + \frac{1}{N}\mathbf{x}^{(N)}=\mu_{N-1} + \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1})$$
+	\item[b)] 
+	\begin{equation*}
+	\begin{split}
+	\Sigma_N &= \frac{1}{N}\sum_{i=1}^N (\mathbf{x}^{(i)} - \mu_N)(\mathbf{x}^{(i)} - \mu_N)^\top \\
+	&= \frac{1}{N}\sum_{i=1}^N \left(\mathbf{x}^{(i)} - \mu_{N-1} - \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1}) \right)\left(\mathbf{x}^{(i)} - \mu_{N-1} - \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1}) \right)^\top \\
+	&= \frac{N-1}{N} \frac{1}{N-1} \sum_{i=1}^{N-1} \left(\mathbf{x}^{(i)} - \mu_{N-1} - \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1}) \right)\left(\mathbf{x}^{(i)} - \mu_{N-1} - \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1}) \right)^\top \\&\ \ \ \ + \frac{1}{N} \left(\mathbf{x}^{(N)} - \mu_{N-1} - \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1}) \right)\left(\mathbf{x}^{(N)} - \mu_{N-1} - \frac{1}{N} (\mathbf{x}^{(N)}-\mu_{N-1}) \right)^\top\\
+	&= \frac{N-1}{N} \frac{1}{N-1} \sum_{i=1}^{N-1} \left((\mathbf{x}^{(i)} - \mu_{N-1})(\mathbf{x}^{(i)} - \mu_{N-1})^\top + \frac{1}{N^2}  (\mathbf{x}^{(N)}-\mu_{N-1}) (\mathbf{x}^{(N)}-\mu_{N-1})^\top  \right)\\&\ \ \ \ + \frac{1}{N} \frac{(N-1)^2}{N^2}\left(\mathbf{x}^{(N)} - \mu_{N-1}\right)\left(\mathbf{x}^{(N)} - \mu_{N-1} \right)^\top\\
+	&= \frac{N-1}{N} \Sigma_{N-1} + \frac{N-1}{N^2}\left(\mathbf{x}^{(N)} - \mu_{N-1}\right)\left(\mathbf{x}^{(N)} - \mu_{N-1} \right)^\top
+	\end{split}
+	\end{equation*}
+	\end{itemize}
+\item[3] Answer:
+	\begin{itemize}
+	\item[a)] $$\mathbb{E}(\mathbf{y}) = \mathbb{E}(\mathbf{A}\mathbf{x}+\mathbf{b}+\mathbf{n})= \mathbf{A}\mu_x+\mathbf{b}+\mu_n$$
+	\begin{equation*}
+	\begin{split}
+	\text{Cov}(\mathbf{y},\mathbf{y}) &= \mathbb{E}\left[\left(\mathbf{y} - \mathbb{E}(\mathbf{y}) \right) \left(\mathbf{y} - \mathbb{E}(\mathbf{y}) \right)^\top \right] \\
+	&= \mathbb{E}\left[\left(\mathbf{A}\mathbf{x} - \mathbf{A}\mu_x+\mathbf{n} - \mu_n\right) \left( \mathbf{A}\mathbf{x} - \mathbf{A}\mu_x+\mathbf{n} - \mu_n\right)^\top \right] \\
+	&= \mathbb{E}\left[ \mathbf{A}\left(\mathbf{x} - \mu_x\right) \left(\mathbf{x} - \mu_x\right)^\top\mathbf{A}^\top \right] +  \mathbb{E}\left[\left(\mathbf{n} - \mu_n\right) \left(\mathbf{n} - \mu_n\right)^\top \right] + 2 \mathbb{E}\left[\mathbf{A}\left( \mathbf{x} - \mu_x\right) \left(\mathbf{n} - \mu_n\right)^\top \right] 
+	\end{split}
+	\end{equation*}
+	Since $\mathbf{x}$ and $\mathbf{n}$ are independent, the last term is zero, so 
+	$$\text{Cov}(\mathbf{y},\mathbf{y})  = \mathbf{A} \Sigma_x \mathbf{A}^\top + \Sigma_n$$
+	\item[b)] The mean remains the same, 
+	$$\mathbb{E}(\mathbf{y}) =  \mathbf{A}\mu_x+\mathbf{b}+\mu_n$$
+	and from above, we can obtain that 
+	$$\text{Cov}(\mathbf{y},\mathbf{y})  = \mathbf{A} \Sigma_x \mathbf{A}^\top + \Sigma_n + 2\mathbf{A}\Sigma_{xn}$$
+	\end{itemize}
+\item[4] Answer:
+	\begin{itemize}
+	\item[a)] From
+	$$\sigma(a)=\frac{1}{1+e^{-a}}$$
+	we have,
+	$$\frac{d\sigma}{da} = \frac{e^{-a}}{(1+e^{-a})^2}  = \frac{1+e^{-a}-1}{(1+e^{-a})^2} = \sigma(a) - \sigma^2(a) = \sigma(a) (1-\sigma(a))$$
+	So,
+	$$\frac{d^2\sigma}{da^2} = \frac{d\sigma}{da} (1-\sigma(a)) - \sigma(a)\frac{d\sigma}{da} = \sigma(a) (1-\sigma(a))(1 - 2\sigma(a))$$
+	\item[b)] $\frac{d\sigma}{da}$ will be computed to zero if $\sigma(a)$ is zero or one. So 
+	$$a \leq \log \frac{2^{-126}}{1-2^{-126}} \sim -126 \log 2 $$
+	$$a \geq \log \frac{1-2^{-24}}{2^{-24}} \sim 24 \log 2$$
+	If we use $\frac{d\sigma}{da} =\sigma(a)\sigma(-a)$, it will be computed to zero if $a\leq  \log \frac{2^{-126}}{1-2^{-126}} $ or $a \geq  \log \frac{1-2^{-126}}{2^{-126}} $, So the range of $a$ is much larger.
+	If $a\geq 0$, then we should implement $\sigma(a) = \frac{1}{1+\exp(-a)}$. And if $a \leq 0$, we should instead use $\sigma(a)=\frac{\exp(a)}{\exp(a)+1}$. This can help improve the numerical precision.
+	\item[c)] If there is only two classes in the multi-class model, then 
+	$$S(e) = \frac{\exp(e)}{\exp(e_1) + \exp(e_2)}$$
+So if we treat $e_1$ as the positive class in the binary task, $$S(e_1) = \frac{\exp(e_1)}{\exp(e_1) + \exp(e_2)} = \frac{1}{1+\exp(e_2-e_1)} = \frac{1}{1+\exp((\mathbf{A}_2-\mathbf{A}_1)^\top\mathbf{x} + (c_2-c_1)}$$
+in which $\mathbf{A}_i$ is the $i$-th row of matrix $\mathbf{A}$, and $c_i$ is the $i$-th entry of $\mathbf{c}$. Obviously, it is equivalent to set $\mathbf{w} = \mathbf{A}_1 - \mathbf{A}_2$ and $b=c_1-c_2$ in the binary logistic regression model.
+	Similarly, if we treat $e_2$ as the positive class in the binary task, we can also set $\mathbf{w} = \mathbf{A}_2 - \mathbf{A}_1$ and $b=c_2-c_1$ in the binary logistic regression model.
+	
+	Given the binary logistic regression model, we can transform it into multi-class model by setting arbitrary weight and bias to the negative class. For example, denote the weight and bias corresponding to $y=0$ is $\mathbf{w}'$ and $b'$, then
+	\begin{equation*}
+	\begin{split}
+	p(y=1|\mathbf{x}) &= \frac{1}{1+\exp(-\mathbf{w}^\top \mathbf{x} - b)}   = \frac{1}{1+\exp(-(\mathbf{w}+\mathbf{w}'-\mathbf{w}')^\top \mathbf{x} - (b+b'-b'))} \\
+	&= \frac{1}{1+\exp(-(\mathbf{w}+\mathbf{w}')^\top \mathbf{x} - (b+b')) \exp(\mathbf{w}'^\top \mathbf{x} + b')}  \\
+	&= \frac{\exp((\mathbf{w}+\mathbf{w}')^\top \mathbf{x} + (b+b')) }{\exp((\mathbf{w}+\mathbf{w}')^\top \mathbf{x} + (b+b')) +\exp(\mathbf{w}'^\top \mathbf{x} + b')}
+	\end{split}
+	\end{equation*}
+	So it is equivalent to set arbitrary value of $\mathbf{A}_2$ and $c_2$ and let $\mathbf{A}_1=\mathbf{A}_2+\mathbf{w}$ and $c_1=c_2+b$.
+	\end{itemize}
+\end{itemize}
 
 \end{document}
