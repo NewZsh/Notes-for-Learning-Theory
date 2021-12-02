@@ -1,0 +1,73 @@
+<BIF VERSION="0.3">
+<NETWORK>
+<NAME>Dog-Problem</NAME>
+
+<!-- Variables -->
+<VARIABLE TYPE="nature">
+	<NAME>burglary</NAME>
+	<OUTCOME>true</OUTCOME>
+	<OUTCOME>false</OUTCOME>
+	<PROPERTY>position = (50, 165)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>earthquake</NAME>
+	<OUTCOME>true</OUTCOME>
+	<OUTCOME>false</OUTCOME>
+	<PROPERTY>position = (90, 165)</PROPERTY>
+</VARIABLE>
+
+
+<VARIABLE TYPE="nature">
+	<NAME>alarm</NAME>
+	<OUTCOME>high</OUTCOME>
+	<OUTCOME>low</OUTCOME>
+	<PROPERTY>position = (70, 165)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>johncalls</NAME>
+	<OUTCOME>true</OUTCOME>
+	<OUTCOME>false</OUTCOME>
+	<PROPERTY>position = (190, 69)</PROPERTY>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
+	<NAME>marycalls</NAME>
+	<OUTCOME>true</OUTCOME>
+	<OUTCOME>false</OUTCOME>
+	<PROPERTY>position = (155, 165)</PROPERTY>
+</VARIABLE>
+
+
+<!-- Probability distributions -->
+<DEFINITION>
+	<FOR>burglary</FOR>
+	<TABLE>0.001 0.999</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>earthquake</FOR>
+	<TABLE>0.002 0.998</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>alarm</FOR>
+    <GIVEN>burglary</GIVEN>
+	<GIVEN>earthquake</GIVEN>
+	<TABLE>0.95 0.05 0.94 0.06 0.29 0.71 0.001 0.999</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>johncalls</FOR>
+    <GIVEN>alarm</GIVEN>
+	<TABLE>0.9 0.1 0.05 0.95</TABLE>
+</DEFINITION>
+
+<DEFINITION>
+	<FOR>marycalls</FOR>
+    <GIVEN>alarm</GIVEN>
+	<TABLE>0.7 0.3 0.01 0.99</TABLE>
+</DEFINITION>
+</NETWORK>
+</BIF>
