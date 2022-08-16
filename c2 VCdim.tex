@@ -170,9 +170,47 @@ A hypothesis is $(\epsilon, \delta)$-competitive with another if
 
 \section{Exercises and solutions}
 
-\textit{
-      To be continue...\\
-      Chapter 3. Bayesian-PAC\\
-      Chapter 4. Generalization in Deep Learning}
+\newpage
+\begin{itemize}
+\item[1] \begin{itemize}
+		\item[(a)] The hypothesis class is a generalization of rectangle to high-dimensional space and its VCdim is $2k$. Consider the set $\{\mathbf{x}_1,\cdots, \mathbf{x}_{2k}\}$, if $i\leq k$, $\mathbf{x}_i$ is a vector in $k$-dimension space, with all entries to be zero except that its $i$-th entry to be 1, and otherwise, i.e., $i>k$, $\mathbf{x}_i$ is a vector with all entries to be zero except that $i-k$-th entry to be -1. Let $(y_1,\cdots, y_{2d}) \in \{0, 1\}^{2k}$, we can choose $a_i = -2$ if $y_{i+k} = 1$, and $a_i = 0$ otherwise, and choose $b_i = 2$ if $y_i = 1$, and $b_i = 0$ otherwise. Then $h_{a_1,b_1,\cdots,a_k,b_k}(x_i) = y_i$ for every $i\in[2k]$, so the set can be shattered. 
+		Let $C$ be a set of size at least $2k + 1$. We show that $C$ is not shattered. By the pigeonhole principle, there exists an
+element $\mathbf{x}\in C$, s.t. for every $j \in [k]$, there exists $\mathbf{x}' \in C$ with $x'_j \leq x_j$ and similarly there exists $\mathbf{x}'' \in C$ with $x''_j \leq x_j$. Thus the labelling in which $x$ is negative, and the rest of the elements in $C$ are positive can not be obtained.
+		\item[(b)]
+			\begin{itemize}
+			\item[i.] Its VCdim is 1. Consider the set with only one point, obviously we can choose a suitable $r$ to satisfy that $f_r(x_1,x_2)\geq 0$ or $<0$. And consider the set with two points, if the point further away from original point with label -1 and that closer from original point is with label +1, then we cannot choose a suitable $r$ to shatter the set. 
+			\item[ii.] A linear function can fit two points well with no error, so a linear function's (polynomial with degree be 1) VC dimension is 2. As a polynomial with degree $k$ can fit well $k+1$ points, so can shatter at least $k+1$ points. However, for any point $k+2$, a polynomial with degree $k$ can not ensure to shatter it. So the VC dimension is $k+1$.
+			\end{itemize}
+			\item[(c)] Firstly, the VC dimension of $H_{maj}^n\leq n$. For a single point set, we can use $h_S(x)$ in which $S=\{1\}$ to shatter it. Without loss of generality, assume that in a set with two points, the $x_1$ are the same, but the labels are different, so we must use $h_S(x)$ in which $S=\{1,2\}$ to shatter them. Similarly, $h_S(x), S\subset \{1,\cdots, n\}$ can shatter at most $n$ points.
+		\end{itemize}
+		
+\item[2] \begin{itemize}
+		\item[(a)] Any set of two points can be shattered by a line. So $VCdim(H)\geq 2$. However, for a line that shatter the former two points, we can select another point that the line assigns a wrong label to it. So there exist some set of 3 points cannot be shattered by a line. So $VCdim(H)=2$. Also note that a line that shifts is still a line. So $VCdim(H_{shifts})=2$.
+		\item[(b)]  For any set $C$ with two points $x_1, x_2$. We should consider their distance to $\lfloor x_1 \rfloor$  and $\lfloor x_2 \rfloor$ respectively. There are four cases $[>0.5, >0.5], [>0.5,\leq 0.5], [\leq 0.5, >0.5], [\leq 0.5, \leq 0.5]$. And for each case, the label set $(0,0), (1,0), (0,1), (1,1)$ can be achieved. So, $VCdim(\{h_{even}\}_{shifts})\geq 2$. And consider a set with three points, if we choose a $s$ to satisfy that we can assign true label for the former two points, we can adversarially choose the third points with a label that cannot be true. So  $VCdim(\{h_{even}\}_{shifts})= 2$.
+		\item[(c)] Consider the hypothesis set $\mathcal{H}_\theta(x)=sin(\theta x)$, then $VCdim(\{h\}_{shifts})=\infty$.
+		\end{itemize}
+		
+\item[3] \begin{itemize}
+	\item[(a)] Any $(h1\star h2)(\hat{x})=h_1(x_1)h_2(x_2) \in H_1 \bigcup H_2$, so $H_1\times H_2=H_1 \bigcup H_2$. Using the conclusion in (c), its VC dimension is finite.
+	\item[(b)] By definition of uniform convergence, there exists a set $S_1$ with size $m_1\geq m_{\mathcal{H}_1}^{UC}(\epsilon_1,\delta_1)$ such that $|L_{S_1}(h_1)-L_{\mathcal{D}}(h_1)|<\epsilon_1 $, for all $h_1\in H_1$, and a set $S_2$ with size $m_2\geq m_{\mathcal{H}_2}^{UC}(\epsilon_2,\delta_2)$ such that $|L_{S_2}(h_2)-L_{\mathcal{D}}(h_2)|<\epsilon_2 $, for all $h_2\in H_2$.
+	
+	Note that if $h_1$ and $h_2$ are both correct, then $h_{1,2}$ is correct, and vice versa. So $L(h_{1,2})=1-(1-L(h_1))(1-L(h_2))=L(h_1)+L(h_2)-L(h_1)*L(h_2)$, no matter true error or empirical error.
+	
+	Consider the set $S=S_1\bigcup S_2$, it is with size $m\geq m_{\mathcal{H}_1}^{UC}(\epsilon_1,\delta_1) + m_{\mathcal{H}_2}^{UC}(\epsilon_2,\delta_2)$, and hence
+	
+	$$|L_S(h_{1,2})-L_{\mathcal{D}}(h_{1,2})| \leq |L_S(h_1)-L_{\mathcal{D}}(h_1)|+|L_S(h_2)-L_{\mathcal{D}}(h_2)| + |L_{S_1}(h_1)L_S(h_2)-L_{\mathcal{D}}(h_1)L_{\mathcal{D}}(h_2)|
+	$$
+	The third term has higher order and can be omitted, and leads to $|L_S(h_{1,2})-L_{\mathcal{D}}(h_{1,2})| \leq  \epsilon_1 + \epsilon_2$, and hence enjoy the uniform convergence property.
+	\item[(c)] By definition of the growth function, we have
+		\begin{equation*}
+		\tau_{\mathcal{H}}(k) \leq \sum_{i=1}^k \tau_{\mathcal{H}_i}
+		\end{equation*}
+By applying Sauer's lemma on each of the terms, we obtain
+	\begin{equation*}
+	\tau_{\mathcal{H}}(k) \leq \sum_{i=1}^k \tau_{\mathcal{H}_i} \leq  \sum_{i=1}^k \sum_{j=0}^d C_k^j
+	\end{equation*}
+	\end{itemize}
+	
+\end{itemize}
 
 \end{document}
