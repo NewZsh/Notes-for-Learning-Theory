@@ -1,0 +1,136 @@
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+\setmainfont{Calibri Light}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
+\usepackage{amsmath,bm}
+\usepackage{framed} 
+\usepackage{wrapfig}
+\usepackage{amssymb}
+\usepackage{ntheorem}
+\usepackage{graphicx}
+\usepackage{bbm}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=cyan,      
+	urlcolor=red,
+	citecolor=green,
+}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{proof}{Proof}
+\setlength{\parindent}{2em}
+\author{Siheng Zhang\\zhangsiheng@cvte.com}
+\title{Chapter \textbf{\textit{9}} Support Vector Machine}
+\date{\today}
+\usepackage[a4paper,left=18mm,right=18mm,top=25mm,bottom=25mm]{geometry} 
+
+\begin{document}
+\maketitle  
+
+This part corresponds to \textbf{Chapter ? of PRML, Chapter of UML}. It mainly introduces support vector machines (SVMs), a class of model built from linear model with \textbf{margin}, and can be extended to non-linear case.
+
+\tableofcontents
+\newpage
+
+\section{Hard SVM}
+
+	\begin{equation}
+	\min \frac{1}{2} \mathbf{w}^\top \mathbf{w},\ \ \ \ \textit{s.t.}\ \ y_i\mathbf{w}^\top \mathbf{x}_i \geq 1, \forall i\in\{1,...,m\}
+	\end{equation}
+Using Lagrange multipliers $\lambda_i,  i\in\{1,...,m\}$, the above objective can be written as:
+
+	\begin{equation*}
+	\min \mathcal{L} =  \frac{1}{2} \mathbf{w}^\top \mathbf{w} + \sum_{i=1}^m \lambda_i(1-y_i \mathbf{x}_i \mathbf{w}_i)
+	\end{equation*}
+Taking derivatives \textit{w.r.t} $\mathbf{w}$ and letting it to be zero leads to
+
+	\begin{equation*}
+	\mathbf{w} = \sum_{i=1}^m \lambda_i y_i \mathbf{x}_i
+	\end{equation*}
+
+Bring it back to $\mathcal{L}$, we have
+
+	\begin{equation*}
+	\mathcal{L} = \sum_{i=1}^m \lambda_i - \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m \lambda_i \lambda_j y_i y_j \mathbf{x}_i \mathbf{x}_j
+	\end{equation*}
+Take derivatives \textit{w.r.t} $\lambda_i$ and letting it to be zero leads to 
+
+	\begin{equation*}
+	y_i \mathbf{x}_i \sum_{j=1} \lambda_i y_j \mathbf{x}_j=1
+	\end{equation*}
+Hence, 
+
+	\begin{equation*}
+	\mathbf{w}^\top \mathbf{w} = \sum_{i=1}^m\sum_{j=1}^m \lambda_i \lambda_j y_i y_j \mathbf{x}_i \mathbf{x}_j = \sum_{i=1}^m \lambda_i
+	\end{equation*}
+
+\section{Kernel trick}
+
+\subsection{Representor Theorem}
+
+	\begin{theorem}(Nonparametric Representor Theorem)
+	Given a nonempty set $\mathcal{X}$, a positive definite real-valued kernel $k$ on $\mathcal{X}\times \mathcal{X}$, a training set $S={(\vec{x}_i, y_i), i=1,...,m}\in \mathcal{X}\times\mathcal{R}$, a strictly monotonically increasing real-valued function $g$ on $[0,\infty]$, and an arbitrary cost function $c:(\mathcal{R}\times \mathcal{R})^m\rightarrow \mathcal{R}$, and a class of hypothesis 
+	\begin{equation*}
+	\mathcal{F}=\left\{ f\in \mathcal{R}^{\mathcal{X}}|f(\cdot) = \sum_{i=1}^\infty \beta_i k(\cdot,z_i),  \beta_i\in \mathcal{R}, z_i\in\mathcal{X}, \|f\|<\infty \right\}
+	\end{equation*}
+Here, $\|\cdot\|$ is the norm in the RKHS. Then, any $f\in\mathcal{F}$ minimizing the regularized risk function
+	\begin{equation*}
+	c((y_1, f(\vec{x}_1)), ..., (y_m, f(\vec{x}_m))) + g(\|f\|)
+	\end{equation*}
+admits a representation of the form:
+	\begin{equation}
+	f(\cdot) = \sum_{i=1}^m \alpha_i k(\cdot, x_i)
+	\end{equation}
+	\end{theorem}
+	
+	\vspace{2mm}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	{\sffamily
+	\noindent\textit{\underline{remark1.} If we discarded the strictness of the monotonicity of $g$, it would no longer follow that each minimizer (there might be multiple minimizers) admits such an expansion. However, it would still follow that there is always one minimizer that DOES admit the expansion.}}
+	\end{spacing}
+	\end{scriptsize}
+	\vspace{-2mm}
+
+	\begin{proof}
+	Any $f\in\mathcal{F}$ can be decomposed into a part that lives in the span of the ${\phi(x_i),i=1,...,m}$ and another part that lives in its ortho-complement space (thus the two parts are orthogonal), i.e.,
+		\begin{equation*}
+		f=\sum_{i=1}^m \alpha_i \phi(\vec{x}_i) + \vec{v}
+		\end{equation*}
+in which $\vec{v}\cdot \phi(\vec{x})=0, \forall \vec{x}$. Then for arbitrary point $\vec{x}$, the first term of loss yields
+
+		\begin{equation*}
+		f(\vec{x}_j) = \left(\sum_{i=1}^m \alpha_i \phi(\vec{x}_i)  + \vec{v}\right) \cdot \phi(\vec{x}) = \left(\sum_{i=1}^m \alpha_i \phi(\vec{x}_i) \right) \cdot \phi(\vec{x})
+		\end{equation*}
+		
+		The second term of loss yields
+		\begin{equation*}
+		g(\|f\|) = g\left( \left(\sum_{i=1}^m \alpha_i \phi(\vec{x}_i)  + \vec{v}\right) \cdot \left(\sum_{i=1}^m \alpha_i \phi(\vec{x}_i)  + \vec{v}\right)\right) = g \left( \| \sum_{i=1}^m \alpha_i \phi(\vec{x}_i) \|  + \|\vec{v}\| \right) \geq g \left( \| \sum_{i=1}^m \alpha_i \phi(\vec{x}_i) \|  \right)
+		\end{equation*}
+		
+		Hence, any minimizer must have $\vec{v}=0$, which conclude the proof.
+	\end{proof}		
+	
+\section{Soft SVM}
+
+	For non-linearly separable case, build new data $\mathbf{z}_i=(\mathbf{x_i}, \rho e_i) \in \mathbb{R}^{d+m}$, where $\rho>0$ and $e_i$ is the $m-$dimensional vector all of whose components are zero except for the $i-$th component which is equal to 1. Obviously, the dataset $\{(\mathbf{z}_i,y_i)\}_{i=1}^m$ is linearly separable. Again, apply hard SVM on it.
+	
+	\begin{equation*}
+	\min \frac{1}{2} \mathbf{v}^\top \mathbf{v},\ \ \ \ \textit{s.t.}\ \ y_i\mathbf{v}^\top \mathbf{z}_i \geq 1, \forall i\in\{1,...,m\}
+	\end{equation*}
+Denote $\mathbf{v}=(\mathbf{w},\xi_1/(\rho*y_1), \cdots, \xi_m/(\rho*y_m))$, in which $\mathbf{w}\in \mathbb{R}^d$, using Lagrange multipliers the objective can be written as
+
+	\begin{equation*}
+	\min \frac{1}{2} \mathbf{w}^\top \mathbf{w} + \frac{1}{2\rho^2} \sum_{i=1}^m \xi_i^2 + \sum_{i=1}^m \lambda_i (1-\xi_i - y_i\mathbf{w}^\top \mathbf{x}_i)
+	\end{equation*}
+which is equivalent to
+
+\begin{equation*}
+	\min  \mathbf{w}^\top \mathbf{w} + \frac{1}{2\rho^2} \sum_{i=1}^m \xi_i^2,\ \ \ \ \textit{s.t.}\ \ y_i\mathbf{w}^\top \mathbf{x}_i \geq 1-\xi_i, \forall i\in\{1,...,m\}
+	\end{equation*}
+	
+\end{document}
