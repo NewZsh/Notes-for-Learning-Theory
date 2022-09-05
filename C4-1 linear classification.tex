@@ -10,6 +10,7 @@
 \usepackage{ntheorem}
 \usepackage{graphicx}
 \usepackage{bbm}
+\usepackage[ruled]{algorithm2e}
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true,
@@ -31,10 +32,12 @@
 \begin{document}
 \maketitle  
 
-This part corresponds to \textbf{Chapter 1,3,4 of PRML, Chapter of UML}, and mainly answers the following questions:
+This part corresponds to \textbf{Chapter 4 of PRML, Chapter 9 of UML}, and mainly answers the following questions:
 
 \begin{itemize}
-\item 
+\item How to implement ERM rule on linear discriminant functions? We will see that using square error as risk, it leads to least squares solution, and using negative likelihood (for binary class, or named `cross entropy`  for multi-class), which is a surrogate of `0-1` loss, it leads to logistic regression.
+\item The relation between logistic regression and maximum likelihood estimation (MLE). Read also the final part of Chapter 3.
+\item We will introduce Fisher's method and reveal its relation to least squares.
 \end{itemize}
 
 \tableofcontents
@@ -144,12 +147,9 @@ in which $\mathbf{S}_B=(\mathbf{m}_2-\mathbf{m}_1)(\mathbf{m}_2-\mathbf{m}_1)^\t
 
 	The least-squares approach expect the \textbf{model predictions as close as possible to target values}. By contrast, the Fisher criterion was derived by \textbf{maximizing class separation in the output space}. It is interesting to see the relationship between these two approaches. In particular, we shall show that, \textbf{for the two-class problem, the Fisher criterion can be obtained as a special case of least squares}.
 
-	Denote $n$ to be the total number of training samples, $n_1$ be the number of class 1 and $n_2$ be the number of class 2. For class 1, we take the label as $y=n/n_1$, for class 2, we take the label as $y=-n/n_2$, then we have $\sum_i y_i = n_1 * n / n_1 - n2 * n / n_2 = 0$.
+	Denote $n$ to be the total number of training samples, $n_1$ be the number of class 1 and $n_2$ be the number of class 2. For class 1, we take the label as $n/n_1$, for class 2, we take the label as $-n/n_2$, then we have $\sum_i y_i = n_1 * n / n_1 - n2 * n / n_2 = 0$.
 	
-	Here, we consider the derivatives with regard to weight and bias, \textit{i.e.}, the loss is
-	
-	$$\frac{1}{2}\sum_i (y_i - \mathbf{w}^\top \mathbf{x}_i - w_0)^2$$
-Setting its derivatives to zero, we obtain
+	Here, we consider the derivatives of sum of square error with regard to weight and bias,
 
 	\begin{equation}
 	\sum_i (y_i - \mathbf{w}^\top \mathbf{x}_i - w_0) = 0
@@ -174,8 +174,7 @@ And the left-side can be written as
 
 	\begin{equation*}
 	\begin{split}
-	&\sum_i \mathbf{w}^\top (\mathbf{x}_i - \mathbf{m}) \mathbf{x}_i \\
-	&=\sum_i \mathbf{w}^\top \mathbf{x}_i \mathbf{x}_i  - \mathbf{w}^\top \mathbf{m} \sum_i \mathbf{x}_i  \\
+	&\sum_i \mathbf{w}^\top (\mathbf{x}_i - \mathbf{m}) \mathbf{x}_i =\sum_i \mathbf{w}^\top \mathbf{x}_i \mathbf{x}_i  - \mathbf{w}^\top \mathbf{m} \sum_i \mathbf{x}_i  \\
 	&= \sum_{\mathbf{x}_i \in C_1}  \mathbf{w}^\top (\mathbf{x}_i - \mathbf{m}_1 + \mathbf{m}_1) (\mathbf{x}_i - \mathbf{m}_1 + \mathbf{m}_1) +  \sum_{\mathbf{x}_i \in C_2}  \mathbf{w}^\top (\mathbf{x}_i - \mathbf{m}_2 + \mathbf{m}_2) (\mathbf{x}_i - \mathbf{m}_2 + \mathbf{m}_2) - n\mathbf{w}^\top \mathbf{m} \mathbf{m}\\
 	&= \sum_{\mathbf{x}_i \in C_1}  \mathbf{w}^\top (\mathbf{x}_i - \mathbf{m}_1) (\mathbf{x}_i - \mathbf{m}_1) + \sum_{\mathbf{x}_i \in C_1}  \mathbf{w}^\top  \mathbf{m}_1  \mathbf{m}_1 + \sum_{\mathbf{x}_i \in C_2}  \mathbf{w}^\top (\mathbf{x}_i - \mathbf{m}_2) (\mathbf{x}_i - \mathbf{m}_2) + \sum_{\mathbf{x}_i \in C_2}  \mathbf{w}^\top  \mathbf{m}_2  \mathbf{m}_2- n\mathbf{w}^\top \mathbf{m} \mathbf{m} \\
 	&= S_W \mathbf{w} + n_1  \mathbf{m}_1  \mathbf{m}_1^\top \mathbf{w} +  n_2  \mathbf{m}_2  \mathbf{m}_2^\top \mathbf{w}- n\mathbf{m} \mathbf{m}^\top \mathbf{w}
@@ -189,17 +188,103 @@ Note that $S_B \mathbf{w}$ is along the direction of $(\mathbf{m}_1 - \mathbf{m}
 
 \subsection{For multi-class case}		
 		
+		Now, denote the weight matrix as $\mathbf{W}\in \mathcal{R}^{d\times K}$, in which $K$ is the number of classes. By the same criteria, that is, encourage the between-class covariance to be large and  the within-class covariance to be small. We can maximize the following target:
 		
+		$$
+		\max \text{Tr}\left((\mathbf{WS}_W \mathbf{W}^\top )^{-1}  (\mathbf{WS}_B \mathbf{W}^\top ) \right)
+		$$
+	
+As a result, $\mathbf{W}$ is determined by those eigenvectors of $\mathbf{S}_W^{-1} \mathbf{S}_B$ that correspond to the $K$ largest eigenvalues. Note that this also raises a restriction that $K<d$.
 		 
-\section{Probabilistic perspective}
+\section{Logistic regression}
+	From a probabilistic perspective, define \textit{log odds} $a$ to represent the log of the ratio of probabilities:
 	
-	\subsection{Logistic regression}
-	\label{sec-lr}
+	$$a=\log \frac{p(C_1|\mathbf{x})}{p(C_2|\mathbf{x})}$$
 	
-	\subsection{Iterative re-weighted least squares(IRLS)}
+	Then the posterior can be expressed by `\textit{sigmoid}` function $\sigma(a)=1/(1+\exp(-a))$. We have shown in the last chapter that Gaussian distribution assumption leads to linear discriminant of this form. Besides, for any distribution in exponential family, this also holds. Denote $a=\mathbf{w}^\top \mathbf{x}$, logistic regression uses 
+	$$p = 1/(1+\exp(-\mathbf{w}^\top \mathbf{x}))$$
+for prediction. The ERM rule associated with logistic regression is ($y_i \in {-1, 1}$)
+
+	$$\arg \min_\mathbf{w} \frac{1}{m} \sum_{i=1}^m \log (1+\exp(-y_i \mathbf{w}^\top \mathbf{x}_i ))$$
+or I prefer to write it as ($y_i \in {0, 1}$)
+
+	\begin{equation}
+	\arg \min_\mathbf{w}  \mathcal{L} = - \frac{1}{m} \sum_{i=1}^m \left( y_i \log p_i  + (1-y_i) \log (1-p_i)\right)
+	\end{equation}
+	For multi-class case, we define $a_i=\log (p(\mathbf{x}|C_i)p(C_i))$, then the posterior is
 	
-		 \textbf{perceptron algorithm.}
-	 \textbf{surrogate loss.} In the agnostic (namely, non-separable) case, the implementation is computational hard. The most popular solution is to use surrogate loss functions but not the 0-1 loss in realizable case, which is left in \ref{sec-lr}.
+	$$p(C_k|x)=\frac{\exp a_k}{ \sum_j \exp a_j}$$
+which is known as the `softmax` function. And the ERM rule with `\textit{one-hot}` encoding target (that is, $y_i \in \{0,1\}^K, \sum_{k=1}^K y_{ik}=1$), a.k.a cross-entropy, is as below:
+
+	$$\arg \min_\mathbf{w}  - \frac{1}{m} \sum_{i=1}^m \sum_{k=1}^K  y_{ik} \log \frac{\exp a_{ik}}{ \sum_j \exp a_{ij}}$$
 	
+\begin{framed}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	\noindent\textit{\textbf{remark4: property of sigmoid function.}}
+	\begin{equation*}
+	\begin{split}
+	\sigma(-a) &= 1/(1+\exp(a)) = \exp(-a) / (1 + \exp(-a)) = 1-\sigma(a) \\
+	\frac{\text{d} \sigma(a)}{\text{d} a}&= \exp(-a)/(1+\exp(-a))^2 = \sigma(a) (1-\sigma(a))
+	\end{split}
+	\end{equation*}
+	
+	\noindent\textit{\textbf{remark5: `soft`-max.} Consider the maximum operator $\max \{a_1, ..., a_k\}$. Note that exponential operator quickly enlarge the gap of two positive scalar, we can approximate the \textbf{non-derivable} maximum operator by `\textit{log-sum-exp}` }
+	
+	$$\max \{a_1, ..., a_k\} \approx \log\sum_j \exp a_j$$
+	
+	In multi-class classification, we would like the posterior of true class is that maximize among that of all classes, \textit{i.e.}, $a_i\geq \max\{a_1, ..., a_k\} $. Using the `log-sum-exp` with exponential, it requires to maximize the following scalar for the true class $C_i$:
+	$$\frac{\exp a_i}{\sum_j \exp a_j} $$
+That is what `\textit{soft}`-max means.
+	\end{spacing}
+	\end{scriptsize}
+	\end{framed}
+	
+	How to solve logistic regression? Taking derivatives of its ERM goal leads to
+	
+	$$\frac{\partial \mathcal{L}}{\partial \mathbf{w}} = \sum_{i=1}^m \left( y_i (1-p_i) - (1-y_i) p_i \right) \frac{\partial p_i}{\partial \mathbf{w}} = \sum_{i=1}^m (y_i -p_i) \mathbf{x}$$
+Hence, we can use gradient descent to solve $\mathbf{w}$. Gradient descent takes the following procedure:
+		
+	\begin{algorithm}[]
+	\caption{GD procedure}
+	\LinesNumbered 
+	\KwIn{learning rate $\eta$}
+	\KwOut{$\mathbf{w}^*$}
+	\textbf{init}: $\mathbf{w}_o, t=0$
+	\While{True}{
+		update $\mathbf{w}_{t+1}=\mathbf{w}_t-\eta \frac{\partial \mathcal{L}}{\partial \mathbf{w}} $ \\
+		\If{$\|\mathbf{w}_{t+1} -\mathbf{w}_t\|_2 < \epsilon$}{
+			break;
+		}
+	}
+	\end{algorithm}
+
+	\begin{framed}
+	\begin{scriptsize}
+	\begin{spacing}{1.2}
+	\noindent\textit{\textbf{remark6: Newton-Raphson updating rule cannot be applied.}  Some people may challenge gradient descent for it takes multiple iterations and requires manually selection of learning step (though it can be selected in a large range). They may recall that Newton-Raphson updating rule uses the Hessian matrix to determine the best learning step, i.e.,}
+	$$\mathbf{w} = \mathbf{w} - \mathbf{H}^{-1} \frac{\partial \mathcal{L}}{\partial \mathbf{w}} $$
+	\textit{However, the Hessian matrix in logistic regression is}
+	$$\frac{\partial^2 \mathcal{L}}{\partial \mathbf{w}^2} = -\sum_{i=1}^m p_i (1-p_i) \mathbf{x}  \mathbf{x}^\top $$
+\textit{which is not constant. In fact, it depends on $\mathbf{w}$ through the value of $p_i$. Hence, this update cannot be applied directly. In the next chapter, we will show that, for linear regression, this update rule does work. It can find the global minima with only one step updating.}
+	\end{spacing}
+	\end{scriptsize}
+	\end{framed}
+	
+\section{Summary}
+
+We have shown two ways to implement ERM rule for linear classification,
+\begin{itemize}
+\item using square error as risk, it leads to least squares solution
+\item using negative likelihood (for binary class, or named `cross entropy`  for multi-class), which is a surrogate of `0-1` loss, it leads to logistic regression.
+\end{itemize}
+
+We have also revealed the relation between Fisher's method and least squares, as well as the relation between logistic regression and MLE.
+
+Since we have seen that linear discriminant hypothesis space is flexible and may suffer from overfitting, we will come up with some techniques to address it, like regularization, MAP instead of MLE, and support vector machines (SVM), which introduces `\textit{margin}` concept as another criterion. Indeed, these techniques are tightly connected at their intrinsic.
+
+Besides, we have shown the gradient descent algorithm, which is the base of modern updating rules. We will go deeper in the chapter of neural network.
+
+\section{Exercises and solutions}
 
 \end{document}
